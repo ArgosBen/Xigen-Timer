@@ -1,0 +1,486 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		B5CD972918A11B54001635B6 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5CD972818A11B54001635B6 /* Cocoa.framework */; };
+		B5CD973318A11B54001635B6 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B5CD973118A11B54001635B6 /* InfoPlist.strings */; };
+		B5CD973518A11B54001635B6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B5CD973418A11B54001635B6 /* main.m */; };
+		B5CD973918A11B54001635B6 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = B5CD973718A11B54001635B6 /* Credits.rtf */; };
+		B5CD973C18A11B54001635B6 /* xigenAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B5CD973B18A11B54001635B6 /* xigenAppDelegate.m */; };
+		B5CD973F18A11B54001635B6 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5CD973D18A11B54001635B6 /* MainMenu.xib */; };
+		B5CD974118A11B54001635B6 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5CD974018A11B54001635B6 /* Images.xcassets */; };
+		B5CD974818A11B54001635B6 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5CD974718A11B54001635B6 /* XCTest.framework */; };
+		B5CD974918A11B54001635B6 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5CD972818A11B54001635B6 /* Cocoa.framework */; };
+		B5CD975118A11B54001635B6 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B5CD974F18A11B54001635B6 /* InfoPlist.strings */; };
+		B5CD975318A11B54001635B6 /* Xigen_TimerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B5CD975218A11B54001635B6 /* Xigen_TimerTests.m */; };
+		B5CD975D18A11B6F001635B6 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5CD975C18A11B6F001635B6 /* WebKit.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		B5CD974A18A11B54001635B6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B5CD971D18A11B54001635B6 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B5CD972418A11B54001635B6;
+			remoteInfo = "Xigen Timer";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		B5CD972518A11B54001635B6 /* Xigen Timer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Xigen Timer.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B5CD972818A11B54001635B6 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		B5CD972B18A11B54001635B6 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		B5CD972C18A11B54001635B6 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		B5CD972D18A11B54001635B6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		B5CD973018A11B54001635B6 /* Xigen Timer-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Xigen Timer-Info.plist"; sourceTree = "<group>"; };
+		B5CD973218A11B54001635B6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		B5CD973418A11B54001635B6 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		B5CD973618A11B54001635B6 /* Xigen Timer-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Xigen Timer-Prefix.pch"; sourceTree = "<group>"; };
+		B5CD973818A11B54001635B6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
+		B5CD973A18A11B54001635B6 /* xigenAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = xigenAppDelegate.h; sourceTree = "<group>"; };
+		B5CD973B18A11B54001635B6 /* xigenAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = xigenAppDelegate.m; sourceTree = "<group>"; };
+		B5CD973E18A11B54001635B6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		B5CD974018A11B54001635B6 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		B5CD974618A11B54001635B6 /* Xigen TimerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Xigen TimerTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B5CD974718A11B54001635B6 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		B5CD974E18A11B54001635B6 /* Xigen TimerTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Xigen TimerTests-Info.plist"; sourceTree = "<group>"; };
+		B5CD975018A11B54001635B6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		B5CD975218A11B54001635B6 /* Xigen_TimerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Xigen_TimerTests.m; sourceTree = "<group>"; };
+		B5CD975C18A11B6F001635B6 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		B5CD972218A11B54001635B6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B5CD975D18A11B6F001635B6 /* WebKit.framework in Frameworks */,
+				B5CD972918A11B54001635B6 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B5CD974318A11B54001635B6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B5CD974918A11B54001635B6 /* Cocoa.framework in Frameworks */,
+				B5CD974818A11B54001635B6 /* XCTest.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		B5CD971C18A11B54001635B6 = {
+			isa = PBXGroup;
+			children = (
+				B5CD972E18A11B54001635B6 /* Xigen Timer */,
+				B5CD974C18A11B54001635B6 /* Xigen TimerTests */,
+				B5CD972718A11B54001635B6 /* Frameworks */,
+				B5CD972618A11B54001635B6 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		B5CD972618A11B54001635B6 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B5CD972518A11B54001635B6 /* Xigen Timer.app */,
+				B5CD974618A11B54001635B6 /* Xigen TimerTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B5CD972718A11B54001635B6 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B5CD975C18A11B6F001635B6 /* WebKit.framework */,
+				B5CD972818A11B54001635B6 /* Cocoa.framework */,
+				B5CD974718A11B54001635B6 /* XCTest.framework */,
+				B5CD972A18A11B54001635B6 /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		B5CD972A18A11B54001635B6 /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B5CD972B18A11B54001635B6 /* AppKit.framework */,
+				B5CD972C18A11B54001635B6 /* CoreData.framework */,
+				B5CD972D18A11B54001635B6 /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		B5CD972E18A11B54001635B6 /* Xigen Timer */ = {
+			isa = PBXGroup;
+			children = (
+				B5CD973A18A11B54001635B6 /* xigenAppDelegate.h */,
+				B5CD973B18A11B54001635B6 /* xigenAppDelegate.m */,
+				B5CD973D18A11B54001635B6 /* MainMenu.xib */,
+				B5CD974018A11B54001635B6 /* Images.xcassets */,
+				B5CD972F18A11B54001635B6 /* Supporting Files */,
+			);
+			path = "Xigen Timer";
+			sourceTree = "<group>";
+		};
+		B5CD972F18A11B54001635B6 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				B5CD973018A11B54001635B6 /* Xigen Timer-Info.plist */,
+				B5CD973118A11B54001635B6 /* InfoPlist.strings */,
+				B5CD973418A11B54001635B6 /* main.m */,
+				B5CD973618A11B54001635B6 /* Xigen Timer-Prefix.pch */,
+				B5CD973718A11B54001635B6 /* Credits.rtf */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		B5CD974C18A11B54001635B6 /* Xigen TimerTests */ = {
+			isa = PBXGroup;
+			children = (
+				B5CD975218A11B54001635B6 /* Xigen_TimerTests.m */,
+				B5CD974D18A11B54001635B6 /* Supporting Files */,
+			);
+			path = "Xigen TimerTests";
+			sourceTree = "<group>";
+		};
+		B5CD974D18A11B54001635B6 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				B5CD974E18A11B54001635B6 /* Xigen TimerTests-Info.plist */,
+				B5CD974F18A11B54001635B6 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		B5CD972418A11B54001635B6 /* Xigen Timer */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B5CD975618A11B54001635B6 /* Build configuration list for PBXNativeTarget "Xigen Timer" */;
+			buildPhases = (
+				B5CD972118A11B54001635B6 /* Sources */,
+				B5CD972218A11B54001635B6 /* Frameworks */,
+				B5CD972318A11B54001635B6 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Xigen Timer";
+			productName = "Xigen Timer";
+			productReference = B5CD972518A11B54001635B6 /* Xigen Timer.app */;
+			productType = "com.apple.product-type.application";
+		};
+		B5CD974518A11B54001635B6 /* Xigen TimerTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B5CD975918A11B54001635B6 /* Build configuration list for PBXNativeTarget "Xigen TimerTests" */;
+			buildPhases = (
+				B5CD974218A11B54001635B6 /* Sources */,
+				B5CD974318A11B54001635B6 /* Frameworks */,
+				B5CD974418A11B54001635B6 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B5CD974B18A11B54001635B6 /* PBXTargetDependency */,
+			);
+			name = "Xigen TimerTests";
+			productName = "Xigen TimerTests";
+			productReference = B5CD974618A11B54001635B6 /* Xigen TimerTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		B5CD971D18A11B54001635B6 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = xigen;
+				LastUpgradeCheck = 0500;
+				ORGANIZATIONNAME = Xigen;
+				TargetAttributes = {
+					B5CD974518A11B54001635B6 = {
+						TestTargetID = B5CD972418A11B54001635B6;
+					};
+				};
+			};
+			buildConfigurationList = B5CD972018A11B54001635B6 /* Build configuration list for PBXProject "Xigen Timer" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = B5CD971C18A11B54001635B6;
+			productRefGroup = B5CD972618A11B54001635B6 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				B5CD972418A11B54001635B6 /* Xigen Timer */,
+				B5CD974518A11B54001635B6 /* Xigen TimerTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		B5CD972318A11B54001635B6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B5CD973318A11B54001635B6 /* InfoPlist.strings in Resources */,
+				B5CD974118A11B54001635B6 /* Images.xcassets in Resources */,
+				B5CD973918A11B54001635B6 /* Credits.rtf in Resources */,
+				B5CD973F18A11B54001635B6 /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B5CD974418A11B54001635B6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B5CD975118A11B54001635B6 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		B5CD972118A11B54001635B6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B5CD973C18A11B54001635B6 /* xigenAppDelegate.m in Sources */,
+				B5CD973518A11B54001635B6 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B5CD974218A11B54001635B6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B5CD975318A11B54001635B6 /* Xigen_TimerTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		B5CD974B18A11B54001635B6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B5CD972418A11B54001635B6 /* Xigen Timer */;
+			targetProxy = B5CD974A18A11B54001635B6 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		B5CD973118A11B54001635B6 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B5CD973218A11B54001635B6 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		B5CD973718A11B54001635B6 /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B5CD973818A11B54001635B6 /* en */,
+			);
+			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
+		B5CD973D18A11B54001635B6 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B5CD973E18A11B54001635B6 /* Base */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+		B5CD974F18A11B54001635B6 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B5CD975018A11B54001635B6 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		B5CD975418A11B54001635B6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		B5CD975518A11B54001635B6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		B5CD975718A11B54001635B6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Xigen Timer/Xigen Timer-Prefix.pch";
+				INFOPLIST_FILE = "Xigen Timer/Xigen Timer-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		B5CD975818A11B54001635B6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Xigen Timer/Xigen Timer-Prefix.pch";
+				INFOPLIST_FILE = "Xigen Timer/Xigen Timer-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		B5CD975A18A11B54001635B6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Xigen Timer.app/Contents/MacOS/Xigen Timer";
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Xigen Timer/Xigen Timer-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "Xigen TimerTests/Xigen TimerTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		B5CD975B18A11B54001635B6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Xigen Timer.app/Contents/MacOS/Xigen Timer";
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Xigen Timer/Xigen Timer-Prefix.pch";
+				INFOPLIST_FILE = "Xigen TimerTests/Xigen TimerTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		B5CD972018A11B54001635B6 /* Build configuration list for PBXProject "Xigen Timer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B5CD975418A11B54001635B6 /* Debug */,
+				B5CD975518A11B54001635B6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B5CD975618A11B54001635B6 /* Build configuration list for PBXNativeTarget "Xigen Timer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B5CD975718A11B54001635B6 /* Debug */,
+				B5CD975818A11B54001635B6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		B5CD975918A11B54001635B6 /* Build configuration list for PBXNativeTarget "Xigen TimerTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B5CD975A18A11B54001635B6 /* Debug */,
+				B5CD975B18A11B54001635B6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = B5CD971D18A11B54001635B6 /* Project object */;
+}
