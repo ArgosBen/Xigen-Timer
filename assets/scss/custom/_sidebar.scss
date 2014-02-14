@@ -1,0 +1,25 @@
+.sidebar {
+	border-right: 1px solid #DDDDDD;
+	height: 100%;
+	overflow-x: hidden;
+	overflow-y: auto;
+
+	.side-nav {
+
+		margin: 0px;
+		padding: 0px;
+
+		li {
+			margin-bottom: 0px;
+		}
+
+		li a {
+			font-size: 12px;
+			width: 100%;
+			padding: 5px;
+
+			border-bottom: 1px solid #DDDDDD;
+		}
+
+	}
+}

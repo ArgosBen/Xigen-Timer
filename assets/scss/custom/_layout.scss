@@ -1,0 +1,32 @@
+.top-bar {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	z-index: 10;
+
+	.top-bar-section li.logout {
+
+		a:not(.button) {
+			padding-left: 5px;
+		}
+
+		span {
+			margin-left: 10px;
+		}
+
+		img {
+			height: 35px;
+			display: inline-block;
+		}
+	}
+}
+
+.content-wrap {
+	height: 100%;
+	padding-top: 45px;
+}
+
+.row {
+	height: 100%;
+}

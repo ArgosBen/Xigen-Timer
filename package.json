@@ -1,0 +1,8 @@
+{
+  "name": "nw-demo",
+  "main": "index.html",
+  "window" : {
+  	"toolbar" : true,
+  	"title" : "Xigen Timer"
+  }
+}
