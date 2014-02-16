@@ -3,6 +3,10 @@
   "main": "index.html",
   "window" : {
   	"toolbar" : true,
-  	"title" : "Xigen Timer"
+  	"title" : "Xigen Timer",
+  	"width" : 900,
+  	"height" : 480,
+  	"min_width": 900,
+    "min_height": 480
   }
 }
