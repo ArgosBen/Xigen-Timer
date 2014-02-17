@@ -185,28 +185,117 @@ if (typeof XIGENTIMER !== "object") {
 
 		getTimelogs: function () {
 
-			client.get(baseURL + "timelogs",
-			{
-				headers: {
-					"Authorization" : "Basic bWF0dG06NmdyZWVuY2F0",
-					"Content-Type" : "application/json"
-				}
-			},
-			function(data, response) {
-				
-				var myLogs = JSON.parse(data).filter(function (log) {
+			var userToken,
+				userID,
+				getUserToken,
+				getLogs;
 
-					return log.UserID === config.userID;
+			getUserToken = function () {
+				localforage.getItem("user", function (user) {
+					userID = user.UserID;
+				}).then(getLogs);
+			};
+
+			getLogs = function () {
+				client.get(baseURL + "timelogs",
+				{
+					headers: {
+						"Authorization" : userToken,
+						"Content-Type" : "application/json"
+					}
+				},
+				function(data, response) {
+					
+					var myLogs = JSON.parse(data).filter(function (log) {
+
+						return log.UserID === userID;
+
+					});
+
+					$.each(myLogs, function () {
+
+						console.log(this);
+
+					});
+
+				});
+			};
+
+			localforage.getItem("authToken", function (token) {
+
+				userToken = token;
+
+			}).then(getUserToken);
+
+		},
+
+		logTime: function (userID, taskID, duration, isBillable, description) {
+
+			var getUserToken,
+				userToken,
+				makeRequest,
+				userData,
+				date = new Date(),
+				formattedDate;
+
+			formattedDate = [
+				date.getFullYear(),
+				"-",
+				date.getMonth().toString().length === 1 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1,
+				"-",
+				date.getDate().toString().length === 1 ? "0" + date.getDate() : date.getDate(),
+				"T",
+				date.getHours(),
+				":",
+				date.getMinutes().toString().length === 1 ? "0" + date.getMinutes() : date.getMinutes(),
+				":",
+				date.getSeconds().toString().length === 1 ? "0" + date.getSeconds() : date.getSeconds(),
+			].join('');
+
+			getUserToken = function () {
+				localforage.getItem("user", function (user) {
+					userData = user;
+				}).then(makeRequest);
+			};
+
+			makeRequest = function () {
+
+				client.post(baseURL + "timelogs",
+				{
+					headers: {
+						"Authorization" : userToken,
+						"Content-Type" : "application/json"
+					},
+					data: JSON.stringify({
+						"UserID" : userData.UserID,
+						"Duration" : duration,
+						"TaskID" : taskID,
+						"Description" : description,
+						"Billable" : isBillable,
+						"EntryDate" : formattedDate
+					})
+				},
+				function (data, response) {
+
+					console.log(data, response);
+					console.log(JSON.stringify({
+						"UserID" : userData.UserID,
+						"Duration" : duration,
+						"TaskID" : taskID,
+						"Description" : description,
+						"Billable" : false,
+						"EntryDate" : formattedDate
+					}));
 
 				});
 
-				$.each(myLogs, function () {
+			};
 
-					$("body").append("<p>" + this.Duration + " hours doing task: " + this.Description + "</p>");
+			localforage.getItem("authToken", function (token) {
 
-				});
+				userToken = token;
 
-			});
+			}).then(getUserToken);
 
 		}
 

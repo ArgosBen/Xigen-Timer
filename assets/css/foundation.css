@@ -7735,6 +7735,10 @@ th.hide-for-touch {
   text-align: center;
 }
 
+.breadcrumbs {
+  margin-top: 10px;
+}
+
 .sidebar {
   border-right: 1px solid #DDDDDD;
   height: 100%;
@@ -7763,6 +7767,7 @@ th.hide-for-touch {
   font-weight: bold;
   padding: 5px 5px 0 5px;
   cursor: pointer;
+  position: relative;
 }
 
 .sidebar .side-nav > li > span:hover {
@@ -7771,6 +7776,15 @@ th.hide-for-touch {
 
 .sidebar .side-nav li ul {
   list-style: none outside none;
+  margin-left: 10px;
+}
+
+.sidebar .side-nav li ul li {
+  border-bottom: 1px solid #eaeaea;
+}
+
+.sidebar .side-nav li ul li:last-child {
+  border-bottom: none;
 }
 
 .sidebar .side-nav li ul li > span {
@@ -7787,6 +7801,31 @@ th.hide-for-touch {
 .sidebar .side-nav > li {
   border-bottom: 1px solid #DDD;
   padding-bottom: 5px;
+}
+
+.sidebar .side-nav li span {
+  position: relative;
+  padding-right: 30px;
+}
+
+.sidebar .side-nav li span:after {
+  content: '';
+  width: 0px;
+  height: 0px;
+  background: transparent;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-left: 5px solid #333;
+}
+
+.sidebar .side-nav li span.is-open:after {
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid #333;
+  border-bottom: none;
 }
 
 .login {

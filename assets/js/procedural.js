@@ -8,7 +8,7 @@ $(function () {
 		}),
 		isTiming = false,
 		defaultText,
-		submit,
+		submit = $(".login [type=submit]"),
 		VIEWMODEL;
 
 	// Foundation
@@ -57,7 +57,7 @@ $(function () {
 
 		$.each(data, function () {
 
-			ul.append("<li><a href='#'>" + this.Name + "</a></li>");
+			ul.append("<li data-id='" + this.TaskID + "'><a href='#'>" + this.Name + "</a></li>");
 
 		});
 
@@ -77,6 +77,8 @@ $(function () {
 
 			sidebar.empty();
 
+			console.log(projects);
+
 			$.each(projects.filter(function (i) {
 				return i.Activities.length > 0;
 			}), function (i, proj) {
@@ -90,15 +92,15 @@ $(function () {
 					newUL = $(document.createElement("ul"));
 
 					$.each(proj.Activities.filter(function (i) {
-						return !i.isHidden;
+						return !i.isHidden && i.Progress < 100;
 					}), function (i, act) {
 
-						//console.log(act);
+						console.log(act);
 
 						if (!act.Activities) {
-							newUL.append("<li><a href='#'>" + act.Name + "</a></li>");
+							newUL.append("<li data-id='" + act.TaskID + "'><a href='#'>" + act.Name + "</a></li>");
 						} else {
-							li = $("<li><span>" + act.Name + "</span></li>");
+							li = $("<li data-id='" + act.TaskID + "'><span>" + act.Name + "</span></li>");
 							li.append(drawActivityList(act.Activities));
 							newUL.append(li);
 						}
@@ -152,8 +154,6 @@ $(function () {
 			var password = $("[name=password]", this).val(),
 				user = $("[name=user]", this).val(),
 				authToken;
-			
-			submit = $("[type=submit]", this);
 				
 			defaultText = submit.text();
 
@@ -179,6 +179,7 @@ $(function () {
 			$("[data-login]")[0].reset();
 			VIEWMODEL.isLoggedOut(true);
 			VIEWMODEL.isLoggedIn(false);
+			submit.text(defaultText);
 
 		});
 
@@ -194,13 +195,21 @@ $(function () {
 		if (isTiming) {
 
 			isTiming = false;
-			$(".do-timestart").text("Start");
+			$(".do-timestart").text("Start (Timer Paused)");
 			timer.stop();
 			console.log(timer.getTime());
+
+			if (timer.getTime().time > 0) {
+				$(".do-send").removeAttr("disabled");
+			} else {
+				$(".do-send").attr("disabled", "disabled");
+			}
 
 		} else {
 
 			isTiming = true;
+			$(".do-timestart").addClass("alert").removeClass("success");
+			$(".do-send").attr("disabled", "disabled");
 			$(".do-timestart").text("Pause");
 			timer.start();
 
@@ -216,7 +225,42 @@ $(function () {
 
 			$(this).children("span").on("click", function () {
 
+				$(this).toggleClass("is-open");
+
 				$(this).parent("li").children("ul").toggle();
+
+			});
+
+		});
+
+		$(".side-nav li a").each(function () {
+
+			var bc = $(".breadcrumbs"),
+				path = [];
+
+			$(this).on("click", function () {
+
+				path.push($(this).text());
+
+				$(this).parents("li").each(function () {
+					path.push($(this).find("span").first().text());
+				});
+
+				path = path.filter(function (step) {
+					return step !== "";
+				}).reverse();
+
+				bc.empty();
+
+				$(path).each(function (i) {
+
+					if (i !== path.length - 1) {
+						bc.append("<li class='unavailable'><a href='#'>" + this + "</a></li>");
+					} else {
+						bc.append("<li class='current'><a href='#'>" + this + "</a></li>");
+					}
+
+				});
 
 			});
 

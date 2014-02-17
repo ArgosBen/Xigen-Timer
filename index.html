@@ -128,6 +128,16 @@
 
 					<div class="row">
 
+						<div class="small-12 columns">
+							<ul class="breadcrumbs">
+								<li class="unavaliable">Please select a task on the left to begin.</li>
+							</ul>
+						</div>
+
+					</div>
+
+					<div class="row">
+
 						<div class="small-12 columns l-centered">
 							<div class="timer"></div>
 						</div>
@@ -137,12 +147,22 @@
 						</div>
 
 						<div class="small-6 columns">
-							<a class="button expand warning">Send Hours</a>
+							<a class="do-send button expand warning" disabled>Send Hours</a>
 						</div>
 
 						<div class="small-12 columns">
 							<label>Description:</label>
 							<textarea></textarea>
+						</div>
+
+						<div class="small-6 columns">
+							<input id="isBillable" type="checkbox" checked />
+							<label for="isBillable">Time is billable:</label>
+						</div>
+
+						<div class="small-6 columns">
+							<input id="markReview" type="checkbox" />
+							<label for="markReview">Mark as waiting internal review:</label>
 						</div>
 
 					</div>
