@@ -96,8 +96,38 @@ if (typeof XIGENTIMER !== "object") {
 									"Content-Type" : "application/json"
 								}
 							}, function (activities) {
-								myProjects[i].Activities = JSON.parse(activities);
+								
+								var acts = JSON.parse(activities),
+									parent,
+									loopCounter = 0;
+
 								loaded += 1;
+
+								$.each(acts, function () {
+
+									var that = this;
+
+									if (this.ParentID) {
+
+										parent = acts.filter(function (act) {
+											return act.EntityBaseID === that.ParentID;
+										})[0];
+
+										if (!parent.Activities) {
+											parent.Activities = [];
+										}
+
+										parent.Activities.push(that);
+
+										that.isHidden = true;
+
+									}
+
+									loopCounter += 1;
+
+								});
+
+								myProjects[i].Activities = acts;
 
 								if (typeof callback === "function" && loaded === projectCount) {
 

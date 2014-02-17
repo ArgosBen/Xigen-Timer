@@ -51,6 +51,20 @@ $(function () {
 
 	}
 
+	function drawActivityList(data) {
+
+		var ul = $(document.createElement("ul"));
+
+		$.each(data, function () {
+
+			ul.append("<li><a href='#'>" + this.Name + "</a></li>");
+
+		});
+
+		return ul;
+
+	}
+
 	function drawProjects () {
 
 		XIGENTIMER.API.getProjects(function (projects) {
@@ -58,25 +72,36 @@ $(function () {
 			var sidebar = $(".side-nav"),
 				frag = document.createDocumentFragment(),
 				newLI,
-				newUL;
+				newUL,
+				li;
 
 			sidebar.empty();
 
-			$.each(projects, function (i, proj) {
+			$.each(projects.filter(function (i) {
+				return i.Activities.length > 0;
+			}), function (i, proj) {
 
 				newLI = $(document.createElement("li"));
 
-				newLI.text(proj.Name);
+				newLI.append("<span>" + proj.Name + "</span>");
 
 				if (proj.Activities && proj.Activities.length > 0) {
 
 					newUL = $(document.createElement("ul"));
 
-					$.each(proj.Activities, function (i, act) {
+					$.each(proj.Activities.filter(function (i) {
+						return !i.isHidden;
+					}), function (i, act) {
 
-						console.log(act);
+						//console.log(act);
 
-						newUL.append("<li><a href='#'>" + act.Name + "</a></li>");
+						if (!act.Activities) {
+							newUL.append("<li><a href='#'>" + act.Name + "</a></li>");
+						} else {
+							li = $("<li><span>" + act.Name + "</span></li>");
+							li.append(drawActivityList(act.Activities));
+							newUL.append(li);
+						}
 
 					});
 
@@ -89,6 +114,7 @@ $(function () {
 			});
 
 			sidebar[0].appendChild(frag);
+			collapseMenu();
 
 		});
 
@@ -162,24 +188,39 @@ $(function () {
 
 	ko.applyBindings(VIEWMODEL);
 
-	// // Timer start/pause
-	// $(".do-timestart").on("click", function () {
+	// Timer start/pause
+	$(".do-timestart").on("click", function () {
 
-	// 	if (isTiming) {
+		if (isTiming) {
 
-	// 		isTiming = false;
-	// 		$(".do-timestart").text("Start");
-	// 		timer.stop();
-	// 		console.log(timer.getTime());
+			isTiming = false;
+			$(".do-timestart").text("Start");
+			timer.stop();
+			console.log(timer.getTime());
 
-	// 	} else {
+		} else {
 
-	// 		isTiming = true;
-	// 		$(".do-timestart").text("Pause");
-	// 		timer.start();
+			isTiming = true;
+			$(".do-timestart").text("Pause");
+			timer.start();
 
-	// 	}
+		}
 
-	// });
+	});
+
+	// Collapsey bits
+	function collapseMenu () {
+		$(".side-nav li ul").hide();
+
+		$(".side-nav li").each(function () {
+
+			$(this).children("span").on("click", function () {
+
+				$(this).parent("li").children("ul").toggle();
+
+			});
+
+		});
+	}
 
 });
