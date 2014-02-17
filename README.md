@@ -1,4 +1,4 @@
 Xigen-Timer
 ===========
 
-Xigen Timer for Mac OS X
+Xigen Projects System Timer for Windows, Mac & Linux.
