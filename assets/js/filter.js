@@ -131,7 +131,8 @@
 		$("li a", this.list).each(function () {
 
 			var bc = $(config.BREADCRUMB_CLASS),
-				path = [];
+				path = [],
+				label;
 
 			if (!XIGENTIMER.BREADCRUMB_EMPTY) {
 				XIGENTIMER.BREADCRUMB_CONTAINER = bc;
@@ -141,12 +142,15 @@
 			$(this).on("click", function () {
 
 				path = [];
+				label = $(this).find(".label");
 
-				// if ($(this).find("span").length) {
-				// 	path.push($("span", this).text());
-				// } else {
-				// 	path.push($(this).text());
-				// }
+				if (label.hasClass("alert")) {
+					XIGENTIMER.VIEWMODEL.taskTypeID(2);
+				} else if (label.hasClass("success")) {
+					XIGENTIMER.VIEWMODEL.taskTypeID(3);
+				} else {
+					XIGENTIMER.VIEWMODEL.taskTypeID(1);
+				}
 
 				$(this).parents("li").each(function () {
 					path.push($(this).find("span").first().text());

@@ -86,6 +86,8 @@ $(function () {
 
 		XIGENTIMER.BREADCRUMB_CONTAINER.empty().append(XIGENTIMER.BREADCRUMB_EMPTY);
 
+		XIGENTIMER.renderTimeLogs();
+
 	};
 
 });

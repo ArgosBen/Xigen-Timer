@@ -69,6 +69,7 @@ $(function () {
 		this.isTiming = ko.observable(false);
 		this.activityDesc = ko.observable("");
 		this.isEditingTime = ko.observable(false);
+		this.taskTypeID = ko.observable(1);
 
 		this.isOverview = ko.computed(function () {
 			return !that.isEditingTime();
@@ -89,6 +90,25 @@ $(function () {
 			// Put this here, so it is subscribed
 			that.dummy();
 			return !!that.activityDesc() && !that.isTiming() && XIGENTIMER.TIMER.getTime() > 0 && !!that.selectedProject();
+		});
+
+		this.markText = ko.computed(function () {
+
+			switch(that.taskTypeID()) {
+			case 1:
+				return "Waiting internal review?";
+				break;
+			case 2:
+				return "Mark as closed?";
+				break;
+			default:
+				return "Waiting internal review?";
+			}
+
+		});
+
+		this.showMarkComplete = ko.computed(function () {
+			return that.taskTypeID() !== 3;
 		});
 
 		// Change timing page
@@ -171,6 +191,19 @@ $(function () {
 	// View online button
 	$(".do-viewonline").on("click", function () {
 		XIGENTIMER.launchExternal("http://projects.xigen.co.uk/TaskDetails.aspx?ID=" + VIEWMODEL.selectedProject());
+	});
+
+	// External links
+	$("body").on("click", "a", function (e) {
+		if ($(this).attr("target") === "_system") {
+			e.preventDefault();
+			XIGENTIMER.launchExternal($(this).attr("href"));
+		}
+	});
+
+	// Edit timelog button
+	$(".time-table").on("click", ".button", function () {
+		XIGENTIMER.editTimeLog($(this).parents("tr").attr("data-id"), this);
 	});
 
 });

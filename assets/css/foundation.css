@@ -6769,3 +6769,16 @@ th.hide-for-touch {
 .time-table .button {
   margin-bottom: 0px;
 }
+.time-table textarea, .time-table input {
+  margin-bottom: 0px;
+}
+.time-table textarea {
+  resize: none;
+  height: 85px;
+}
+.time-table .error {
+  border-color: #f04124;
+}
+.time-table a:hover {
+  text-decoration: underline;
+}

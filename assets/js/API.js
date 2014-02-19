@@ -267,11 +267,26 @@ if (typeof XIGENTIMER !== "object") {
 
 			var getUserToken,
 				userToken,
-				makeRequest;
+				makeRequest,
+				taskTypeID,
+				getTaskType,
+				ret;
+
+			getTaskType = function () {
+
+				localforage.getItem("activityCache", function (activities) {
+
+					ret = activities.filter(function (a) {
+						return a.TaskID === taskID;
+					})[0];
+
+					taskTypeID = ret.TaskTypeID;
+
+				}).then(makeRequest);
+
+			}
 
 			makeRequest = function () {
-
-				console.log(baseURL + "activities/" + taskID);
 
 				client.put(baseURL + "activities/" + taskID,
 				{
@@ -281,7 +296,7 @@ if (typeof XIGENTIMER !== "object") {
 					},
 					data: JSON.stringify({
 						"EntityBaseID" : taskID,
-						"TaskStatusID" : 18
+						"TaskStatusID" : taskTypeID === 1 ? 18 : 8
 					})
 				},
 				function (data, response) {
@@ -300,7 +315,80 @@ if (typeof XIGENTIMER !== "object") {
 
 				userToken = token;
 
-			}).then(makeRequest);
+			}).then(getTaskType);
+
+		},
+
+		updateTimeLog: function (logID, duration, description, callback) {
+
+			var getUserToken,
+				userToken,
+				makeRequest,
+				getOldLog,
+				oldLog,
+				diff = false;
+
+			getOldLog = function () {
+
+				client.get(baseURL + "timelogs/" + logID,
+				{
+					headers: {
+						"Authorization" : userToken,
+						"Content-Type" : "application/json"
+					}
+				},
+				function (data) {
+
+					oldLog = JSON.parse(data);
+
+					if (oldLog.Duration !== duration) {
+						diff = true;
+						oldLog.Duration = parseFloat(duration);
+					}
+					
+					if (oldLog.Description !== description) {
+						diff = true;
+						oldLog.Description = description;
+					}
+
+					delete oldLog.LastModificationDate;
+
+					if (diff) {
+						makeRequest();
+					} else {
+						callback(true);
+					}
+				});
+
+			};
+
+			makeRequest = function () {
+
+				client.put(baseURL + "timelogs/" + logID,
+				{
+					headers: {
+						"Authorization" : userToken,
+						"Content-Type" : "application/json"
+					},
+					data: JSON.stringify(oldLog)
+				},
+				function (data, response) {
+
+					if (typeof callback === "function") {
+
+						callback(response.statusCode === 200);
+
+					}
+
+				});
+
+			};
+
+			localforage.getItem("authToken", function (token) {
+
+				userToken = token;
+
+			}).then(getOldLog);
 
 		}
 

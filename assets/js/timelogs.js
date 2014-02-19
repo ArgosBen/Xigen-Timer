@@ -1,7 +1,10 @@
 (function () {
 
 	var config = {
-		TABLE_CLASS: ".time-table"
+		TABLE_CLASS: ".time-table",
+		TEXT_EDIT: "Edit",
+		TEXT_SAVE: "Save",
+		TEXT_SAVING: "Saving..."
 	};
 
 	function getTaskName(ID, callback) {
@@ -18,7 +21,7 @@
 			})[0];
 
 			taskName = ret.Name;
-			taskID = ret.TaskID;
+			taskID = ret.EntityBaseID;
 
 		}).then(getProjectName);
 
@@ -65,9 +68,9 @@
 
 			logs = logs.filter(function (log) {
 
-				return log.Locked !== "Locked" && log.LastModificationDate.indexOf(date) > -1;
+				return log.Locked !== "Locked" && log.EntryDate.indexOf(date) > -1;
 
-			});
+			}).reverse();
 
 			$.each(logs, function (i) {
 
@@ -77,11 +80,12 @@
 					var row = document.createElement("tr");
 
 					row.setAttribute("data-id", logs[i].EntityBaseID);
+					row.setAttribute("data-taskId", logs[i].TaskID);
 
-					$(row).append("<td><strong>" + name[1] + ":</strong><br/><a target='_system' href='http://projectsvm.xigen.co.uk/TaskDetails.aspx?ID='" + name[2] + "'>" + name[0] + "</a></td>");
+					$(row).append("<td><strong>" + name[1] + ":</strong><br/><a target='_system' href='http://projectsvm.xigen.co.uk/TaskDetails.aspx?ID=" + name[2] + "'>" + name[0] + "</a></td>");
 					$(row).append("<td>" + logs[i].Duration.toFixed(2) + "</td>");
 					$(row).append("<td>" + logs[i].Description + "</td>");
-					$(row).append("<td><button class='button tiny success'>Edit</button></td>");
+					$(row).append("<td><button class='button tiny success expand'>" + config.TEXT_EDIT + "</button></td>");
 
 					frag.appendChild(row);
 
@@ -99,6 +103,70 @@
 		});
 
 	};
+
+	XIGENTIMER.editTimeLog = function (logID, triggerEl) {
+
+		console.log(logID);
+
+		var row = $(config.TABLE_CLASS + " tbody").find("[data-id='" + logID + "']"),
+			taskID = row.attr("data-taskId"),
+			descCell = row.find("td").eq(2),
+			durCell = row.find("td").eq(1),
+			desc = descCell.text(),
+			dur = durCell.text(),
+			isValid = /[0-9]{1,2}\.[0-9]{1,2}/,
+			validates = true;
+
+		if (!triggerEl.jquery) {
+			triggerEl = $(triggerEl);
+		}
+
+		durCell.html("<input type='text' value='" + dur + "' />");
+		descCell.html("<textarea>" + desc + "</textarea>");
+
+		triggerEl.text(config.TEXT_SAVE);
+
+		triggerEl.on("click", function () {
+
+			triggerEl.attr("disabled", "disabled");
+			triggerEl.text(config.TEXT_SAVING);
+
+			desc = descCell.find("textarea").val();
+			dur = durCell.find("input").val();
+
+			if (!isValid.test(dur)) {
+				durCell.find("input").addClass("error");
+
+				validates = false;
+
+				durCell.find("input").on("keyup", function () {
+					if (isValid.test($(this).val())) {
+						durCell.find("input").removeClass("error");
+						validates = true;
+					} else {
+						durCell.find("input").addClass("error");
+					}
+				});
+
+			}
+
+			if (validates) {
+				XIGENTIMER.API.updateTimeLog(logID, dur, desc, function (success) {
+
+					descCell.html(desc);
+					durCell.html(dur);
+
+					triggerEl.removeAttr("disabled");
+					triggerEl.text(config.TEXT_EDIT);
+
+					triggerEl.off("click");
+
+				});
+			}
+		
+		});
+
+	}
 
 	if ($(config.TABLE_CLASS).length) {
 		XIGENTIMER.renderTimeLogs();

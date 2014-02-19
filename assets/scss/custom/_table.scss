@@ -15,4 +15,21 @@
 		margin-bottom: 0px;
 	}
 
+	textarea, input {
+		margin-bottom: 0px;
+	}
+
+	textarea {
+		resize: none;
+		height: 85px;
+	}
+
+	.error {
+		border-color: $alert-color;
+	}
+
+	a:hover {
+		text-decoration: underline;
+	}
+
 }

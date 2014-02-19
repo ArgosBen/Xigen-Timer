@@ -64,7 +64,7 @@
 
 					filteredActivities = proj.Activities.filter(function (i) {
 
-						return !i.isHidden && (i.TaskStatusID === 4 || i.TaskStatusID === 1);
+						return !i.isHidden && (i.TaskStatusID === 4 || i.TaskStatusID === 1 || i.TaskStatusID === 10);
 
 					});
 
