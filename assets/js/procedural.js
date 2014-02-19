@@ -195,6 +195,7 @@ $(function () {
 			submit.text(defaultText);
 			$(".side-nav").empty();
 			sidebarFilter = false;
+			XIGENTIMER.TIMER.setTime(0);
 			XIGENTIMER.reset();
 
 		});
