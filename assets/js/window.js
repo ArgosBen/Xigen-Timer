@@ -13,11 +13,11 @@
 	}
 
 	XIGENTIMER.close = function (url) {
-		if (XIGENTIMER.VIEWMODEL.isTiming() || XIGENTIMER.TIMER.getTime() > 0) {
+		if (XIGENTIMER.VIEWMODEL.isLoggedIn() && (XIGENTIMER.VIEWMODEL.isTiming() || XIGENTIMER.TIMER.getTime().time > 0)) {
 
 			if (XIGENTIMER.VIEWMODEL.isTiming()) {
 				message = "Timer is running, are you sure you want to close?";
-			} else if (XIGENTIMER.TIMER.getTime() > 0) {
+			} else if (XIGENTIMER.TIMER.getTime().time > 0) {
 				message = "There is time on the clock which hasn't been sent yet. Are you sure you want to close?";
 			}
 
