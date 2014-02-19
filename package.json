@@ -33,6 +33,6 @@
     "grunt": "~0.4.2"
   },
   "dependencies": {
-    "node-rest-client": "*"
+    "node-rest-client": ">=0.7.7"
   }
 }
