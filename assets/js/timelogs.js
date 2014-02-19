@@ -128,9 +128,6 @@
 
 		triggerEl.on("click", function () {
 
-			triggerEl.attr("disabled", "disabled");
-			triggerEl.text(config.TEXT_SAVING);
-
 			desc = descCell.find("textarea").val();
 			dur = durCell.find("input").val();
 
@@ -151,6 +148,10 @@
 			}
 
 			if (validates) {
+
+				triggerEl.attr("disabled", "disabled");
+				triggerEl.text(config.TEXT_SAVING);
+
 				XIGENTIMER.API.updateTimeLog(logID, dur, desc, function (success) {
 
 					descCell.html(desc);
