@@ -6592,6 +6592,16 @@ body {
   overflow-y: auto;
 }
 
+.top-bar,
+.sidebar,
+.conten-wrap {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
+
 .sidebar {
   height: 100%;
 }

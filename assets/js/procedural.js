@@ -100,7 +100,7 @@ $(function () {
 
 			switch(that.taskTypeID()) {
 			case 1:
-				return "Waiting internal review?";
+				return "Send for internal review";
 				break;
 			case 2:
 				return "Mark as closed?";
@@ -213,7 +213,7 @@ $(function () {
 
 	// View online button
 	$(".do-viewonline").on("click", function () {
-		localforage.get("baseURL", function (u) {
+		localforage.getItem("baseURL", function (u) {
 			u = u.replace("/rest/v1/", "");
 			XIGENTIMER.launchExternal(u + "/TaskDetails.aspx?ID=" + VIEWMODEL.selectedProject());
 		});
