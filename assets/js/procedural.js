@@ -68,6 +68,11 @@ $(function () {
 		this.selectedProject = ko.observable(false);
 		this.isTiming = ko.observable(false);
 		this.activityDesc = ko.observable("");
+		this.isEditingTime = ko.observable(false);
+
+		this.isOverview = ko.computed(function () {
+			return !that.isEditingTime();
+		});
 
 		// Used to force update
 		this.dummy = ko.observable();
@@ -81,13 +86,19 @@ $(function () {
 		});
 
 		this.canSendTime = ko.computed(function () {
-
 			// Put this here, so it is subscribed
 			that.dummy();
-
 			return !!that.activityDesc() && !that.isTiming() && XIGENTIMER.TIMER.getTime() > 0 && !!that.selectedProject();
-
 		});
+
+		// Change timing page
+		this.selectTiming = function () {
+			that.isEditingTime(true);
+		}
+
+		this.selectOverview = function () {
+			that.isEditingTime(false);
+		}
 
 		// Update the dummy function so that canSendTime will recompute
 		this.recalcCanSend = function () {

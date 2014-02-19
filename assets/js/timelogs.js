@@ -40,17 +40,32 @@
 
 	}
 
+	getTodaysDate = function () {
+
+		var date = new Date();
+
+		return formattedDate = [
+			date.getFullYear(),
+			date.getMonth().toString().length === 1 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1,
+			date.getDate().toString().length === 1 ? "0" + date.getDate() - 1 : date.getDate() - 1,
+		].join('-');
+
+	}
+
 	XIGENTIMER.renderTimeLogs = function () {
 
 		XIGENTIMER.API.getTimelogs(function (logs) {
 
-			var table = $(config.TABLE_CLASS),
+			var table = $(config.TABLE_CLASS + " tbody"),
 				log,
-				name;
+				name,
+				date = getTodaysDate(),
+				loaded = 0,
+				frag = document.createDocumentFragment();
 
 			logs = logs.filter(function (log) {
 
-				return log.Locked !== "Locked";
+				return log.Locked !== "Locked" && log.LastModificationDate.indexOf(date) > -1;
 
 			});
 
@@ -61,12 +76,21 @@
 
 					var row = document.createElement("tr");
 
+					row.setAttribute("data-id", logs[i].EntityBaseID);
+
 					$(row).append("<td><strong>" + name[1] + ":</strong><br/><a target='_system' href='http://projectsvm.xigen.co.uk/TaskDetails.aspx?ID='" + name[2] + "'>" + name[0] + "</a></td>");
 					$(row).append("<td>" + logs[i].Duration.toFixed(2) + "</td>");
 					$(row).append("<td>" + logs[i].Description + "</td>");
 					$(row).append("<td><button class='button tiny success'>Edit</button></td>");
 
-					table.append(row);
+					frag.appendChild(row);
+
+					loaded += 1;
+
+					if (loaded === logs.length) {
+						table.empty();
+						table[0].appendChild(frag);
+					}
 
 				});
 

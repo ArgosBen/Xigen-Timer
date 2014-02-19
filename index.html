@@ -30,8 +30,8 @@
 				<!-- Left Nav Section -->
 				<ul class="left">
 					<li data-bind="visible:isLoggedOut" class="active"><a href="#">Login</a></li>
-					<li data-bind="visible:isLoggedIn" class="active"><a href="#">Timer</a></li>
-					<li data-bind="visible:isLoggedIn"><a href="mytime.html">My Time</a></li>
+					<li data-bind="visible:isLoggedIn, css: { active: isOverview }"><a href="#" data-bind="click: selectOverview">Timer</a></li>
+					<li data-bind="visible:isLoggedIn, css: { active: isEditingTime }"><a href="#" data-bind="click: selectTiming">My Time</a></li>
 					<li data-bind="visible:isLoggedIn"><a href="#">Settings</a></li>
 				</ul>
 			</section>
@@ -111,7 +111,7 @@
 
 			<!-- END LOGIN -->
 
-			<div class="row collapse" data-bind="visible:isLoggedIn">
+			<div class="row collapse" data-bind="visible: isOverview">
 
 				<div class="small-4 columns sidebar">
 
@@ -185,6 +185,30 @@
 
 			</div>
 
+			<!-- Edit Time -->
+			<div class="row scroll-container" data-bind="visible: isEditingTime">
+
+				<div class="small-12 columns">
+
+					<table class="time-table">
+
+						<thead>
+							<tr>
+								<th>Task</th>
+								<th>Duration</th>
+								<th>Description</th>
+								<th></th>
+							</tr>
+						</thead>
+
+						<tbody></tbody>
+
+					</table>
+
+				</div>
+
+			</div>
+
 		</div>
 
 		<div id="customTime" class="reveal-modal" data-reveal>
@@ -238,5 +262,6 @@
 		<script src="assets/js/updateHours.js"></script>
 		<script src="assets/js/timer.js"></script>
 		<script src="assets/js/sendTime.js"></script>
+		<script src="assets/js/timelogs.js"></script>
 	</body>
 </html>
