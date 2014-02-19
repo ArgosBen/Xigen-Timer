@@ -1,7 +1,7 @@
 {
   "name": "Xigen-EasyProjects-Timer",
   "main": "index.html",
-  "version" : 1,
+  "version" : "0.9.0",
   "window": {
     "toolbar": false,
     "title": "Xigen Timer",
