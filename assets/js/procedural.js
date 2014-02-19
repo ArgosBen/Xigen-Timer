@@ -35,22 +35,28 @@ $(function () {
 						}, 600000);
 					}
 				});
+
+				XIGENTIMER.renderTimeLogs();
+
 				VIEWMODEL.isLoggedOut(false);
 				VIEWMODEL.isLoggedIn(true);
 
 			} else {
 
 				VIEWMODEL.isLoggedOut(true);
+				VIEWMODEL.isLoggedIn(false);
 
-				submit.text("Incorrect login, try again! :)")
-					.addClass("warning")
-					.removeClass("info");
+				if (authToken) {
+					submit.text("Incorrect login, try again! :)")
+						.addClass("warning")
+						.removeClass("info");
 
-				setTimeout(function () {
-					submit.text(defaultText)
-					.addClass("info")
-					.removeClass("warning");
-				}, 3000);
+					setTimeout(function () {
+						submit.text(defaultText)
+						.addClass("info")
+						.removeClass("warning");
+					}, 3000);
+				}
 
 			}
 
@@ -72,7 +78,7 @@ $(function () {
 		this.taskTypeID = ko.observable(1);
 
 		this.isOverview = ko.computed(function () {
-			return !that.isEditingTime();
+			return !that.isEditingTime() && that.isLoggedIn();
 		});
 
 		// Used to force update
@@ -127,17 +133,15 @@ $(function () {
 
 		localforage.getItem("authToken", function (token) {
 
-			if (token) {
+			localforage.getItem("userName", function (user) {
 
-				localforage.getItem("userName", function (user) {
+				if (user && token) {
+					authorize(token, user);
+				} else {
+					authorize(false);
+				}
 
-					if (user && token) {
-						authorize(token, user);
-					}
-
-				});
-
-			};
+			});
 
 		});
 		

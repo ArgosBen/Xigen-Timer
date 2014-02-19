@@ -168,8 +168,4 @@
 
 	}
 
-	if ($(config.TABLE_CLASS).length) {
-		XIGENTIMER.renderTimeLogs();
-	}
-
 }());
