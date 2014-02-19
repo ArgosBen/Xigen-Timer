@@ -7,7 +7,7 @@ if (typeof XIGENTIMER !== "object") {
 	"use strict";
 
 	var RESTClient = require('node-rest-client').Client,
-		baseURL = "http://projectsvm.xigen.co.uk/rest/v1/",
+		baseURL,
 		avatarURL = "http://projectsvm.xigen.co.uk/ImagePage.aspx?t=0",
 		client = new RESTClient(),
 		config = {
@@ -19,40 +19,50 @@ if (typeof XIGENTIMER !== "object") {
 
 		authorizeUser: function (auth, login, callback) {
 
-			var ret = false;
+			var ret = false,
+				doAuth;
 
-			client.get(baseURL + "users",
-			{
-				headers: {
-					"Authorization" : auth,
-					"Content-Type" : "application/json"
-				}
-			},
-			function(data) {
-				
-				if (data) {
-					$.each(JSON.parse(data), function (i, user) {
-
-						if (user.Login.toLowerCase() === login.toLowerCase()) {
-	
-							localforage.setItem("user", user);
-
-							ret = user;
-							return false;
-						}
-
-					});
-
-					if (typeof callback === "function") {
-						callback(ret);
-					}
-				} else {
-					if (typeof callback === "function") {
-						callback(false);
-					}
-				}
-
+			console.log("Authorising...");
+			localforage.getItem("baseURL", function (b) {
+				baseURL = b;
+				doAuth();
 			});
+
+			doAuth = function () {
+
+				client.get(baseURL + "users",
+				{
+					headers: {
+						"Authorization" : auth,
+						"Content-Type" : "application/json"
+					}
+				},
+				function(data) {
+					
+					if (data) {
+						$.each(JSON.parse(data), function (i, user) {
+
+							if (user.Login.toLowerCase() === login.toLowerCase()) {
+		
+								localforage.setItem("user", user);
+
+								ret = user;
+								return false;
+							}
+
+						});
+
+						if (typeof callback === "function") {
+							callback(ret);
+						}
+					} else {
+						if (typeof callback === "function") {
+							callback(false);
+						}
+					}
+
+				});
+			}
 
 		},
 

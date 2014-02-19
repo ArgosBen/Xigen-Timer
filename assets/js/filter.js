@@ -113,6 +113,8 @@
 
 		});
 
+		$(this.list).unbind("click");
+
 		$(this.list).on("click", "li span", function () {
 
 			$(this).toggleClass(config.ACTIVE_CLASS);

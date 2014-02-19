@@ -50,7 +50,7 @@
 		return formattedDate = [
 			date.getFullYear(),
 			date.getMonth().toString().length === 1 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1,
-			date.getDate().toString().length === 1 ? "0" + date.getDate() - 1 : date.getDate() - 1,
+			date.getDate().toString().length === 1 ? "0" + date.getDate() : date.getDate(),
 		].join('-');
 
 	}
@@ -72,33 +72,46 @@
 
 			}).reverse();
 
-			$.each(logs, function (i) {
+			if (logs.length > 0) {
+				
+				$.each(logs, function (i) {
 
-				getTaskName(this.TaskID, function (result) {
-					name = result;
+					getTaskName(this.TaskID, function (result) {
+						name = result;
 
-					var row = document.createElement("tr");
+						var row = document.createElement("tr");
 
-					row.setAttribute("data-id", logs[i].EntityBaseID);
-					row.setAttribute("data-taskId", logs[i].TaskID);
+						row.setAttribute("data-id", logs[i].EntityBaseID);
+						row.setAttribute("data-taskId", logs[i].TaskID);
 
-					$(row).append("<td><strong>" + name[1] + ":</strong><br/><a target='_system' href='http://projectsvm.xigen.co.uk/TaskDetails.aspx?ID=" + name[2] + "'>" + name[0] + "</a></td>");
-					$(row).append("<td>" + logs[i].Duration.toFixed(2) + "</td>");
-					$(row).append("<td>" + logs[i].Description + "</td>");
-					$(row).append("<td><button class='button tiny success expand'>" + config.TEXT_EDIT + "</button></td>");
+						$(row).append("<td><strong>" + name[1] + ":</strong><br/><a target='_system' href='http://projectsvm.xigen.co.uk/TaskDetails.aspx?ID=" + name[2] + "'>" + name[0] + "</a></td>");
+						$(row).append("<td>" + logs[i].Duration.toFixed(2) + "</td>");
+						$(row).append("<td>" + logs[i].Description + "</td>");
+						$(row).append("<td><button class='button tiny success expand'>" + config.TEXT_EDIT + "</button></td>");
 
-					frag.appendChild(row);
+						frag.appendChild(row);
 
-					loaded += 1;
+						loaded += 1;
 
-					if (loaded === logs.length) {
-						table.empty();
-						table[0].appendChild(frag);
-					}
+						if (loaded === logs.length) {
+							table.empty();
+							table[0].appendChild(frag);
+						}
+
+					});
 
 				});
 
-			});
+			} else {
+
+				var row = document.createElement("tr");
+
+				$(row).append("<td align='center' colspan='4'><strong>No time logged for today yet - Do some work!</strong></td>");
+				frag.appendChild(row);
+				table.empty();
+				table[0].appendChild(frag);
+
+			}
 
 		});
 
@@ -121,7 +134,7 @@
 			triggerEl = $(triggerEl);
 		}
 
-		durCell.html("<input type='text' value='" + dur + "' />");
+		durCell.html("<input maxlength='5' type='text' value='" + dur + "' />");
 		descCell.html("<textarea>" + desc + "</textarea>");
 
 		triggerEl.text(config.TEXT_SAVE);

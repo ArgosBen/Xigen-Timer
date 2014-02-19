@@ -5,9 +5,12 @@
 	var drawActivityList = function(data) {
 
 		var ul = $(document.createElement("ul")),
-			label;
+			label,
+			additionalClass;
 
 		$.each(data, function () {
+
+			this.TaskStatusID === 18 ? additionalClass = 'is-review' : additionalClass = '';
 
 			switch (this.TaskTypeID) {
 			case 2:
@@ -21,7 +24,7 @@
 				break;
 			}
 
-			ul.append("<li data-id='" + this.EntityBaseID + "'><a href='#'>" + label + "<span>" + this.Name + "</span></a></li>");
+			ul.append("<li class='" + additionalClass + "' data-id='" + this.EntityBaseID + "'><a href='#'>" + label + "<span>" + this.Name + "</span></a></li>");
 
 		});
 
@@ -40,6 +43,7 @@
 				filteredActivities,
 				li,
 				label,
+				additionalClass,
 				prevActive = [];
 
 			sidebar.find(".is-open").each(function () {
@@ -64,11 +68,16 @@
 
 					filteredActivities = proj.Activities.filter(function (i) {
 
-						return !i.isHidden && (i.TaskStatusID === 4 || i.TaskStatusID === 1 || i.TaskStatusID === 10);
+						return !i.isHidden && (i.TaskStatusID === 4 || 
+							i.TaskStatusID === 1 ||
+							i.TaskStatusID === 18 || 
+							i.TaskStatusID === 10);
 
 					});
 
 					$.each(filteredActivities, function (i, act) {
+
+						act.TaskStatusID === 18 ? additionalClass = 'is-review' : additionalClass = '';
 
 						switch (act.TaskTypeID) {
 						case 2:
@@ -83,7 +92,7 @@
 						}
 
 						if (!act.Activities) {
-							newUL.append("<li data-id='" + act.EntityBaseID + "'><a href='#'>" + label + "<span>" + act.Name + "</span></a></li>");
+							newUL.append("<li class='" + additionalClass + "' data-id='" + act.EntityBaseID + "'><a href='#'>" + label + "<span>" + act.Name + "</span></a></li>");
 						} else {
 							li = $("<li data-id='" + act.EntityBaseID + "'><span>" + act.Name + "</span></li>");
 							li.append(drawActivityList(act.Activities));

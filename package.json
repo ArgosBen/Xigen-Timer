@@ -10,7 +10,8 @@
     "max_width": 900,
     "max_height": 480,
     "min_width": 900,
-    "min_height": 480
+    "min_height": 480,
+    "frame" : false
   },
   "devDependencies": {
     "grunt-node-webkit-builder": "~0.1.17",

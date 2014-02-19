@@ -25,6 +25,9 @@
 				<!-- Right Nav Section -->
 				<ul class="right">
 					<li data-bind="visible:isLoggedIn" class="active logout"><a data-avatar data-logout href="#"><span>Logout</span></a></li>
+					<li class='icon icon-min'><a href="#"><img src="assets/svg/minimise.svg" /></a></li>
+					<li data-bind="visible: notOSX" class='icon icon-hide'><a href="#"><img src="assets/svg/hide.svg" /></a></li>
+					<li class='icon icon-close'><a href="#"><img src="assets/svg/close.svg" /></a></li>
 				</ul>
 
 				<!-- Left Nav Section -->
@@ -256,7 +259,7 @@
 		<!-- Custom JS -->
 		<script src="assets/js/API.js"></script>
 		<script src="assets/js/filter.js"></script>
-		<script src="assets/js/launchExternal.js"></script>
+		<script src="assets/js/window.js"></script>
 		<script src="assets/js/updateProjectList.js"></script>
 		<script src="assets/js/procedural.js"></script>
 		<script src="assets/js/updateHours.js"></script>

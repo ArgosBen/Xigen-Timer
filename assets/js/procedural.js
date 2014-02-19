@@ -4,6 +4,7 @@ $(function () {
 
 	var avatarURL = "http://projectsvm.xigen.co.uk/ImagePage.aspx?t=0",
 		defaultText,
+		os = require('os'),
 		submit = $(".login [type=submit]"),
 		VIEWMODEL,
 		sidebarFilter;
@@ -24,16 +25,15 @@ $(function () {
 				$("[data-avatar]").prepend("<img src='" + avatarURL  + "&h=" + user.AvatarHash + "&id=" + user.UserID + "'/>");
 
 				XIGENTIMER.updateProjectList(function () {
-					if (!sidebarFilter) {
-						sidebarFilter = new XIGENTIMER.ProjectFilter($(".side-nav"), $(".sidebar-filter-wrap input"));
-					
-						setInterval(function () {
-							XIGENTIMER.updateProjectList(function (wasOpen) {
-								console.log("Refreshed...");
-								sidebarFilter.refresh(wasOpen);
-							});
-						}, 600000);
-					}
+
+					sidebarFilter = new XIGENTIMER.ProjectFilter($(".side-nav"), $(".sidebar-filter-wrap input"));
+
+					setInterval(function () {
+						XIGENTIMER.updateProjectList(function (wasOpen) {
+							sidebarFilter.refresh(wasOpen);
+						});
+					}, 600000);
+
 				});
 
 				XIGENTIMER.renderTimeLogs();
@@ -48,14 +48,12 @@ $(function () {
 
 				if (authToken) {
 					submit.text("Incorrect login, try again! :)")
-						.addClass("warning")
-						.removeClass("info");
+						.addClass("alert");
 
 					setTimeout(function () {
 						submit.text(defaultText)
-						.addClass("info")
-						.removeClass("warning");
-					}, 3000);
+						.removeClass("alert");
+					}, 1500);
 				}
 
 			}
@@ -117,6 +115,8 @@ $(function () {
 			return that.taskTypeID() !== 3;
 		});
 
+		this.notOSX = !/darwin/.test(os.platform());
+
 		// Change timing page
 		this.selectTiming = function () {
 			that.isEditingTime(true);
@@ -152,6 +152,7 @@ $(function () {
 
 			var password = $("[name=password]", this).val(),
 				user = $("[name=user]", this).val(),
+				baseURL = $("[name=baseURL]", this).val(),
 				authToken;
 				
 			defaultText = submit.text();
@@ -160,6 +161,7 @@ $(function () {
 
 			localforage.setItem("authToken", authToken);
 			localforage.setItem("userName", user);
+			localforage.setItem("baseURL", baseURL + "/rest/v1/");
 
 			submit.text("Logging in...");
 
@@ -179,6 +181,9 @@ $(function () {
 			VIEWMODEL.isLoggedOut(true);
 			VIEWMODEL.isLoggedIn(false);
 			submit.text(defaultText);
+			$(".side-nav").empty();
+			sidebarFilter = false;
+			XIGENTIMER.reset();
 
 		});
 
@@ -208,6 +213,19 @@ $(function () {
 	// Edit timelog button
 	$(".time-table").on("click", ".button", function () {
 		XIGENTIMER.editTimeLog($(this).parents("tr").attr("data-id"), this);
+	});
+
+	// Icons
+	$(".icon-min").on("click", function () {
+		XIGENTIMER.minimize();
+	});
+
+	$(".icon-hide").on("click", function () {
+		XIGENTIMER.goToTray();
+	});
+
+	$(".icon-close").on("click", function () {
+		XIGENTIMER.close();
 	});
 
 });
