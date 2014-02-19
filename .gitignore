@@ -38,8 +38,6 @@ Thumbs.db
 
 # Node Webkit Stuff #
 #####################
-node_modules/**
-node_modules
 nwsnapshot.exe
 nw.pak
 nw.exe
@@ -48,3 +46,23 @@ libGLESv2.dll
 icudt.dll
 ffmpegsumo.dll
 webkitbuilds
+
+# Node #
+########
+lib-cov
+lcov.info
+*.seed
+*.log
+*.csv
+*.dat
+*.out
+*.pid
+*.gz
+
+pids
+logs
+results
+build
+.grunt
+
+node_modules
