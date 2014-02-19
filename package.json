@@ -1,7 +1,19 @@
 {
   "name": "Xigen-EasyProjects-Timer",
   "main": "index.html",
+  "author" : "Matt Malone <Matt@xigen.co.uk>",
   "version" : "1.0.0",
+  "description" : "A timer for the EasyProjects.NET project management system",
+  "contributors": [ 
+    {
+      "name": "Ben McCarthy",
+      "email": "ben@xigen.co.uk"
+    } 
+  ],
+  "repository" : {
+    "type" : "git",
+    "url" : "http://github.com/XigenBen/Xigen-Timer.git"
+  },
   "window": {
     "toolbar": false,
     "title": "Xigen Timer",
