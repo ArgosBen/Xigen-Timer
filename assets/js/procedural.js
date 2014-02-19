@@ -34,9 +34,9 @@ $(function () {
 						});
 					}, 600000);
 
-				});
+					XIGENTIMER.renderTimeLogs();
 
-				XIGENTIMER.renderTimeLogs();
+				});
 
 				VIEWMODEL.isLoggedOut(false);
 				VIEWMODEL.isLoggedIn(true);
@@ -212,7 +212,10 @@ $(function () {
 
 	// View online button
 	$(".do-viewonline").on("click", function () {
-		XIGENTIMER.launchExternal("http://projects.xigen.co.uk/TaskDetails.aspx?ID=" + VIEWMODEL.selectedProject());
+		localforage.get("baseURL", function (u) {
+			u = u.replace("/rest/v1/", "");
+			XIGENTIMER.launchExternal(u + "/TaskDetails.aspx?ID=" + VIEWMODEL.selectedProject());
+		});
 	});
 
 	// External links
