@@ -25,7 +25,11 @@ if (typeof XIGENTIMER !== "object") {
 			console.log("Authorising...");
 			localforage.getItem("baseURL", function (b) {
 				baseURL = b;
-				doAuth();
+				if (b) {
+					doAuth();
+				} else {
+					callback(false);
+				}
 			});
 
 			doAuth = function () {
