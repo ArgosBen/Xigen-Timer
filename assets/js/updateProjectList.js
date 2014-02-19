@@ -13,6 +13,9 @@
 			case 2:
 				label = "<div class='label alert'>Issue</div>";
 				break;
+			case 3:
+				label = "<div class='label success'>Request</div>";
+				break;
 			default:
 				label = "<div class='label'>Task</div>";
 				break;
@@ -70,6 +73,9 @@
 						switch (act.TaskTypeID) {
 						case 2:
 							label = "<div class='label alert'>Issue</div>";
+							break;
+						case 3:
+							label = "<div class='label success'>Request</div>";
 							break;
 						default:
 							label = "<div class='label'>Task</div>";

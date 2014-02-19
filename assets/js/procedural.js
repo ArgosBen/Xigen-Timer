@@ -157,4 +157,9 @@ $(function () {
 		XIGENTIMER.reset()
 	});
 
+	// View online button
+	$(".do-viewonline").on("click", function () {
+		XIGENTIMER.launchExternal("http://projects.xigen.co.uk/TaskDetails.aspx?ID=" + VIEWMODEL.selectedProject());
+	});
+
 });

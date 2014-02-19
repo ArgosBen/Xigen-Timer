@@ -7767,6 +7767,10 @@ th.hide-for-touch {
   padding-left: 35px;
 }
 
+#desc {
+  resize: none;
+}
+
 .sidebar {
   height: 100%;
 }
@@ -7954,6 +7958,7 @@ th.hide-for-touch {
   font-size: 0.6875rem;
   margin-bottom: 0px;
   width: 50%;
+  float: left;
 }
 
 .reset-button:hover,
