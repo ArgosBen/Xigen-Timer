@@ -1,16 +1,16 @@
 {
   "name": "Xigen-EasyProjects-Timer",
   "main": "index.html",
-  "version" : "0.9.0",
+  "version" : "1.0.0",
   "window": {
-    "toolbar": true,
+    "toolbar": false,
     "title": "Xigen Timer",
     "width": 900,
-    "height": 480,
+    "height": 445,
     "max_width": 900,
-    "max_height": 480,
+    "max_height": 445,
     "min_width": 900,
-    "min_height": 480,
+    "min_height": 445,
     "frame" : false
   },
   "devDependencies": {

@@ -67,12 +67,8 @@
 			list-style: none outside none;
 			margin-left: 10px;
 
-			li {
-				border-bottom: 1px solid lighten(#DDDDDD, 5%);
-
-				&:last-child {
-					border-bottom: none;
-				}
+			li + li {
+				border-top: 1px solid lighten(#DDDDDD, 5%);
 			}
 		}
 
@@ -145,5 +141,13 @@
 	.label {
 		float: left;
 		margin-right: 10px;
+	}
+
+	.side-nav .is-review {
+		display: none;
+
+		.show-review & {
+			display: block;
+		}
 	}
 }

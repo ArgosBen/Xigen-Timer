@@ -35,7 +35,7 @@
 					<li data-bind="visible:isLoggedOut" class="active"><a href="#">Login</a></li>
 					<li data-bind="visible:isLoggedIn, css: { active: isOverview }"><a href="#" data-bind="click: selectOverview">Timer</a></li>
 					<li data-bind="visible:isLoggedIn, css: { active: isEditingTime }"><a href="#" data-bind="click: selectTiming">My Time</a></li>
-					<li data-bind="visible:isLoggedIn"><a href="#">Settings</a></li>
+					<li data-bind="visible:isLoggedIn" data-reveal-id="settingsMenu" ><a href="#">Settings</a></li>
 				</ul>
 			</section>
 		</nav>
@@ -246,6 +246,20 @@
 					</div>
 
 			</div>
+		</div>
+
+		<div id="settingsMenu" class="reveal-modal" data-reveal>
+			<h3>Settings</h3>
+
+			<div class="row collapse">
+				<div class="small-12 columns">
+					<input type="checkbox" name="showPending" id="showPending" data-bind="checked:showReviewItems"/>
+					<label for="showPending">Show items waiting internal review?</label>
+				</div>
+			</div>
+
+			<a class="close-reveal-modal">&#215;</a>
+
 		</div>
 		
 		<!-- Libraries -->

@@ -117,6 +117,18 @@ $(function () {
 
 		this.notOSX = !/darwin/.test(os.platform());
 
+		this.showReviewItems = ko.observable(false);
+
+		this.showReviewItems.subscribe(function (val) {
+
+			if (val === true) {
+				$("body").addClass("show-review");
+			} else {
+				$("body").removeClass("show-review");
+			}
+
+		});
+
 		// Change timing page
 		this.selectTiming = function () {
 			that.isEditingTime(true);

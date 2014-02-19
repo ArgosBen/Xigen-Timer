@@ -6649,11 +6649,8 @@ body {
   list-style: none outside none;
   margin-left: 10px;
 }
-.sidebar .side-nav li ul li {
-  border-bottom: 1px solid #eaeaea;
-}
-.sidebar .side-nav li ul li:last-child {
-  border-bottom: none;
+.sidebar .side-nav li ul li + li {
+  border-top: 1px solid #eaeaea;
 }
 .sidebar .side-nav li ul li > span {
   cursor: pointer;
@@ -6710,6 +6707,12 @@ body {
 .sidebar .label {
   float: left;
   margin-right: 10px;
+}
+.sidebar .side-nav .is-review {
+  display: none;
+}
+.show-review .sidebar .side-nav .is-review {
+  display: block;
 }
 
 .login {
