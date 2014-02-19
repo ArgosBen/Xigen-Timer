@@ -7,8 +7,8 @@ if (typeof XIGENTIMER !== "object") {
 	"use strict";
 
 	var RESTClient = require('node-rest-client').Client,
-		baseURL = "http://projects.xigen.co.uk/rest/v1/",
-		avatarURL = "http://projects.xigen.co.uk/ImagePage.aspx?t=0",
+		baseURL = "http://projectsvm.xigen.co.uk/rest/v1/",
+		avatarURL = "http://projectsvm.xigen.co.uk/ImagePage.aspx?t=0",
 		client = new RESTClient(),
 		config = {
 			userID : 0,
@@ -18,9 +18,6 @@ if (typeof XIGENTIMER !== "object") {
 	timer.API = {
 
 		authorizeUser: function (auth, login, callback) {
-
-			console.log("Authorizing (level 2) with " + auth);
-			console.log("Authorizing (level 2) with user " + login);
 
 			var ret = false;
 
@@ -62,7 +59,8 @@ if (typeof XIGENTIMER !== "object") {
 		getProjects: function (callback) {
 
 			var projectCount,
-				loaded = 0;
+				loaded = 0,
+				allActivities = [];
 
 			localforage.getItem("authToken", function (userToken) {
 
@@ -84,6 +82,8 @@ if (typeof XIGENTIMER !== "object") {
 
 							});
 
+						localforage.setItem("projectCache", projects);
+
 						projectCount = myProjects.length;
 
 						$(myProjects).each(function (i) {
@@ -102,6 +102,8 @@ if (typeof XIGENTIMER !== "object") {
 									loopCounter = 0;
 
 								loaded += 1;
+
+								allActivities = allActivities.concat(acts);
 
 								$.each(acts, function () {
 
@@ -129,6 +131,10 @@ if (typeof XIGENTIMER !== "object") {
 
 								myProjects[i].Activities = acts;
 
+								if (loaded === projectCount) {
+									localforage.setItem("activityCache", allActivities);
+								}
+
 								if (typeof callback === "function" && loaded === projectCount) {
 
 									callback(myProjects);
@@ -145,45 +151,7 @@ if (typeof XIGENTIMER !== "object") {
 
 		},
 
-		getActivities: function (callback) {
-
-			localforage.getItem("authToken", function (token) {
-
-				client.get(baseURL + "activities",
-				{
-					headers: {
-						"Authorization" : token,
-						"Content-Type" : "application/json"
-					}
-				},
-				function(data, response) {
-
-					console.log(JSON.parse(data));
-
-					// localforage.getItem("user", function (user) {
-					
-					// var projects = data ? JSON.parse(data) : [],
-					// 	myProjects = projects.filter(function (proj) {
-
-					// 		return proj.Members.split("\n").indexOf(user.Name) > -1;
-
-					// 	});
-
-					// 	if (typeof callback === "function") {
-
-					// 		callback(myProjects);
-
-					// 	}
-
-					// });
-
-				});
-
-			});
-
-		},
-
-		getTimelogs: function () {
+		getTimelogs: function (callback) {
 
 			var userToken,
 				userID,
@@ -212,11 +180,11 @@ if (typeof XIGENTIMER !== "object") {
 
 					});
 
-					$.each(myLogs, function () {
+					if (typeof callback === "function") {
 
-						console.log(this);
+						callback(myLogs);
 
-					});
+					}
 
 				});
 			};
@@ -229,7 +197,7 @@ if (typeof XIGENTIMER !== "object") {
 
 		},
 
-		logTime: function (userID, taskID, duration, isBillable, description) {
+		logTime: function (userID, taskID, duration, isBillable, description, callback) {
 
 			var getUserToken,
 				userToken,
@@ -277,15 +245,11 @@ if (typeof XIGENTIMER !== "object") {
 				},
 				function (data, response) {
 
-					console.log(data, response);
-					console.log(JSON.stringify({
-						"UserID" : userData.UserID,
-						"Duration" : duration,
-						"TaskID" : taskID,
-						"Description" : description,
-						"Billable" : false,
-						"EntryDate" : formattedDate
-					}));
+					if (typeof callback === "function") {
+
+						callback(response.statusCode === 201);
+
+					}
 
 				});
 
@@ -296,6 +260,47 @@ if (typeof XIGENTIMER !== "object") {
 				userToken = token;
 
 			}).then(getUserToken);
+
+		},
+
+		markForReview: function (taskID, callback) {
+
+			var getUserToken,
+				userToken,
+				makeRequest;
+
+			makeRequest = function () {
+
+				console.log(baseURL + "activities/" + taskID);
+
+				client.put(baseURL + "activities/" + taskID,
+				{
+					headers: {
+						"Authorization" : userToken,
+						"Content-Type" : "application/json"
+					},
+					data: JSON.stringify({
+						"EntityBaseID" : taskID,
+						"TaskStatusID" : 18
+					})
+				},
+				function (data, response) {
+
+					if (typeof callback === "function") {
+
+						callback(response.statusCode === 200);
+
+					}
+
+				});
+
+			};
+
+			localforage.getItem("authToken", function (token) {
+
+				userToken = token;
+
+			}).then(makeRequest);
 
 		}
 

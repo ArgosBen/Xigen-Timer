@@ -160,6 +160,10 @@ $topbar-arrows: true !default; //Set false to remove the triangle icon from the 
         height: $topbar-height;
         margin: 0;
         font-size: $rem-base;
+        background: $primary-color;
+        position: relative;
+        width: 50px;
+        border-right: 1px solid $topbar-bg-color;
 
         h1 {
           line-height: $topbar-height;
@@ -172,6 +176,13 @@ $topbar-arrows: true !default; //Set false to remove the triangle icon from the 
             display: block;
             padding: 0 $topbar-link-padding;
           }
+        }
+
+        img {
+          max-height: 35px;
+          position: absolute;
+          top: 5px;
+          left: 5px;
         }
       }
 

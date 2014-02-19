@@ -1,8 +1,31 @@
 .sidebar {
-	border-right: 1px solid #DDDDDD;
 	height: 100%;
-	overflow-x: hidden;
-	overflow-y: auto;
+
+	.sidebar-filter-wrap {
+		height: 10%;
+		position: relative;
+
+		input {
+			border-width: 1px 0px 1px 0px;
+			margin-bottom: 0px;
+			height: 100%;
+			padding-right: 45px;
+
+			&:focus {
+				box-shadow: none;
+
+				& + .do-clearfilter {
+					border-color: #999;
+				}
+			}
+		}
+	}
+
+	.sidebar-projects-wrap {
+		height: 90%;
+		overflow: auto;
+		border-right: 1px solid #CCCCCC;
+	}
 
 	.side-nav {
 
@@ -11,12 +34,18 @@
 
 		li {
 			margin-bottom: 0px;
+			display: block;
+			width: 100%;
+			height: auto;
+			overflow: hidden;
 		}
 
 		li a {
 			font-size: 13px;
-			width: 100%;
 			padding: 5px;
+			display: inline-block;
+			float: left;
+			width: 100%;
 		}
 
 		> li > span {
@@ -64,7 +93,7 @@
 			padding-bottom: 5px;
 		}
 
-		li span {
+		li > span {
 
 			position: relative;
 			padding-right: 30px;
@@ -92,5 +121,28 @@
 
 		}
 
+	}
+
+	.do-clearfilter {
+		position: absolute;
+		right: 0px;
+		top: 0px;
+		height: 100%;
+		border-color: #CCC;
+		border-width: 1px 1px 1px 0px;
+		border-style: solid;
+		margin-bottom: 0px;
+		width: 45px;
+
+		-webkit-transition: border-color 0.45s ease-in-out;
+		-moz-transition: border-color 0.45s ease-in-out;
+		-ms-transition: border-color 0.45s ease-in-out;
+		-o-transition: border-color 0.45s ease-in-out;
+		transition: border-color 0.45s ease-in-out;
+	}
+
+	.label {
+		float: left;
+		margin-right: 10px;
 	}
 }

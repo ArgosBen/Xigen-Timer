@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Xigen Timer</title>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="description" content="Demo project">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,300' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" href="assets/css/foundation.css">
+		<link rel="stylesheet" href="assets/css/flipclock.css">
+		<style type="text/css"></style>
+	</head>
+	<body>
+		<!-- App Nav -->
+		<nav class="top-bar" data-topbar>
+			<ul class="title-area">
+				<li class="name">
+					<h1><img src="assets/svg/xigen_logo_whiteout.svg" alt="Xigen" /></h1>
+				</li>
+				<li class="toggle-topbar menu-icon"><a href="#">Menu</a></li>
+			</ul>
+
+			<section class="top-bar-section">
+				<!-- Right Nav Section -->
+				<ul class="right">
+					<li data-bind="visible:isLoggedIn" class="active logout"><a data-avatar data-logout href="#"><span>Logout</span></a></li>
+				</ul>
+
+				<!-- Left Nav Section -->
+				<ul class="left">
+					<li data-bind="visible:isLoggedOut" class="active"><a href="#">Login</a></li>
+					<li data-bind="visible:isLoggedIn"><a href="index.html">Timer</a></li>
+					<li data-bind="visible:isLoggedIn" class="active"><a href="#">My Time</a></li>
+					<li data-bind="visible:isLoggedIn"><a href="#">Settings</a></li>
+				</ul>
+			</section>
+		</nav>
+
+		<div class="content-wrap">
+
+			<!-- Login Screen -->
+
+			<div class="row" data-bind="visible:isLoggedOut">
+
+				<div class="small-5 small-centered columns">
+
+					<div class="panel login">
+
+						<form method="POST" action="" data-login>
+
+							<div class="row">
+
+								<div class="small-12 columns l-centered">
+									<h3>Login</h3>
+								</div>
+
+							</div>
+
+							<div class="row">
+
+								<div class="small-12 columns">
+									<label for="user">Username:</label>
+								</div>
+
+								<div class="small-12 columns l-centered">
+									<input name="user" id="user" type="text" />
+								</div>
+
+							</div>
+
+							<div class="row">
+
+								<div class="small-12 columns">
+									<label for="password">Password:</label>
+								</div>
+
+								<div class="small-12 columns l-centered">
+									<input name="password" id="password" type="password" />
+								</div>
+
+							</div>
+
+							<div class="row">
+
+								<div class="small-12 columns">
+									<label for="baseURL">Projects URL:</label>
+								</div>
+
+								<div class="small-12 columns l-centered">
+									<input name="baseURL" id="baseURL" type="text" value="http://projects.xigen.co.uk" />
+								</div>
+
+							</div>
+
+							<div class="row">
+
+								<div class="small-12 columns l-centered">
+									<button type="submit" class="button info expand">Log me in!</button>
+								</div>
+
+							</div>
+
+						</form>
+
+					</div>
+
+				</div>
+
+			</div>
+
+			<!-- END LOGIN -->
+
+			<div class="row" data-bind="visible:isLoggedIn">
+
+				<div class="small-12 columns sidebar">
+
+					<table class="time-table">
+
+						<thead>
+							<tr>
+								<th>Task</th>
+								<th>Duration</th>
+								<th>Description</th>
+								<th></th>
+							</tr>
+						</thead>
+
+					</table>
+
+				</div>
+
+			</div>
+
+		</div>
+
+		<div id="customTime" class="reveal-modal" data-reveal>
+			<h3>Edit Time Logged</h3>
+			<div class="row">
+
+				<div class="edit-box">
+					<label for="hours">Hours:</label>
+					<input type="text" id="hours" name="hours" placeholder="Hours" value="0" maxlength="2" />
+				</div>
+
+				<div class="edit-box">
+					<label for="minutes">Minutes:</label>
+					<input type="text" id="minutes" name="minutes" placeholder="Minutes" value="0" maxlength="2" />
+				</div>
+
+				<div class="edit-box">
+					<label for="seconds">Seconds (I'll assume 0):</label>
+					<input type="text" id="seconds" name="seconds" placeholder="Seconds (who cares though?)" value="0" maxlength="2" />
+				</div>
+
+			</div>
+
+			<div class="row collapse">
+				
+					<div class="small-4 columns">
+						<a class="button small secondary expand do-close">Cancel</a>
+					</div>
+
+					<div class="small-4 columns">
+						<a class="button small success expand do-update">Update Hours</a>
+					</div>
+
+			</div>
+		</div>
+		
+		<!-- Libraries -->
+		<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+		<script src="http://cdnjs.cloudflare.com/ajax/libs/knockout/3.0.0/knockout-min.js"></script>
+		<script src="assets/js/foundation/foundation.js"></script>
+		<script src="assets/js/foundation/foundation.reveal.js"></script>
+		<script src="assets/js/localforage.js"></script>
+		<script src="assets/js/flipclock.js"></script>
+
+		<!-- Custom JS -->
+		<script src="assets/js/API.js"></script>
+		<script src="assets/js/filter.js"></script>
+		<script src="assets/js/updateProjectList.js"></script>
+		<script src="assets/js/procedural.js"></script>
+		<script src="assets/js/updateHours.js"></script>
+		<script src="assets/js/timer.js"></script>
+		<script src="assets/js/sendTime.js"></script>
+		<script src="assets/js/timelogs.js"></script>
+	</body>
+</html>

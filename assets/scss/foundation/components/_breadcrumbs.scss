@@ -65,6 +65,7 @@ $crumb-slash: "/" !default;
   span {
     text-transform: $crumb-font-transform;
     color: $crumb-font-color;
+    font-weight: bold;
   }
 
   // Current is for the link of the current page

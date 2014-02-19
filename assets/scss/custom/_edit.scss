@@ -1,0 +1,22 @@
+.edit-box {
+  
+  float: left;
+  width: 32%;
+
+  & + & {
+    margin-left: 2%;
+  }
+
+}
+
+.do-update {
+    margin-bottom: 0px;
+}
+
+#customTime {
+
+    .button {
+        margin-bottom: 0px;
+    }
+
+}

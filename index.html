@@ -4,7 +4,7 @@
 		<title>Xigen Timer</title>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-	    <meta name="description" content="Demo project">
+		<meta name="description" content="Demo project">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,300' rel='stylesheet' type='text/css'>
 		<link rel="stylesheet" href="assets/css/foundation.css">
@@ -16,7 +16,7 @@
 		<nav class="top-bar" data-topbar>
 			<ul class="title-area">
 				<li class="name">
-				<h1><a href="#">Xigen Timer</a></h1>
+					<h1><img src="assets/svg/xigen_logo_whiteout.svg" alt="Xigen" /></h1>
 				</li>
 				<li class="toggle-topbar menu-icon"><a href="#">Menu</a></li>
 			</ul>
@@ -29,9 +29,9 @@
 
 				<!-- Left Nav Section -->
 				<ul class="left">
-					<li data-bind="visible:isLoggedOut" class="active"><a href="index.html">Login</a></li>
-					<li data-bind="visible:isLoggedIn" class="active"><a href="index.html">Timer</a></li>
-					<li data-bind="visible:isLoggedIn"><a href="#">My Time</a></li>
+					<li data-bind="visible:isLoggedOut" class="active"><a href="#">Login</a></li>
+					<li data-bind="visible:isLoggedIn" class="active"><a href="#">Timer</a></li>
+					<li data-bind="visible:isLoggedIn"><a href="mytime.html">My Time</a></li>
 					<li data-bind="visible:isLoggedIn"><a href="#">Settings</a></li>
 				</ul>
 			</section>
@@ -115,12 +115,16 @@
 
 				<div class="small-4 columns sidebar">
 
-					<ul class="side-nav">
-					    <li><a href="#">Link 1</a></li>
-					    <li><a href="#">Link 2</a></li>
-					    <li><a href="#">Link 3</a></li>
-					    <li><a href="#">Link 4</a></li>
-					</ul>
+					<div class="sidebar-filter-wrap">
+						<input type="text" placeholder="Filter Projects..." />
+						<button class="tiny secondary do-clearfilter">X</button>
+					</div>
+
+					<div class="sidebar-projects-wrap">
+						<ul class="side-nav">
+							<li><a href="#">Loading Projects...</a></li>
+						</ul>
+					</div>
 
 				</div>
 
@@ -130,7 +134,8 @@
 
 						<div class="small-12 columns">
 							<ul class="breadcrumbs">
-								<li class="unavaliable">Please select a task on the left to begin.</li>
+								<li class="unavaliable"><img src="assets/svg/alert.svg" />
+								<span>Please select a task on the left to begin.</span></li>
 							</ul>
 						</div>
 
@@ -142,27 +147,36 @@
 							<div class="timer"></div>
 						</div>
 
-						<div class="small-6 columns">
-							<a class="do-timestart button expand success">Start</a>
+						<div class="small-4 columns">
+							<button class="do-timestart button expand success" disabled data-bind="enable: hasProjectSelected">Start</button>
 						</div>
 
-						<div class="small-6 columns">
-							<a class="do-send button expand warning" disabled>Send Hours</a>
+						<div class="small-4 columns">
+							<button class="do-edit button secondary expand" data-reveal-id="customTime" data-bind="enable: canEdit" >Edit</button>
+						</div>
+
+						<div class="small-4 columns">
+							<button class="do-send button expand" data-bind="enable: canSendTime, css: { secondary: !canSendTime() }">Send Hours</button>
 						</div>
 
 						<div class="small-12 columns">
-							<label>Description:</label>
-							<textarea></textarea>
+							<label for="desc">Description*:</label>
+							<textarea id="desc" data-bind="value:activityDesc, valueUpdate: 'keyup'"></textarea>
 						</div>
 
-						<div class="small-6 columns">
+						<div class="small-3 columns">
 							<input id="isBillable" type="checkbox" checked />
-							<label for="isBillable">Time is billable:</label>
+							<label for="isBillable">Billable?</label>
 						</div>
 
-						<div class="small-6 columns">
+						<div class="small-5 columns">
 							<input id="markReview" type="checkbox" />
-							<label for="markReview">Mark as waiting internal review:</label>
+							<label for="markReview">Waiting internal review?</label>
+						</div>
+
+						<div class="small-4 columns">
+							<button class="do-reset reset-button alert">Reset</button>
+							<button class="do-reset reset-button success">View Online</button>
 						</div>
 
 					</div>
@@ -172,16 +186,56 @@
 			</div>
 
 		</div>
+
+		<div id="customTime" class="reveal-modal" data-reveal>
+			<h3>Edit Time Logged</h3>
+			<div class="row">
+
+				<div class="edit-box">
+					<label for="hours">Hours:</label>
+					<input type="text" id="hours" name="hours" placeholder="Hours" value="0" maxlength="2" />
+				</div>
+
+				<div class="edit-box">
+					<label for="minutes">Minutes:</label>
+					<input type="text" id="minutes" name="minutes" placeholder="Minutes" value="0" maxlength="2" />
+				</div>
+
+				<div class="edit-box">
+					<label for="seconds">Seconds (I'll assume 0):</label>
+					<input type="text" id="seconds" name="seconds" placeholder="Seconds (who cares though?)" value="0" maxlength="2" />
+				</div>
+
+			</div>
+
+			<div class="row collapse">
+				
+					<div class="small-4 columns">
+						<a class="button small secondary expand do-close">Cancel</a>
+					</div>
+
+					<div class="small-4 columns">
+						<a class="button small success expand do-update">Update Hours</a>
+					</div>
+
+			</div>
+		</div>
 		
 		<!-- Libraries -->
 		<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
 		<script src="http://cdnjs.cloudflare.com/ajax/libs/knockout/3.0.0/knockout-min.js"></script>
 		<script src="assets/js/foundation/foundation.js"></script>
+		<script src="assets/js/foundation/foundation.reveal.js"></script>
 		<script src="assets/js/localforage.js"></script>
 		<script src="assets/js/flipclock.js"></script>
 
 		<!-- Custom JS -->
 		<script src="assets/js/API.js"></script>
+		<script src="assets/js/filter.js"></script>
+		<script src="assets/js/updateProjectList.js"></script>
 		<script src="assets/js/procedural.js"></script>
+		<script src="assets/js/updateHours.js"></script>
+		<script src="assets/js/timer.js"></script>
+		<script src="assets/js/sendTime.js"></script>
 	</body>
 </html>

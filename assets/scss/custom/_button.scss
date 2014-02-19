@@ -1,0 +1,7 @@
+.reset-button {
+	@include button(rem_calc(5px), #F04124, 0px, false, false, false);
+	font-size: rem_calc(11px);
+	margin-bottom: 0px;
+
+	width: 50%;
+}

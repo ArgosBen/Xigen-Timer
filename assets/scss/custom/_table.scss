@@ -1,0 +1,18 @@
+.time-table {
+	margin-top: 15px;
+	width: 100%;
+
+	td:nth-child(1) { width: 40%; }
+	td:nth-child(2) { width: 10%; text-align: center; }
+	td:nth-child(3) { width: 40%; }
+	td:nth-child(4) { width: 10%; }
+
+	td {
+		vertical-align: top;
+	}
+
+	.button {
+		margin-bottom: 0px;
+	}
+
+}

@@ -2,23 +2,17 @@ $(function () {
 
 	"use strict";
 
-	var avatarURL = "http://projects.xigen.co.uk/ImagePage.aspx?t=0",
-		timer = $(".timer").FlipClock({
-			autoStart: false
-		}),
-		isTiming = false,
+	var avatarURL = "http://projectsvm.xigen.co.uk/ImagePage.aspx?t=0",
 		defaultText,
 		submit = $(".login [type=submit]"),
-		VIEWMODEL;
+		VIEWMODEL,
+		sidebarFilter;
 
 	// Foundation
 	$(document).foundation();
 
 	// Handle logins
 	function authorize (authToken, username) {
-
-		console.log("Authorizing (level 1) with " + authToken);
-		console.log("Authorizing (level 1) with user " + username);
 
 		XIGENTIMER.API.authorizeUser(authToken, username, function (user) {
 
@@ -29,11 +23,24 @@ $(function () {
 				$("[data-avatar]").find("img").remove();
 				$("[data-avatar]").prepend("<img src='" + avatarURL  + "&h=" + user.AvatarHash + "&id=" + user.UserID + "'/>");
 
-				drawProjects();
+				XIGENTIMER.updateProjectList(function () {
+					if (!sidebarFilter) {
+						sidebarFilter = new XIGENTIMER.ProjectFilter($(".side-nav"), $(".sidebar-filter-wrap input"));
+					
+						setInterval(function () {
+							XIGENTIMER.updateProjectList(function (wasOpen) {
+								console.log("Refreshed...");
+								sidebarFilter.refresh(wasOpen);
+							});
+						}, 600000);
+					}
+				});
 				VIEWMODEL.isLoggedOut(false);
 				VIEWMODEL.isLoggedIn(true);
 
 			} else {
+
+				VIEWMODEL.isLoggedOut(true);
 
 				submit.text("Incorrect login, try again! :)")
 					.addClass("warning")
@@ -51,84 +58,41 @@ $(function () {
 
 	}
 
-	function drawActivityList(data) {
-
-		var ul = $(document.createElement("ul"));
-
-		$.each(data, function () {
-
-			ul.append("<li data-id='" + this.TaskID + "'><a href='#'>" + this.Name + "</a></li>");
-
-		});
-
-		return ul;
-
-	}
-
-	function drawProjects () {
-
-		XIGENTIMER.API.getProjects(function (projects) {
-
-			var sidebar = $(".side-nav"),
-				frag = document.createDocumentFragment(),
-				newLI,
-				newUL,
-				li;
-
-			sidebar.empty();
-
-			console.log(projects);
-
-			$.each(projects.filter(function (i) {
-				return i.Activities.length > 0;
-			}), function (i, proj) {
-
-				newLI = $(document.createElement("li"));
-
-				newLI.append("<span>" + proj.Name + "</span>");
-
-				if (proj.Activities && proj.Activities.length > 0) {
-
-					newUL = $(document.createElement("ul"));
-
-					$.each(proj.Activities.filter(function (i) {
-						return !i.isHidden && i.Progress < 100;
-					}), function (i, act) {
-
-						console.log(act);
-
-						if (!act.Activities) {
-							newUL.append("<li data-id='" + act.TaskID + "'><a href='#'>" + act.Name + "</a></li>");
-						} else {
-							li = $("<li data-id='" + act.TaskID + "'><span>" + act.Name + "</span></li>");
-							li.append(drawActivityList(act.Activities));
-							newUL.append(li);
-						}
-
-					});
-
-					newLI.append(newUL);
-
-				}
-
-				frag.appendChild(newLI[0]);
-
-			});
-
-			sidebar[0].appendChild(frag);
-			collapseMenu();
-
-		});
-
-	}
-
 	// Login Form
 	XIGENTIMER.loginForm = function () {
 
 		var that = this;
 
 		this.isLoggedIn = ko.observable(false);
-		this.isLoggedOut = ko.observable(true);
+		this.isLoggedOut = ko.observable(false);
+		this.selectedProject = ko.observable(false);
+		this.isTiming = ko.observable(false);
+		this.activityDesc = ko.observable("");
+
+		// Used to force update
+		this.dummy = ko.observable();
+
+		this.hasProjectSelected = ko.computed(function () {
+			return !! that.selectedProject();
+		});
+
+		this.canEdit = ko.computed(function () {
+			return !that.isTiming();
+		});
+
+		this.canSendTime = ko.computed(function () {
+
+			// Put this here, so it is subscribed
+			that.dummy();
+
+			return !!that.activityDesc() && !that.isTiming() && XIGENTIMER.TIMER.getTime() > 0 && !!that.selectedProject();
+
+		});
+
+		// Update the dummy function so that canSendTime will recompute
+		this.recalcCanSend = function () {
+			that.dummy.notifySubscribers();
+		};
 
 		localforage.getItem("authToken", function (token) {
 
@@ -183,88 +147,14 @@ $(function () {
 
 		});
 
-	}
+	};
 
 	VIEWMODEL = new XIGENTIMER.loginForm();
-
 	ko.applyBindings(VIEWMODEL);
+	XIGENTIMER.VIEWMODEL = VIEWMODEL;
 
-	// Timer start/pause
-	$(".do-timestart").on("click", function () {
-
-		if (isTiming) {
-
-			isTiming = false;
-			$(".do-timestart").text("Start (Timer Paused)");
-			timer.stop();
-			console.log(timer.getTime());
-
-			if (timer.getTime().time > 0) {
-				$(".do-send").removeAttr("disabled");
-			} else {
-				$(".do-send").attr("disabled", "disabled");
-			}
-
-		} else {
-
-			isTiming = true;
-			$(".do-timestart").addClass("alert").removeClass("success");
-			$(".do-send").attr("disabled", "disabled");
-			$(".do-timestart").text("Pause");
-			timer.start();
-
-		}
-
+	$(".do-reset").on("click", function () {
+		XIGENTIMER.reset()
 	});
-
-	// Collapsey bits
-	function collapseMenu () {
-		$(".side-nav li ul").hide();
-
-		$(".side-nav li").each(function () {
-
-			$(this).children("span").on("click", function () {
-
-				$(this).toggleClass("is-open");
-
-				$(this).parent("li").children("ul").toggle();
-
-			});
-
-		});
-
-		$(".side-nav li a").each(function () {
-
-			var bc = $(".breadcrumbs"),
-				path = [];
-
-			$(this).on("click", function () {
-
-				path.push($(this).text());
-
-				$(this).parents("li").each(function () {
-					path.push($(this).find("span").first().text());
-				});
-
-				path = path.filter(function (step) {
-					return step !== "";
-				}).reverse();
-
-				bc.empty();
-
-				$(path).each(function (i) {
-
-					if (i !== path.length - 1) {
-						bc.append("<li class='unavailable'><a href='#'>" + this + "</a></li>");
-					} else {
-						bc.append("<li class='current'><a href='#'>" + this + "</a></li>");
-					}
-
-				});
-
-			});
-
-		});
-	}
 
 });
