@@ -1,12 +1,17 @@
 {
-  "name": "nw-demo",
+  "name": "Xigen-EasyProjects-Timer",
   "main": "index.html",
-  "window" : {
-  	"toolbar" : true,
-  	"title" : "Xigen Timer",
-  	"width" : 900,
-  	"height" : 480,
-  	"min_width": 900,
-    "min_height": 480
+  "version" : "1.0",
+  "window": {
+    "toolbar": false,
+    "title": "Xigen Timer",
+    "width": 900,
+    "height": 480,
+    "max_width": 900,
+    "max_height": 480
+  },
+  "devDependencies": {
+    "grunt-node-webkit-builder": "~0.1.17",
+    "grunt": "~0.4.2"
   }
 }

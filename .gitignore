@@ -38,6 +38,8 @@ Thumbs.db
 
 # Node Webkit Stuff #
 #####################
+node_modules/**
+node_modules
 nwsnapshot.exe
 nw.pak
 nw.exe
@@ -45,3 +47,4 @@ libEGL.dll
 libGLESv2.dll
 icudt.dll
 ffmpegsumo.dll
+webkitbuilds
