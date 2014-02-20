@@ -113,8 +113,6 @@
 
 		});
 
-		$(this.list).unbind("click");
-
 		$(this.list).on("click", "li span", function () {
 
 			$(this).toggleClass(config.ACTIVE_CLASS);
@@ -130,54 +128,81 @@
 		// Collapsey bits
 		$("li ul", this.list).hide();
 
-		$("li a", this.list).each(function () {
+		var bc = $(config.BREADCRUMB_CLASS),
+			path = [],
+			ret,
+			targetID,
+			estimatedHours,
+			soFar,
+			handleClick,
+			getSoFar,
+			label,
+			that;
 
-			var bc = $(config.BREADCRUMB_CLASS),
-				path = [],
-				label;
+		if (!XIGENTIMER.BREADCRUMB_EMPTY) {
+			XIGENTIMER.BREADCRUMB_CONTAINER = bc;
+			XIGENTIMER.BREADCRUMB_EMPTY = bc.contents();
+		}
 
-			if (!XIGENTIMER.BREADCRUMB_EMPTY) {
-				XIGENTIMER.BREADCRUMB_CONTAINER = bc;
-				XIGENTIMER.BREADCRUMB_EMPTY = bc.contents();
+		$(this.list).on("click", "a", function (e) {
+
+			e.preventDefault();
+
+			targetID = parseInt($(this).parents('li').attr("data-id"), 10);
+			that = this;
+			path = [];
+			label = $(that).find(".label");
+
+			if (label.hasClass("alert")) {
+				XIGENTIMER.VIEWMODEL.taskTypeID(2);
+			} else if (label.hasClass("success")) {
+				XIGENTIMER.VIEWMODEL.taskTypeID(3);
+			} else {
+				XIGENTIMER.VIEWMODEL.taskTypeID(1);
 			}
 
-			$(this).on("click", function () {
+			$(that).parents("li").each(function () {
+				path.push($(this).find("span").first().text());
+			});
 
-				path = [];
-				label = $(this).find(".label");
+			path = path.filter(function (step) {
+				return step !== "";
+			}).reverse();
 
-				if (label.hasClass("alert")) {
-					XIGENTIMER.VIEWMODEL.taskTypeID(2);
-				} else if (label.hasClass("success")) {
-					XIGENTIMER.VIEWMODEL.taskTypeID(3);
+			bc.empty();
+
+			$(path).each(function (i) {
+
+				if (i !== path.length - 1) {
+					bc.append("<li class='unavailable'><a href='#'>" + this + "</a></li>");
 				} else {
-					XIGENTIMER.VIEWMODEL.taskTypeID(1);
+					bc.append("<li class='current'><a href='#'>" + this + "</a></li>");
 				}
-
-				$(this).parents("li").each(function () {
-					path.push($(this).find("span").first().text());
-				});
-
-				path = path.filter(function (step) {
-					return step !== "";
-				}).reverse();
-
-				bc.empty();
-
-				$(path).each(function (i) {
-
-					if (i !== path.length - 1) {
-						bc.append("<li class='unavailable'><a href='#'>" + this + "</a></li>");
-					} else {
-						bc.append("<li class='current'><a href='#'>" + this + "</a></li>");
-					}
-
-				});
-
-				XIGENTIMER.VIEWMODEL.selectedProject($(this).parent().attr("data-id"));
 
 			});
 
+			$("[data-estimate]").text(estimatedHours || "Working...");
+			$("[data-sofar]").text(soFar || "Working...");
+
+			XIGENTIMER.VIEWMODEL.selectedProject(targetID);
+
+			localforage.getItem("activityCache", function (acts) {
+
+				ret = acts.filter(function (a) {
+					return a.EntityBaseID === targetID;
+				})[0];
+
+				estimatedHours = ret.EstimatedHours ? ret.EstimatedHours.toFixed(2) : false;
+
+				XIGENTIMER.API.getTimeForTask(targetID, function (dur) {
+					soFar = dur.toFixed(2);
+
+					$("[data-estimate]").text(estimatedHours || "0.00");
+					$("[data-sofar]").text(soFar || "---");
+
+				});
+
+			});
 		});
 
 	};

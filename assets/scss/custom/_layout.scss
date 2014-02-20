@@ -62,8 +62,25 @@ body {
 	text-align: center;
 }
 
+.panel.callout{
+	margin-top: 0px;
+	margin-bottom: 10px;
+	padding: 9px 14px;
+	display: inline-block;
+	width: 100%;
+
+	label {
+		float: left;
+
+		+ label {
+			margin-left: 15px;
+		}
+	}
+}
+
 .breadcrumbs {
 	margin-top: 10px;
+	margin-bottom: 10px;
 
 	li {
 		position: relative;
@@ -92,7 +109,7 @@ body {
 
 .top-bar, 
 .sidebar, 
-.conten-wrap {
+.content-wrap {
 	-webkit-user-select: none;
 	-moz-user-select: none;
 	-ms-user-select: none;

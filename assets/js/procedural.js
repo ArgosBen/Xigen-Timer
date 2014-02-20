@@ -11,9 +11,60 @@ $(function () {
 	// Foundation
 	$(document).foundation();
 
-	XIGENTIMER.VIEWMODEL = new XIGENTIMER.ViewModel();
-	ko.applyBindings(XIGENTIMER.VIEWMODEL);
+	// Logout button
+	$("[data-logout]").on("click", function (e) {
+		e.preventDefault();
+		localforage.setItem("authToken", null);
+		localforage.setItem("userName", null);
+		localforage.setItem("baseURL", null);
+		XIGENTIMER.reset();
+		XIGENTIMER.VIEWMODEL.reset(true);
+	});
 
+	// Login form submit
+	$("[data-login]").on("submit", function (e) {
+
+		e.preventDefault();
+
+		var password = $("[name=password]", this).val(),
+			user = $("[name=user]", this).val(),
+			baseURL = $("[name=baseURL]", this).val(),
+			authToken;
+			
+		defaultText = submit.text();
+
+		submit.text("Logging in...");
+
+		localforage.setItem("baseURL", baseURL)
+			.then(XIGENTIMER.authoriseUser(user, password, function (user) {
+
+			if (user) {
+				submit.text(defaultText);
+				localforage.setItem("userToken", authToken);
+				localforage.setItem("userName", user);
+				localforage.setItem("baseURL", baseURL);
+
+				XIGENTIMER.VIEWMODEL.isLoggedIn(true);
+				XIGENTIMER.drawProjects();
+			} else {
+				submit.text("Incorrect login, try again :)");
+			}
+
+		}));
+
+	});
+
+	// Login if we have a token
+	localforage.getItem("userToken", function (u) {
+		if (u) {
+			XIGENTIMER.authoriseUser(function () {
+				XIGENTIMER.VIEWMODEL.isLoggedIn(true);
+				XIGENTIMER.drawProjects();
+			});
+		}
+	});
+
+	// Reset Button
 	$(".do-reset").on("click", function () {
 		XIGENTIMER.reset();
 	});
@@ -22,7 +73,7 @@ $(function () {
 	$(".do-viewonline").on("click", function () {
 		localforage.getItem("baseURL", function (u) {
 			u = u.replace("/rest/v1/", "");
-			XIGENTIMER.launchExternal(u + "/TaskDetails.aspx?ID=" + VIEWMODEL.selectedProject());
+			XIGENTIMER.launchExternal(u + "/TaskDetails.aspx?ID=" + XIGENTIMER.VIEWMODEL.selectedProject());
 		});
 	});
 

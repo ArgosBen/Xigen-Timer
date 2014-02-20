@@ -150,4 +150,12 @@
 			display: block;
 		}
 	}
+
+	.side-nav .is-infinite {
+		display: none;
+
+		.show-infinite & {
+			display: block;
+		}
+	}
 }

@@ -8,6 +8,7 @@ if (typeof XIGENTIMER !== "object") {
 
 	var RESTClient = require('node-rest-client').Client,
 		baseURL,
+		userName,
 		APIBaseFunction,
 		avatarURL = "http://projectsvm.xigen.co.uk/ImagePage.aspx?t=0",
 		client = new RESTClient(),
@@ -25,7 +26,6 @@ if (typeof XIGENTIMER !== "object") {
 				getData,
 				getAuthToken,
 				userID,
-				userName,
 				returnedData,
 				request = {};
 
@@ -53,24 +53,30 @@ if (typeof XIGENTIMER !== "object") {
 				request,
 				function(data, response) {
 
-					data = JSON.parse(data);
+					if (!!data) {
 
-					if (!data.length) {
-						data = [data];
-					}
+						if (typeof data !== "object") {
+							data = JSON.parse(data);
+						}
 
-					if (data[0].UserID) {
-						returnedData = data.filter(function (item) {
-							return item.UserID === userID;
-						});
-					} else if (data[0].Members) {
-						returnedData = data.filter(function (item) {
-							return item.Members.split("\n").indexOf(userName) > -1;
-						});
-					} else {
-						returnedData = data.filter(function (item) {
-							return item.CanCreateTimeEntries;
-						});
+						if (!data.length) {
+							data = [data];
+						}
+
+						if (data[0].UserID) {
+							returnedData = data.filter(function (item) {
+								return item.UserID === userID;
+							});
+						} else if (data[0].Members) {
+							returnedData = data.filter(function (item) {
+								return item.Members.split("\n").indexOf(userName) > -1;
+							});
+						} else {
+							returnedData = data.filter(function (item) {
+								return item.CanCreateTimeEntries;
+							});
+						}
+
 					}
 
 					if (typeof callback === "function") {
@@ -88,7 +94,7 @@ if (typeof XIGENTIMER !== "object") {
 			};
 
 			getAuthToken = function () {
-				localforage.getItem("authToken", function (token) {
+				localforage.getItem("userToken", function (token) {
 					userToken = token;
 				}).then(getUserID);
 			};
@@ -97,64 +103,17 @@ if (typeof XIGENTIMER !== "object") {
 				getAuthToken();
 			} else {
 				localforage.getItem("baseURL", function (b) {
-					baseURL = b;
+					baseURL = b.indexOf("/rest/v1/") > -1 ? b : b + "/rest/v1/";
 				}).then(getAuthToken);
 			}
 
 		},
 
-		authorizeUser: function (auth, login, callback) {
+		authoriseAPI: function (callback) {
 
-			var ret = false,
-				doAuth;
-
-			// Get the base URL and auth, 
-			// or if we don't have baseURL then return false
-			localforage.getItem("baseURL", function (b) {
-				baseURL = b;
-				if (b) {
-					doAuth();
-				} else {
-					callback(false);
-				}
+			timer.API.base("GET", "users", {}, function (success, data) {
+				callback(data);
 			});
-
-			doAuth = function () {
-
-				client.get(baseURL + "users",
-				{
-					headers: {
-						"Authorization" : auth,
-						"Content-Type" : "application/json"
-					}
-				},
-				function(data) {
-					
-					if (data) {
-						$.each(JSON.parse(data), function (i, user) {
-
-							if (user.Login.toLowerCase() === login.toLowerCase()) {
-		
-								localforage.setItem("user", user);
-
-								ret = user;
-								return false;
-							}
-
-						});
-
-						if (typeof callback === "function") {
-							callback(ret);
-						}
-
-					} else {
-						if (typeof callback === "function") {
-							callback(false);
-						}
-					}
-
-				});
-			}
 
 		},
 
@@ -179,6 +138,10 @@ if (typeof XIGENTIMER !== "object") {
 					parent,
 					parentIndex;
 
+				dataRef = dataRef.filter(function (act) {
+					return act.TaskStatusID === 1 || act.TaskStatusID === 18 || act.TaskStatusID === 4;
+				});
+
 				parents = dataRef.filter(function (act) {
 					return act.HasChild > 0;
 				});
@@ -187,30 +150,34 @@ if (typeof XIGENTIMER !== "object") {
 					return act.ParentID;
 				});
 
-				$.each(parents, function (i, par) {
+				if (parents.length > 0) {
+					$.each(parents, function (i, par) {
 
-					parentID = par.EntityBaseID;
+						parentID = par.EntityBaseID;
 
-					parents[i].Activities = [];
-
-					parents[i].Activities = children.filter(function (act, i) {
-						if (act.ParentID === parentID) {
-							children.splice(i, 1);
-							return true;
+						if (!parents[i].Activities) {
+							parents[i].Activities = [];
 						}
+
+						parents[i].Activities = children.filter(function (act, i) {
+							return act.ParentID === parentID;
+						});
+
 					});
 
-				});
-
-				return parents.filter(function (par) {
-					return par.ParentID === null;
-				});
+					return parents.filter(function (par) {
+						return !par.ParentID;
+					});
+				} else {
+					return dataRef;
+				}
 
 			};
 
 			timer.API.base("GET", "projects", {}, function (success, data) {
 
 				projectCache = data;
+				localforage.setItem("projectCache", data);
 
 				$.each(data, function (i, item) {
 					item.Activities = [];
@@ -220,9 +187,12 @@ if (typeof XIGENTIMER !== "object") {
 					function (success, data) {
 						loaded += 1;
 
+						activityCache = activityCache.concat(data);
+						localforage.setItem("activityCache", activityCache);
+
 						hierachy[item.EntityBaseID].Activities = tidyActivites(data);
 
-						if (loaded === projectCache.length) {
+						if (loaded === projectCache.length && typeof callback === "function") {
 							callback(hierachy);
 						}
 					});
@@ -242,6 +212,35 @@ if (typeof XIGENTIMER !== "object") {
 
 			timer.API.base("GET", "timelogs", {}, function (success, data) {
 				callback(data);
+			});
+
+		},
+
+		getTimeForTask: function (taskID, callback) {
+
+			var logs,
+				total;
+
+			timer.API.base("GET", "timelogs" , {}, function (success, data) {
+				
+				logs = data.filter(function (log) {
+					return log.TaskID === taskID;
+				});
+
+				if (!logs.length) {
+					logs = [logs];
+				}
+
+				window.logs = logs;
+
+				total = logs.map(function (log) {
+					return log.Duration;
+				}).reduce(function (prev, curr) {
+					return prev + curr;
+				});
+
+				callback(total || 0);
+
 			});
 
 		},
@@ -270,7 +269,7 @@ if (typeof XIGENTIMER !== "object") {
 			].join('');
 
 			timer.API.base("POST", "timelogs", {
-				"UserID" : userData.UserID,
+				"UserID" : userID,
 				"Duration" : duration,
 				"TaskID" : taskID,
 				"Description" : description,

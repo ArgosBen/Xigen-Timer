@@ -22,11 +22,11 @@
     "toolbar": true,
     "title": "Xigen Timer",
     "width": 900,
-    "height": 445,
+    "height": 480,
     "max_width": 900,
-    "max_height": 445,
+    "max_height": 480,
     "min_width": 900,
-    "min_height": 445,
+    "min_height": 480,
     "frame" : false
   },
   "devDependencies": {

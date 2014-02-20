@@ -58,7 +58,7 @@
 		this.canSendTime = ko.computed(function () {
 			// Put this here, so it is subscribed
 			that.dummy();
-			return !!that.activityDesc() && !that.isTiming() && XIGENTIMER.TIMER.getTime().time > 0 && !!that.selectedProject();
+			return !!that.activityDesc() && !that.isTiming() && XIGENTIMER.TIMER.getTime().time -1 > 0 && that.hasProjectSelected();
 		});
 
 		// Changes the text for the "Mark as waiting review" depending on the type of task selected
@@ -88,6 +88,9 @@
 		// If we should show items which are waiting for internal review
 		this.showReviewItems = ko.observable(false);
 
+		// If we should show items which have no end date
+		this.showInfiniteItems = ko.observable(false);
+
 		// Update the body classs depending on if we are showing/hiding waiting internal review or not.
 		this.showReviewItems.subscribe(function (val) {
 
@@ -95,6 +98,17 @@
 				$("body").addClass("show-review");
 			} else {
 				$("body").removeClass("show-review");
+			}
+
+		});
+
+		// Update the body classs depending on if we are showing/hiding items waiting internal review or not.
+		this.showInfiniteItems.subscribe(function (val) {
+
+			if (val === true) {
+				$("body").addClass("show-infinite");
+			} else {
+				$("body").removeClass("show-infinite");
 			}
 
 		});
@@ -114,6 +128,26 @@
 			that.dummy.notifySubscribers();
 		};
 
+		// Reset all the things for logout
+		this.reset = function (logout) {
+
+			if (logout) {
+				that.isLoggedIn(false);
+				that.isEditingTime(false);
+			}
+
+			that.activityDesc("");
+			that.isTiming(false);
+			that.recalcCanSend();
+			that.selectedProject(false);
+
+		};
+
 	};
+
+	$(function () {
+		XIGENTIMER.VIEWMODEL = new XIGENTIMER.ViewModel();
+		ko.applyBindings(XIGENTIMER.VIEWMODEL);
+	});
 
 }(XIGENTIMER));

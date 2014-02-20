@@ -10,8 +10,8 @@ $(function () {
 	// The popup for updating hours
 	$("." + config.UPDATE_CLASS).on("click", function (e) {
 
-		var h, 
-			m, 
+		var h,
+			m,
 			s,
 			modal = $("#" + config.MODAL_ID),
 			validates = true;

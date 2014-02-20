@@ -6,14 +6,13 @@
 		checkToken,
 		getUser,
 		userToken,
-		storedUserName;
+		storedUserName,
+		completeCall;
 
 	getToken = function (callback) {
 
 		localforage.getItem("userToken", function (t) {
-
 			userToken = t ? t : false;
-
 		}).then(
 			getUser.apply(this, arguments)
 		);
@@ -32,18 +31,27 @@
 
 	checkToken = function (username, password, callback) {
 
-		console.log(arguments);
+		var args = arguments;
 
-		if (!userToken) {
+		if (!userToken || (username && password)) {
 			userToken = "Basic " + new Buffer(username + ":" + password).toString('base64');
+			localforage.setItem("userToken", userToken).then(function () {
+				completeCall.apply(this, args);
+			});
+		} else {
+			completeCall.apply(this, arguments);
 		}
+
+	};
+
+	completeCall = function (username, password, callback) {
 
 		if (!password && !callback) {
 			callback = username;
 			username = storedUserName;
 		}
 
-		XIGENTIMER.API.authorizeUser(userToken, username, function (user) {
+		XIGENTIMER.API.authoriseAPI(function (user) {
 			callback(user);
 		});
 

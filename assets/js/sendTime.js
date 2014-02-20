@@ -44,9 +44,11 @@ $(function () {
 			userID = u.UserID;
 		}).then(function () {
 
+			console.log("sending time");
+
 			XIGENTIMER.API.logTime(userID, taskID, dur, isBillable, desc, function (success) {
 
-				console.log(userID, taskID, dur, isBillable, desc);
+				console.log(success);
 
 				if (success) {
 
@@ -63,8 +65,6 @@ $(function () {
 
 					XIGENTIMER.reset();
 
-				} else {
-
 				}
 
 			});
@@ -72,22 +72,5 @@ $(function () {
 		});
 
 	});
-
-	XIGENTIMER.reset = function () {
-
-		XIGENTIMER.TIMER.setTime(0);
-		XIGENTIMER.UPDATEPOPUP.find("input").val(0);
-		$(config.DESC_SEL).val("").trigger("change");
-		$("#isBillable").prop("checked", true);
-		$("#markReview").prop("checked", false);
-
-		XIGENTIMER.VIEWMODEL.recalcCanSend();
-		XIGENTIMER.VIEWMODEL.selectedProject(false);
-
-		XIGENTIMER.BREADCRUMB_CONTAINER.empty().append(XIGENTIMER.BREADCRUMB_EMPTY);
-
-		XIGENTIMER.renderTimeLogs();
-
-	};
 
 });

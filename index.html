@@ -142,6 +142,22 @@
 							</ul>
 						</div>
 
+						<div class="small-12 columns">
+							<div class="panel callout radius">
+
+								<div class="small-6 columns">
+									<label>Estimated Time:</label>
+									<label data-estimate>---</label>
+								</div>
+
+								<div class="small-6 columns">
+									<label>Time Logged so Far:</label>
+									<label data-sofar>---</label>
+								</div>
+
+							</div>
+						</div>
+
 					</div>
 
 					<div class="row">
@@ -256,6 +272,10 @@
 					<input type="checkbox" name="showPending" id="showPending" data-bind="checked:showReviewItems"/>
 					<label for="showPending">Show items waiting internal review?</label>
 				</div>
+				<div class="small-12 columns">
+					<input type="checkbox" name="showInfinite" id="showInfinite" data-bind="checked:showInfiniteItems"/>
+					<label for="showInfinite">Show items without end date?</label>
+				</div>
 			</div>
 
 			<a class="close-reveal-modal">&#215;</a>
@@ -282,5 +302,6 @@
 		<script src="assets/js/sendTime.js"></script>
 		<script src="assets/js/timelogs.js"></script>
 		<script src="assets/js/authorise.js"></script>
+		<script src="assets/js/reset.js"></script>
 	</body>
 </html>
