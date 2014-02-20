@@ -49,8 +49,6 @@ if (typeof XIGENTIMER !== "object") {
 
 			getData = function () {
 
-				console.log("getting " + baseURL + path);
-
 				client[method.toLowerCase()](baseURL + path,
 				request,
 				function(data, response) {
@@ -169,6 +167,10 @@ if (typeof XIGENTIMER !== "object") {
 				getActivities,
 				tidyActivites;
 
+			/*
+			This function gets all the activities that a task has, and maps them all inside eachother
+			so that we have a hierachy. Don't touch, you'll *probably* break it if you do.
+			 */
 			tidyActivites = function (dataRef) {
 
 				var parents = [],
@@ -178,33 +180,31 @@ if (typeof XIGENTIMER !== "object") {
 					parentIndex;
 
 				parents = dataRef.filter(function (act) {
-					return act.HasChild > 0 && !act.ParentID;
+					return act.HasChild > 0;
 				});
 
 				children = dataRef.filter(function (act) {
-					return act.HasChild <= 0 && act.ParentID;
+					return act.ParentID;
 				});
 
-				$.each(children, function () {
+				$.each(parents, function (i, par) {
 
-					parentID = this.ParentID;
+					parentID = par.EntityBaseID;
 
-					parent = parents.filter(function (act, i) {
-						if (act.EntityBaseID === parentID) {
-							parentIndex = i;
+					parents[i].Activities = [];
+
+					parents[i].Activities = children.filter(function (act, i) {
+						if (act.ParentID === parentID) {
+							children.splice(i, 1);
+							return true;
 						}
 					});
 
-					if (!dataRef[parentIndex].Activities) {
-						dataRef[parentIndex].Activities = [];
-					}
-
-					dataRef[parentIndex].HasChild = 0;
-					dataRef[parentIndex].Activities.push(this);
-
 				});
 
-				return parents;
+				return parents.filter(function (par) {
+					return par.ParentID === null;
+				});
 
 			};
 
@@ -218,19 +218,16 @@ if (typeof XIGENTIMER !== "object") {
 
 					timer.API.base("GET", "projects/" + item.EntityBaseID + "/activities", {},
 					function (success, data) {
-						//hierachy[item.EntityBaseID].Activities = data;
 						loaded += 1;
 
 						hierachy[item.EntityBaseID].Activities = tidyActivites(data);
 
 						if (loaded === projectCache.length) {
-							console.log(hierachy);
+							callback(hierachy);
 						}
 					});
 
 				});
-
-				//getActivities();
 
 			});
 
