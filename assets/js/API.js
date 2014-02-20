@@ -240,42 +240,9 @@ if (typeof XIGENTIMER !== "object") {
 				getUserToken,
 				getLogs;
 
-			getUserToken = function () {
-				localforage.getItem("user", function (user) {
-					userID = user.UserID;
-				}).then(getLogs);
-			};
-
-			getLogs = function () {
-				client.get(baseURL + "timelogs",
-				{
-					headers: {
-						"Authorization" : userToken,
-						"Content-Type" : "application/json"
-					}
-				},
-				function(data, response) {
-					
-					var myLogs = JSON.parse(data).filter(function (log) {
-
-						return log.UserID === userID;
-
-					});
-
-					if (typeof callback === "function") {
-
-						callback(myLogs);
-
-					}
-
-				});
-			};
-
-			localforage.getItem("authToken", function (token) {
-
-				userToken = token;
-
-			}).then(getUserToken);
+			timer.API.base("GET", "timelogs", {}, function (success, data) {
+				callback(data);
+			});
 
 		},
 
@@ -302,46 +269,16 @@ if (typeof XIGENTIMER !== "object") {
 				date.getSeconds().toString().length === 1 ? "0" + date.getSeconds() : date.getSeconds(),
 			].join('');
 
-			getUserToken = function () {
-				localforage.getItem("user", function (user) {
-					userData = user;
-				}).then(makeRequest);
-			};
-
-			makeRequest = function () {
-
-				client.post(baseURL + "timelogs",
-				{
-					headers: {
-						"Authorization" : userToken,
-						"Content-Type" : "application/json"
-					},
-					data: JSON.stringify({
-						"UserID" : userData.UserID,
-						"Duration" : duration,
-						"TaskID" : taskID,
-						"Description" : description,
-						"Billable" : isBillable,
-						"EntryDate" : formattedDate
-					})
-				},
-				function (data, response) {
-
-					if (typeof callback === "function") {
-
-						callback(response.statusCode === 201);
-
-					}
-
-				});
-
-			};
-
-			localforage.getItem("authToken", function (token) {
-
-				userToken = token;
-
-			}).then(getUserToken);
+			timer.API.base("POST", "timelogs", {
+				"UserID" : userData.UserID,
+				"Duration" : duration,
+				"TaskID" : taskID,
+				"Description" : description,
+				"Billable" : isBillable,
+				"EntryDate" : formattedDate
+			}, function (success, data) {
+				callback(data);
+			});
 
 		},
 
@@ -354,50 +291,26 @@ if (typeof XIGENTIMER !== "object") {
 				getTaskType,
 				ret;
 
-			getTaskType = function () {
+			localforage.getItem("activityCache", function (activities) {
 
-				localforage.getItem("activityCache", function (activities) {
+				ret = activities.filter(function (a) {
+					return a.TaskID === taskID;
+				})[0];
 
-					ret = activities.filter(function (a) {
-						return a.TaskID === taskID;
-					})[0];
+				taskTypeID = ret.TaskTypeID;
 
-					taskTypeID = ret.TaskTypeID;
-
-				}).then(makeRequest);
-
-			}
+			}).then(makeRequest);
 
 			makeRequest = function () {
 
-				client.put(baseURL + "activities/" + taskID,
-				{
-					headers: {
-						"Authorization" : userToken,
-						"Content-Type" : "application/json"
-					},
-					data: JSON.stringify({
-						"EntityBaseID" : taskID,
-						"TaskStatusID" : taskTypeID === 1 ? 18 : 8
-					})
-				},
-				function (data, response) {
-
-					if (typeof callback === "function") {
-
-						callback(response.statusCode === 200);
-
-					}
-
+				timer.API.base("PUT", "activities/" + taskID, {
+					"EntityBaseID" : taskID,
+					"TaskStatusID" : taskTypeID === 1 ? 18 : 8
+				}, function (success, data) {
+					callback(success);
 				});
 
 			};
-
-			localforage.getItem("authToken", function (token) {
-
-				userToken = token;
-
-			}).then(getTaskType);
 
 		},
 
