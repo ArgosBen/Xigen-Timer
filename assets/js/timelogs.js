@@ -50,7 +50,7 @@
 		return formattedDate = [
 			date.getFullYear(),
 			date.getMonth().toString().length === 1 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1,
-			date.getDate().toString().length === 1 ? "0" + date.getDate() : date.getDate(),
+			date.getDate().toString().length === 1 ? "0" + date.getDate() - 1 : date.getDate() - 1,
 		].join('-');
 
 	}

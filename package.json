@@ -4,6 +4,7 @@
   "author" : "Matt Malone <Matt@xigen.co.uk>",
   "version" : "1.0.0",
   "description" : "A timer for the EasyProjects.NET project management system",
+  "license" : "MIT",
   "contributors": [ 
     {
       "name": "Ben McCarthy",
