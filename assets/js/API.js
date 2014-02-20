@@ -8,21 +8,106 @@ if (typeof XIGENTIMER !== "object") {
 
 	var RESTClient = require('node-rest-client').Client,
 		baseURL,
+		APIBaseFunction,
 		avatarURL = "http://projectsvm.xigen.co.uk/ImagePage.aspx?t=0",
 		client = new RESTClient(),
 		config = {
 			userID : 0,
 			email: "matt@xigen.co.uk"
-		}
+		};
 
 	timer.API = {
+
+		base: function (method, path, data, callback) {
+
+			var getUserID,
+				userToken,
+				getData,
+				getAuthToken,
+				userID,
+				userName,
+				returnedData,
+				request = {};
+
+			getUserID = function () {
+				localforage.getItem("user", function (user) {
+					
+					userID = user.UserID;
+					userName = user.Name;
+
+					request.headers = {
+						"Authorization" : userToken,
+						"Content-Type" : "application/json"
+					};
+
+					if (data) {
+						request.data = typeof data === "object" ? JSON.stringify(data) : data;
+					}
+
+				}).then(getData);
+			};
+
+			getData = function () {
+
+				console.log("getting " + baseURL + path);
+
+				client[method.toLowerCase()](baseURL + path,
+				request,
+				function(data, response) {
+
+					data = JSON.parse(data);
+
+					if (data[0].UserID) {
+						returnedData = data.filter(function (item) {
+							return item.UserID === userID;
+						});
+					} else if (data[0].Members) {
+						returnedData = data.filter(function (item) {
+							return item.Members.split("\n").indexOf(userName) > -1;
+						});
+					} else {
+						returnedData = data.filter(function (item) {
+							return item.CanCreateTimeEntries;
+						});
+					}
+
+					if (typeof callback === "function") {
+
+						if (response.statusCode === 200 || response.statusCode === 201) {
+							callback(true, returnedData);
+						} else {
+							callback(false);
+						}
+
+					}
+
+				});
+
+			};
+
+			getAuthToken = function () {
+				localforage.getItem("authToken", function (token) {
+					userToken = token;
+				}).then(getUserID);
+			};
+
+			if (baseURL) {
+				getAuthToken();
+			} else {
+				localforage.getItem("baseURL", function (b) {
+					baseURL = b;
+				}).then(getAuthToken);
+			}
+
+		},
 
 		authorizeUser: function (auth, login, callback) {
 
 			var ret = false,
 				doAuth;
 
-			console.log("Authorising...");
+			// Get the base URL and auth, 
+			// or if we don't have baseURL then return false
 			localforage.getItem("baseURL", function (b) {
 				baseURL = b;
 				if (b) {
@@ -59,6 +144,7 @@ if (typeof XIGENTIMER !== "object") {
 						if (typeof callback === "function") {
 							callback(ret);
 						}
+
 					} else {
 						if (typeof callback === "function") {
 							callback(false);
