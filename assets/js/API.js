@@ -57,6 +57,10 @@ if (typeof XIGENTIMER !== "object") {
 
 					data = JSON.parse(data);
 
+					if (!data.length) {
+						data = [data];
+					}
+
 					if (data[0].UserID) {
 						returnedData = data.filter(function (item) {
 							return item.UserID === userID;
@@ -156,96 +160,77 @@ if (typeof XIGENTIMER !== "object") {
 
 		},
 
-		getProjects: function (callback) {
+		getHierachy: function (callback) {
 
-			var projectCount,
+			var projectCache = [],
+				activityCache = [],
+				hierachy = {},
 				loaded = 0,
-				allActivities = [];
+				getActivities,
+				tidyActivites;
 
-			localforage.getItem("authToken", function (userToken) {
+			tidyActivites = function (dataRef) {
 
-				client.get(baseURL + "projects",
-				{
-					headers: {
-						"Authorization" : userToken,
-						"Content-Type" : "application/json"
+				var parents = [],
+					children = [],
+					parentID,
+					parent,
+					parentIndex;
+
+				parents = dataRef.filter(function (act) {
+					return act.HasChild > 0 && !act.ParentID;
+				});
+
+				children = dataRef.filter(function (act) {
+					return act.HasChild <= 0 && act.ParentID;
+				});
+
+				$.each(children, function () {
+
+					parentID = this.ParentID;
+
+					parent = parents.filter(function (act, i) {
+						if (act.EntityBaseID === parentID) {
+							parentIndex = i;
+						}
+					});
+
+					if (!dataRef[parentIndex].Activities) {
+						dataRef[parentIndex].Activities = [];
 					}
-				},
-				function(data, response) {
 
-					localforage.getItem("user", function (user) {
-					
-						var projects = data ? JSON.parse(data) : [],
-							myProjects = projects.filter(function (proj) {
+					dataRef[parentIndex].HasChild = 0;
+					dataRef[parentIndex].Activities.push(this);
 
-								return proj.Members.split("\n").indexOf(user.Name) > -1;
+				});
 
-							});
+				return parents;
 
-						localforage.setItem("projectCache", projects);
+			};
 
-						projectCount = myProjects.length;
+			timer.API.base("GET", "projects", {}, function (success, data) {
 
-						$(myProjects).each(function (i) {
+				projectCache = data;
 
-							var proj = this;
+				$.each(data, function (i, item) {
+					item.Activities = [];
+					hierachy[item.EntityBaseID] = this;
 
-							client.get(baseURL + "projects/" + proj.ProjectID + "/activities/" , {
-								headers: {
-									"Authorization" : userToken,
-									"Content-Type" : "application/json"
-								}
-							}, function (activities) {
-								
-								var acts = JSON.parse(activities),
-									parent,
-									loopCounter = 0;
+					timer.API.base("GET", "projects/" + item.EntityBaseID + "/activities", {},
+					function (success, data) {
+						//hierachy[item.EntityBaseID].Activities = data;
+						loaded += 1;
 
-								loaded += 1;
+						hierachy[item.EntityBaseID].Activities = tidyActivites(data);
 
-								allActivities = allActivities.concat(acts);
-
-								$.each(acts, function () {
-
-									var that = this;
-
-									if (this.ParentID) {
-
-										parent = acts.filter(function (act) {
-											return act.EntityBaseID === that.ParentID;
-										})[0];
-
-										if (!parent.Activities) {
-											parent.Activities = [];
-										}
-
-										parent.Activities.push(that);
-
-										that.isHidden = true;
-
-									}
-
-									loopCounter += 1;
-
-								});
-
-								myProjects[i].Activities = acts;
-
-								if (loaded === projectCount) {
-									localforage.setItem("activityCache", allActivities);
-								}
-
-								if (typeof callback === "function" && loaded === projectCount) {
-
-									callback(myProjects);
-
-								}
-							});
-
-						});
+						if (loaded === projectCache.length) {
+							console.log(hierachy);
+						}
 					});
 
 				});
+
+				//getActivities();
 
 			});
 
