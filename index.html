@@ -9,6 +9,7 @@
 		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,300' rel='stylesheet' type='text/css'>
 		<link rel="stylesheet" href="assets/css/foundation.css">
 		<link rel="stylesheet" href="assets/css/flipclock.css">
+		<link rel="stylesheet" href="assets/css/pikaday.css">
 		<style type="text/css"></style>
 	</head>
 	<body>
@@ -145,14 +146,18 @@
 						<div class="small-12 columns">
 							<div class="panel callout radius">
 
-								<div class="small-6 columns">
-									<label>Estimated Time:</label>
-									<label data-estimate>---</label>
-								</div>
+								<div class="row collapse">
 
-								<div class="small-6 columns">
-									<label>Time Logged so Far:</label>
-									<label data-sofar>---</label>
+									<div class="small-6 columns">
+										<label>Estimated Time:</label>
+										<label data-estimate>---</label>
+									</div>
+
+									<div class="small-6 columns">
+										<label>Your time logged:</label>
+										<label data-sofar>---</label>
+									</div>
+
 								</div>
 
 							</div>
@@ -207,12 +212,35 @@
 			<!-- Edit Time -->
 			<div class="row scroll-container" data-bind="visible: isEditingTime">
 
+				<div class="small-6 columns is-datepicker">
+					<div class="row collapse">
+						<div class="small-3 columns">
+				        	<span class="prefix">Show From:</span>
+				        </div>
+						<div class="small-9 columns">
+							<input type="text" id="startDate" data-start class='datepicker' />
+						</div>
+					</div>
+				</div>
+
+				<div class="small-6 columns is-datepicker">
+					<div class="row collapse">
+						<div class="small-3 columns">
+				        	<span class="prefix">Show To:</span>
+				        </div>
+						<div class="small-9 columns">
+							<input type="text" id="startDate" data-end class='datepicker' />
+						</div>
+					</div>
+				</div>
+
 				<div class="small-12 columns">
 
 					<table class="time-table">
 
 						<thead>
 							<tr>
+								<th>When</th>
 								<th>Task</th>
 								<th>Duration</th>
 								<th>Description</th>
@@ -289,6 +317,8 @@
 		<script src="assets/js/foundation/foundation.reveal.js"></script>
 		<script src="assets/js/localforage.js"></script>
 		<script src="assets/js/flipclock.js"></script>
+		<script src="assets/js/moment.min.js"></script>
+		<script src="assets/js/pikaday.js"></script>
 
 		<!-- Custom JS -->
 		<script src="assets/js/API.js"></script>

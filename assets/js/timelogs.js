@@ -1,4 +1,7 @@
+/* globals moment */
 (function () {
+
+	"use strict";
 
 	var config = {
 		TABLE_CLASS: ".time-table",
@@ -12,7 +15,8 @@
 		var ret,
 			taskName,
 			projName,
-			taskID;
+			taskID,
+			getProjectName;
 
 		localforage.getItem("activityCache", function (acts) {
 
@@ -20,12 +24,16 @@
 				return a.TaskID === ID;
 			})[0];
 
-			taskName = ret.Name;
-			taskID = ret.EntityBaseID;
+			if (ret) {
+				taskName = ret.Name;
+				taskID = ret.EntityBaseID;
 
-		}).then(getProjectName);
+				getProjectName();
+			}
 
-		function getProjectName () {
+		});
+
+		getProjectName = function () {
 
 			localforage.getItem("projectCache", function (projects) {
 
@@ -39,23 +47,23 @@
 
 			});
 
-		}
+		};
 
 	}
 
-	getTodaysDate = function () {
+	function getTodaysDate () {
 
 		var date = new Date();
 
-		return formattedDate = [
+		return [
 			date.getFullYear(),
 			date.getMonth().toString().length === 1 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1,
-			date.getDate().toString().length === 1 ? "0" + date.getDate() - 1 : date.getDate() - 1,
+			date.getDate().toString().length === 1 ? "0" + date.getDate() : date.getDate(),
 		].join('-');
 
 	}
 
-	XIGENTIMER.renderTimeLogs = function () {
+	XIGENTIMER.renderTimeLogs = function (dateRange) {
 
 		XIGENTIMER.API.getTimelogs(function (logs) {
 
@@ -64,11 +72,28 @@
 				name,
 				date = getTodaysDate(),
 				loaded = 0,
-				frag = document.createDocumentFragment();
+				frag = document.createDocumentFragment(),
+				timeSince,
+				dateA,
+				dateB;
 
 			logs = logs.filter(function (log) {
 
-				return log.Locked !== "Locked" && log.EntryDate.indexOf(date) > -1;
+				timeSince = +moment(log.EntryDate, "YYYY-MM-DD/HH:mm:ss.SS");
+
+				return log.Locked !== "Locked" && timeSince > dateRange[0] && timeSince < dateRange[1];
+
+			}).sort(function (a, b) {
+
+				dateA = +moment(a.EntryDate, "YYYY-MM-DD/HH:mm:ss.SS");
+				dateB = +moment(b.EntryDate, "YYYY-MM-DD/HH:mm:ss.SS");
+
+				if (dateA < dateB) {
+					return -1;
+				} else if (dateA > dateB) {
+					return 1;
+				}
+				return 0;
 
 			}).reverse();
 
@@ -84,6 +109,9 @@
 						row.setAttribute("data-id", logs[i].EntityBaseID);
 						row.setAttribute("data-taskId", logs[i].TaskID);
 
+						timeSince = moment(logs[i].EntryDate, "YYYY-MM-DD/HH:mm:ss.SS");
+
+						$(row).append("<td><strong>" + timeSince.calendar() + "</strong><br/>(" + timeSince.format('DD-MM-YYYY') + ")</td>");
 						$(row).append("<td><strong>" + name[1] + ":</strong><br/><a target='_system' href='http://projectsvm.xigen.co.uk/TaskDetails.aspx?ID=" + name[2] + "'>" + name[0] + "</a></td>");
 						$(row).append("<td>" + logs[i].Duration.toFixed(2) + "</td>");
 						$(row).append("<td>" + logs[i].Description + "</td>");
@@ -119,12 +147,10 @@
 
 	XIGENTIMER.editTimeLog = function (logID, triggerEl) {
 
-		console.log(logID);
-
 		var row = $(config.TABLE_CLASS + " tbody").find("[data-id='" + logID + "']"),
 			taskID = row.attr("data-taskId"),
-			descCell = row.find("td").eq(2),
-			durCell = row.find("td").eq(1),
+			descCell = row.find("td").eq(3),
+			durCell = row.find("td").eq(2),
 			desc = descCell.text(),
 			dur = durCell.text(),
 			isValid = /[0-9]{1,2}\.[0-9]{1,2}/,
@@ -180,6 +206,22 @@
 		
 		});
 
-	}
+	};
+
+	XIGENTIMER.updateDatePickers = function () {
+
+		var from = $("[data-start]").data("picker"),
+			to = $("[data-end]").data("picker"),
+			dateRange = [];
+
+		to.setMinDate(from.getDate());
+		from.setMaxDate(to.getDate());
+
+		dateRange.push(+from.getDate());
+		dateRange.push(+to.getDate());
+
+		XIGENTIMER.renderTimeLogs(dateRange);
+
+	};
 
 }());

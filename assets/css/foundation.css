@@ -6576,6 +6576,9 @@ body {
 }
 .panel.callout label {
   float: left;
+  font-size: 11px;
+  text-transform: uppercase;
+  font-weight: bold;
 }
 .panel.callout label + label {
   margin-left: 15px;
@@ -6615,6 +6618,14 @@ body {
   -ms-user-select: none;
   -o-user-select: none;
   user-select: none;
+}
+
+.is-datepicker {
+  margin-top: 10px;
+}
+.is-datepicker label,
+.is-datepicker input {
+  margin-bottom: 0px;
 }
 
 .sidebar {
@@ -6808,18 +6819,23 @@ body {
   margin: 15px 0px;
   width: 100%;
 }
-.time-table td:nth-child(1) {
-  width: 40%;
+.time-table th:nth-child(1) {
+  width: 25%;
 }
-.time-table td:nth-child(2) {
+.time-table th:nth-child(2) {
+  width: 25%;
+}
+.time-table th:nth-child(3) {
   width: 10%;
-  text-align: center;
+}
+.time-table th:nth-child(4) {
+  width: 25%;
+}
+.time-table th:nth-child(5) {
+  width: 10%;
 }
 .time-table td:nth-child(3) {
-  width: 40%;
-}
-.time-table td:nth-child(4) {
-  width: 10%;
+  text-align: center;
 }
 .time-table td {
   vertical-align: top;

@@ -51,8 +51,8 @@
 			username = storedUserName;
 		}
 
-		XIGENTIMER.API.authoriseAPI(function (user) {
-			callback(user);
+		XIGENTIMER.API.authoriseAPI(username, function (success, user) {
+			callback(user, userToken);
 		});
 
 	};

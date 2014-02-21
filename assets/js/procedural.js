@@ -1,3 +1,4 @@
+/* globals Pikaday */
 $(function () {
 
 	"use strict";
@@ -5,16 +6,37 @@ $(function () {
 	var avatarURL = "http://projectsvm.xigen.co.uk/ImagePage.aspx?t=0",
 		defaultText,
 		submit = $(".login [type=submit]"),
+		datepickers= [],
+		picker,
 		VIEWMODEL,
 		sidebarFilter;
 
 	// Foundation
 	$(document).foundation();
 
+	$(".datepicker").each(function () {
+		picker = new Pikaday({
+			field: this,
+			firstDay: 1,
+			defaultDate: new Date(),
+			setDefaultDate: true,
+			maxDate: new Date(),
+			format: "D MMM YYYY",
+			onSelect: function () {
+				XIGENTIMER.updateDatePickers();
+			}
+		});
+		$(this).data('picker', picker);
+		datepickers.push(picker);
+	});
+
+	// Initialise the datepickers
+	XIGENTIMER.updateDatePickers();
+
 	// Logout button
 	$("[data-logout]").on("click", function (e) {
 		e.preventDefault();
-		localforage.setItem("authToken", null);
+		localforage.setItem("userToken", null);
 		localforage.setItem("userName", null);
 		localforage.setItem("baseURL", null);
 		XIGENTIMER.reset();
@@ -36,12 +58,15 @@ $(function () {
 		submit.text("Logging in...");
 
 		localforage.setItem("baseURL", baseURL)
-			.then(XIGENTIMER.authoriseUser(user, password, function (user) {
+			.then(XIGENTIMER.authoriseUser(user, password, function (user, token) {
+
+			console.log(user, token);
 
 			if (user) {
 				submit.text(defaultText);
-				localforage.setItem("userToken", authToken);
-				localforage.setItem("userName", user);
+				localforage.setItem("user", user);
+				localforage.setItem("userToken", token);
+				localforage.setItem("userName", user.Login);
 				localforage.setItem("baseURL", baseURL);
 
 				XIGENTIMER.VIEWMODEL.isLoggedIn(true);
@@ -84,6 +109,10 @@ $(function () {
 			XIGENTIMER.launchExternal($(this).attr("href"));
 		}
 	});
+
+	// breadcrumbs
+	XIGENTIMER.BREADCRUMB_CONTAINER = $(".breadcrumbs");
+	XIGENTIMER.BREADCRUMB_EMPTY= $(".breadcrumbs").contents();
 
 	// Edit timelog button
 	$(".time-table").on("click", ".button", function () {

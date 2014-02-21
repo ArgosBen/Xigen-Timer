@@ -24,6 +24,7 @@ if (typeof XIGENTIMER !== "object") {
 			var getUserID,
 				userToken,
 				getData,
+				pureData,
 				getAuthToken,
 				userID,
 				returnedData,
@@ -56,6 +57,10 @@ if (typeof XIGENTIMER !== "object") {
 					if (!!data) {
 
 						if (typeof data !== "object") {
+							pureData = JSON.parse(data);
+						}
+
+						if (typeof data !== "object") {
 							data = JSON.parse(data);
 						}
 
@@ -82,7 +87,7 @@ if (typeof XIGENTIMER !== "object") {
 					if (typeof callback === "function") {
 
 						if (response.statusCode === 200 || response.statusCode === 201) {
-							callback(true, returnedData);
+							callback(true, returnedData, pureData);
 						} else {
 							callback(false);
 						}
@@ -109,11 +114,47 @@ if (typeof XIGENTIMER !== "object") {
 
 		},
 
-		authoriseAPI: function (callback) {
+		authoriseAPI: function (username, callback) {
 
-			timer.API.base("GET", "users", {}, function (success, data) {
-				callback(data);
-			});
+			console.log("calling API for username with username of " + username);
+
+			var userToken,
+				getBaseURL,
+				makeRequest;
+
+			makeRequest = function () {
+				client.get(baseURL + "users",
+				{
+					headers: {
+						"Authorization" : userToken,
+						"Content-Type" : "application/json"
+					}
+				},
+				function (data, response) {
+
+					data = JSON.parse(data);
+
+					data = data.filter(function (u) {
+						return u.Login === username;
+					})[0];
+
+					callback(response.statusCode === 200, data);
+
+				});
+			};
+
+			getBaseURL = function () {
+				localforage.getItem("baseURL", function (b) {
+					baseURL = b.indexOf("/rest/v1/") > -1 ? b : b + "/rest/v1/";
+				}).then(makeRequest);
+			};
+
+			localforage.getItem("userToken", function (token) {
+
+				userToken = token;
+
+			}).then(getBaseURL);
+
 
 		},
 
@@ -210,7 +251,8 @@ if (typeof XIGENTIMER !== "object") {
 				getUserToken,
 				getLogs;
 
-			timer.API.base("GET", "timelogs", {}, function (success, data) {
+			timer.API.base("GET", "timelogs", {}, function (success, data, unfilteredData) {
+				localforage.setItem("timelogCache", unfilteredData);
 				callback(data);
 			});
 
@@ -221,23 +263,17 @@ if (typeof XIGENTIMER !== "object") {
 			var logs,
 				total;
 
-			timer.API.base("GET", "timelogs" , {}, function (success, data) {
-				
-				logs = data.filter(function (log) {
-					return log.TaskID === taskID;
-				});
+			localforage.getItem("timelogCache", function (logs) {
 
-				if (!logs.length) {
-					logs = [logs];
-				}
+				total = logs.filter(function (log) {
+					return log.TaskID === taskID;
+				}).map(function (log) {
+					return log.Duration;
+				}).reduce(function (a, b) {
+					return a.Duration + b.Duration;
+				});
 
 				window.logs = logs;
-
-				total = logs.map(function (log) {
-					return log.Duration;
-				}).reduce(function (prev, curr) {
-					return prev + curr;
-				});
 
 				callback(total || 0);
 
@@ -378,7 +414,7 @@ if (typeof XIGENTIMER !== "object") {
 
 			};
 
-			localforage.getItem("authToken", function (token) {
+			localforage.getItem("userToken", function (token) {
 
 				userToken = token;
 
