@@ -6628,6 +6628,16 @@ body {
   margin-bottom: 0px;
 }
 
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
 .sidebar {
   height: 100%;
 }
@@ -6639,12 +6649,12 @@ body {
   border-width: 1px 0px 1px 0px;
   margin-bottom: 0px;
   height: 100%;
-  padding-right: 45px;
+  padding-right: 90px;
 }
 .sidebar .sidebar-filter-wrap input:focus {
   box-shadow: none;
 }
-.sidebar .sidebar-filter-wrap input:focus + .do-clearfilter {
+.sidebar .sidebar-filter-wrap input:focus ~ .tiny {
   border-color: #999;
 }
 .sidebar .sidebar-projects-wrap {
@@ -6726,7 +6736,7 @@ body {
 }
 .sidebar .do-clearfilter {
   position: absolute;
-  right: 0px;
+  right: 45px;
   top: 0px;
   height: 100%;
   border-color: #CCC;
@@ -6755,6 +6765,32 @@ body {
 }
 .show-infinite .sidebar .side-nav .is-infinite {
   display: block;
+}
+.sidebar .do-refresh {
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  margin-bottom: 0px;
+  height: 100%;
+  width: 45px;
+  border-color: #CCC;
+  border-width: 1px 1px 1px 0px;
+  border-style: solid;
+  -webkit-transition: border-color 0.45s ease-in-out;
+  -moz-transition: border-color 0.45s ease-in-out;
+  -ms-transition: border-color 0.45s ease-in-out;
+  -o-transition: border-color 0.45s ease-in-out;
+  transition: border-color 0.45s ease-in-out;
+  float: left;
+}
+.sidebar .do-refresh img {
+  width: 20px;
+  position: absolute;
+  top: 12.5px;
+  left: 12.5px;
+}
+.sidebar .do-refresh.is-refreshing img {
+  -webkit-animation: spin 1s infinite linear;
 }
 
 .login {

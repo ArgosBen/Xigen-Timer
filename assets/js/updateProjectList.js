@@ -83,7 +83,7 @@
 
 	};
 
-	timer.drawProjects = function (withEndDate) {
+	timer.drawProjects = function (callback) {
 
 		var frag = document.createDocumentFragment(),
 			open = [];
@@ -92,7 +92,7 @@
 
 			$.each(hierachy, function () {
 				if (this.Activities.length > 0) {
-					$(frag).append(drawTree(this, withEndDate));
+					$(frag).append(drawTree(this));
 				}
 			});
 
@@ -112,6 +112,10 @@
 				});
 
 				XIGENTIMER.SidebarFilter.refresh(open);
+			}
+
+			if (typeof callback === "function") {
+				callback();
 			}
 
 		});

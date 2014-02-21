@@ -135,4 +135,15 @@ $(function () {
 		XIGENTIMER.close();
 	});
 
+	// Refresh Button
+	$(".do-refresh").on("click", function () {
+
+		$(this).addClass("is-refreshing").attr("disabled", "disabled");
+
+		XIGENTIMER.drawProjects(function () {
+			$(".do-refresh").removeClass("is-refreshing").removeAttr("disabled");
+		});
+
+	});
+
 });
