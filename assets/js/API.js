@@ -271,9 +271,11 @@ if (typeof XIGENTIMER !== "object") {
 					return log.Duration;
 				});
 
+				console.log(total);
+
 				if (total.length) {
 					total = total.reduce(function (a, b) {
-						return a.Duration + b.Duration;
+						return a + b;
 					});
 				} else {
 					total = 0;
