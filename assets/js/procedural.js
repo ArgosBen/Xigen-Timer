@@ -30,9 +30,6 @@ $(function () {
 		datepickers.push(picker);
 	});
 
-	// Initialise the datepickers
-	XIGENTIMER.updateDatePickers();
-
 	// Logout button
 	$("[data-logout]").on("click", function (e) {
 		e.preventDefault();
@@ -71,6 +68,8 @@ $(function () {
 
 				XIGENTIMER.VIEWMODEL.isLoggedIn(true);
 				XIGENTIMER.drawProjects();
+				// Initialise the datepickers
+				XIGENTIMER.updateDatePickers();
 			} else {
 				submit.text("Incorrect login, try again :)");
 			}
@@ -81,12 +80,16 @@ $(function () {
 
 	// Login if we have a token
 	localforage.getItem("userToken", function (u) {
-		if (u) {
-			XIGENTIMER.authoriseUser(function () {
-				XIGENTIMER.VIEWMODEL.isLoggedIn(true);
-				XIGENTIMER.drawProjects();
-			});
-		}
+		localforage.getItem("baseURL", function (b) {
+			if (u && b) {
+				XIGENTIMER.authoriseUser(function () {
+					XIGENTIMER.VIEWMODEL.isLoggedIn(true);
+					XIGENTIMER.drawProjects();
+					// Initialise the datepickers
+					XIGENTIMER.updateDatePickers();
+				});
+			}
+		});
 	});
 
 	// Reset Button

@@ -269,13 +269,17 @@ if (typeof XIGENTIMER !== "object") {
 					return log.TaskID === taskID;
 				}).map(function (log) {
 					return log.Duration;
-				}).reduce(function (a, b) {
-					return a.Duration + b.Duration;
 				});
 
-				window.logs = logs;
+				if (total.length) {
+					total = total.reduce(function (a, b) {
+						return a.Duration + b.Duration;
+					});
+				} else {
+					total = 0;
+				}
 
-				callback(total || 0);
+				callback(total);
 
 			});
 

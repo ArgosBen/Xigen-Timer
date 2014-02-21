@@ -134,7 +134,7 @@
 
 				var row = document.createElement("tr");
 
-				$(row).append("<td align='center' colspan='4'><strong>No time logged for today yet - Do some work!</strong></td>");
+				$(row).append("<td align='center' colspan='4'><strong>No time logged for these dates - Do some work!</strong></td>");
 				frag.appendChild(row);
 				table.empty();
 				table[0].appendChild(frag);
