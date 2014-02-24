@@ -173,7 +173,8 @@ if (typeof XIGENTIMER !== "object") {
 				hierachy = {},
 				loaded = 0,
 				getActivities,
-				tidyActivites;
+				tidyActivites,
+				isEmpty;
 
 			console.log(filterFunc);
 
@@ -190,6 +191,7 @@ if (typeof XIGENTIMER !== "object") {
 
 				var parents = [],
 					children = [],
+					onlyChildren = [],
 					parentID,
 					parent,
 					parentIndex;
@@ -202,12 +204,21 @@ if (typeof XIGENTIMER !== "object") {
 					dataRef = dataRef.filter(filterFunc);
 				}
 
+				// Take out items which we cant log time on
+				dataRef = dataRef.filter(function (act) {
+					return act.CanCreateTimeEntries === true;
+				});
+
 				parents = dataRef.filter(function (act) {
 					return act.HasChild > 0;
 				});
 
 				children = dataRef.filter(function (act) {
 					return act.ParentID;
+				});
+
+				onlyChildren = dataRef.filter(function (act) {
+					return !act.ParentID && !act.HasChild;
 				});
 
 				if (parents.length > 0) {
@@ -225,8 +236,16 @@ if (typeof XIGENTIMER !== "object") {
 
 					});
 
+					if (onlyChildren.length > 0) {
+						parents = parents.concat(onlyChildren);
+					}
+
 					return parents.filter(function (par) {
-						return !par.ParentID && par.Activities.length > 0;
+						if (par.Activities) {
+							return !par.ParentID && par.Activities.length > 0;
+						} else {
+							return !par.ParentID;
+						}
 					});
 				} else {
 					return dataRef;

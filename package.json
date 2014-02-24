@@ -19,7 +19,7 @@
     "url" : "https://github.com/XigenBen/Xigen-Timer/issues"
   },
   "window": {
-    "toolbar": false,
+    "toolbar": true,
     "title": "Xigen Timer",
     "width": 900,
     "height": 490,
