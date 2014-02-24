@@ -220,8 +220,6 @@
 		dateRange.push(+from.getDate());
 		dateRange.push(+to.getDate());
 
-		console.log(dateRange);
-
 		XIGENTIMER.renderTimeLogs(dateRange);
 
 	};

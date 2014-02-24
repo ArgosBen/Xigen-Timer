@@ -100,6 +100,8 @@
 				$("body").removeClass("show-review");
 			}
 
+			that.updateFromFilters();
+
 		});
 
 		// Update the body classs depending on if we are showing/hiding items waiting internal review or not.
@@ -111,7 +113,22 @@
 				$("body").removeClass("show-infinite");
 			}
 
+			that.updateFromFilters();
+
 		});
+
+		this.updateFromFilters = function () {
+
+			var forReview = that.showReviewItems(),
+				isInfinite = that.showInfiniteItems();
+
+			$(".do-refresh").addClass("is-refreshing").attr("disabled", "disabled");
+
+			XIGENTIMER.drawProjects(function () {
+				$(".do-refresh").removeClass("is-refreshing").removeAttr("disabled");
+			}, forReview, isInfinite);
+
+		};
 
 		// Change timing page
 		this.selectTiming = function () {

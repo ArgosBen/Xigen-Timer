@@ -6786,7 +6786,7 @@ body {
 .sidebar .do-refresh img {
   width: 20px;
   position: absolute;
-  top: 12.5px;
+  top: 10px;
   left: 12.5px;
 }
 .sidebar .do-refresh.is-refreshing img {

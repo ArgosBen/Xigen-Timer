@@ -116,8 +116,6 @@ if (typeof XIGENTIMER !== "object") {
 
 		authoriseAPI: function (username, callback) {
 
-			console.log("calling API for username with username of " + username);
-
 			var userToken,
 				getBaseURL,
 				makeRequest;
@@ -132,7 +130,12 @@ if (typeof XIGENTIMER !== "object") {
 				},
 				function (data, response) {
 
-					data = JSON.parse(data);
+					if (data) {
+						data = JSON.parse(data);
+					} else {
+						callback(false);
+						return false;
+					}
 
 					data = data.filter(function (u) {
 						return u.Login === username;
@@ -144,9 +147,14 @@ if (typeof XIGENTIMER !== "object") {
 			};
 
 			getBaseURL = function () {
-				localforage.getItem("baseURL", function (b) {
-					baseURL = b.indexOf("/rest/v1/") > -1 ? b : b + "/rest/v1/";
-				}).then(makeRequest);
+
+				if (userToken) {
+					localforage.getItem("baseURL", function (b) {
+						baseURL = b.indexOf("/rest/v1/") > -1 ? b : b + "/rest/v1/";
+					}).then(makeRequest);
+				} else {
+					callback(false);
+				}
 			};
 
 			localforage.getItem("userToken", function (token) {
@@ -158,7 +166,7 @@ if (typeof XIGENTIMER !== "object") {
 
 		},
 
-		getHierachy: function (callback) {
+		getHierachy: function (filterFunc, callback) {
 
 			var projectCache = [],
 				activityCache = [],
@@ -167,11 +175,18 @@ if (typeof XIGENTIMER !== "object") {
 				getActivities,
 				tidyActivites;
 
+			console.log(filterFunc);
+
+			if (!callback) {
+				callback = filterFunc;
+				filterFunc = false;
+			}
+
 			/*
 			This function gets all the activities that a task has, and maps them all inside eachother
 			so that we have a hierachy. Don't touch, you'll *probably* break it if you do.
 			 */
-			tidyActivites = function (dataRef) {
+			tidyActivites = function (dataRef, filterFunc) {
 
 				var parents = [],
 					children = [],
@@ -179,9 +194,13 @@ if (typeof XIGENTIMER !== "object") {
 					parent,
 					parentIndex;
 
-				dataRef = dataRef.filter(function (act) {
-					return act.TaskStatusID === 1 || act.TaskStatusID === 18 || act.TaskStatusID === 4;
-				});
+				if (!filterFunc) {
+					dataRef = dataRef.filter(function (act) {
+						return act.EndDate && (act.TaskStatusID === 1 || act.TaskStatusID === 4);
+					});
+				} else {
+					dataRef = dataRef.filter(filterFunc);
+				}
 
 				parents = dataRef.filter(function (act) {
 					return act.HasChild > 0;
@@ -207,7 +226,7 @@ if (typeof XIGENTIMER !== "object") {
 					});
 
 					return parents.filter(function (par) {
-						return !par.ParentID;
+						return !par.ParentID && par.Activities.length > 0;
 					});
 				} else {
 					return dataRef;
@@ -231,7 +250,7 @@ if (typeof XIGENTIMER !== "object") {
 						activityCache = activityCache.concat(data);
 						localforage.setItem("activityCache", activityCache);
 
-						hierachy[item.EntityBaseID].Activities = tidyActivites(data);
+						hierachy[item.EntityBaseID].Activities = tidyActivites(data, filterFunc);
 
 						if (loaded === projectCache.length && typeof callback === "function") {
 							callback(hierachy);

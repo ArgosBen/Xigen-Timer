@@ -32,16 +32,6 @@
 				append = false;
 			}
 
-			// If an end date isnt set, set a special class
-			if (!this.EndDate) {
-				$(topLevel).addClass("is-infinite");
-			}
-
-			// If the task is waiting for internal approval, add a different class
-			if (this.TaskStatusID === 18) {
-				$(topLevel).addClass("is-review");
-			}
-
 			// Generate label HTML depending on the type of task
 			switch (this.TaskTypeID) {
 			case 2:
@@ -83,12 +73,27 @@
 
 	};
 
-	timer.drawProjects = function (callback) {
+	timer.drawProjects = function (callback, showInternalReview, showNoEndDate) {
 
 		var frag = document.createDocumentFragment(),
-			open = [];
+			open = [],
+			filterFunc = false;
 
-		timer.API.getHierachy(function (hierachy) {
+		if (showInternalReview && !showNoEndDate) {
+			filterFunc = function (act) {
+				return act.EndDate && (act.TaskStatusID === 1 || act.TaskStatusID === 4 || act.TaskStatusID === 18);
+			};
+		} else if (showInternalReview && showNoEndDate) {
+			filterFunc = function (act) {
+				return act.TaskStatusID === 1 || act.TaskStatusID === 4  || act.TaskStatusID === 18;
+			};
+		} else if (showNoEndDate && !showInternalReview) {
+			filterFunc = function (act) {
+				return act.TaskStatusID === 1 || act.TaskStatusID === 4;
+			};
+		}
+
+		timer.API.getHierachy(filterFunc, function (hierachy) {
 
 			$.each(hierachy, function () {
 				if (this.Activities.length > 0) {
@@ -98,10 +103,6 @@
 
 			// Append the new markup
 			$(".side-nav").empty().append(frag);
-
-			// Add the infinite/review classes to the parents where necessary
-			$(".is-infinite:only-child").parents("li").addClass("is-infinite");
-			$(".is-review:only-child").parents("li").addClass("is-review");
 
 			if (!XIGENTIMER.SidebarFilter) {
 				XIGENTIMER.SidebarFilter = new XIGENTIMER.ProjectFilter($(".side-nav"), $(".sidebar-filter-wrap input"));

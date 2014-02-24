@@ -8,6 +8,7 @@ $(function () {
 		submit = $(".login [type=submit]"),
 		datepickers= [],
 		picker,
+		failFn,
 		VIEWMODEL,
 		sidebarFilter;
 
@@ -40,6 +41,16 @@ $(function () {
 		XIGENTIMER.VIEWMODEL.reset(true);
 	});
 
+	// Login fail function
+	failFn = function () {
+		submit.text("Incorrect login, try again :)");
+		submit.addClass("alert");
+
+		setTimeout(function () {
+			submit.text(defaultText).removeClass("alert");
+		}, 1500);
+	};
+
 	// Login form submit
 	$("[data-login]").on("submit", function (e) {
 
@@ -54,27 +65,32 @@ $(function () {
 
 		submit.text("Logging in...");
 
-		localforage.setItem("baseURL", baseURL)
-			.then(XIGENTIMER.authoriseUser(user, password, function (user, token) {
+		if (user && password && baseURL) {
+			localforage.setItem("baseURL", baseURL)
+				.then(XIGENTIMER.authoriseUser(user, password, function (user, token) {
 
-			console.log(user, token);
+				console.log(user, token);
 
-			if (user) {
-				submit.text(defaultText);
-				localforage.setItem("user", user);
-				localforage.setItem("userToken", token);
-				localforage.setItem("userName", user.Login);
-				localforage.setItem("baseURL", baseURL);
+				if (user) {
+					submit.text(defaultText);
+					localforage.setItem("user", user);
+					localforage.setItem("userToken", token);
+					localforage.setItem("userName", user.Login);
+					localforage.setItem("baseURL", baseURL);
 
-				XIGENTIMER.VIEWMODEL.isLoggedIn(true);
-				XIGENTIMER.drawProjects();
-				// Initialise the datepickers
-				XIGENTIMER.updateDatePickers();
-			} else {
-				submit.text("Incorrect login, try again :)");
-			}
+					XIGENTIMER.VIEWMODEL.isLoggedIn(true);
+					XIGENTIMER.drawProjects(function () {
+						XIGENTIMER.updateDatePickers();
+					});
+					
+				} else {
+					failFn();
+				}
 
-		}));
+			}));
+		} else {
+			failFn();
+		}
 
 	});
 
@@ -84,9 +100,9 @@ $(function () {
 			if (u && b) {
 				XIGENTIMER.authoriseUser(function () {
 					XIGENTIMER.VIEWMODEL.isLoggedIn(true);
-					XIGENTIMER.drawProjects();
-					// Initialise the datepickers
-					XIGENTIMER.updateDatePickers();
+					XIGENTIMER.drawProjects(function () {
+						XIGENTIMER.updateDatePickers();
+					});
 				});
 			}
 		});
@@ -138,9 +154,7 @@ $(function () {
 	// Refresh Button
 	$(".do-refresh").on("click", function () {
 
-		$(this).addClass("is-refreshing").attr("disabled", "disabled");
-
-		XIGENTIMER.drawProjects(function () {
+		XIGENTIMER.VIEWMODEL.updateFromFilters(function () {
 			$(".do-refresh").removeClass("is-refreshing").removeAttr("disabled");
 		});
 
