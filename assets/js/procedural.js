@@ -158,6 +158,8 @@ $(function () {
 			$(".do-refresh").removeClass("is-refreshing").removeAttr("disabled");
 		});
 
+		XIGENTIMER.updateDatePickers();
+
 	});
 
 });

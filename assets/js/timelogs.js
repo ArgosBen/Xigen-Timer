@@ -218,7 +218,7 @@
 		from.setMaxDate(to.getDate());
 
 		dateRange.push(+from.getDate());
-		dateRange.push(+to.getDate());
+		dateRange.push(+moment(to.getDate()).add('days', 1));
 
 		XIGENTIMER.renderTimeLogs(dateRange);
 

@@ -272,6 +272,7 @@ if (typeof XIGENTIMER !== "object") {
 
 			timer.API.base("GET", "timelogs", {}, function (success, data, unfilteredData) {
 				localforage.setItem("timelogCache", unfilteredData);
+				console.log(data);
 				callback(data);
 			});
 
