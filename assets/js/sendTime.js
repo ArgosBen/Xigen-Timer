@@ -7,6 +7,7 @@ $(function () {
 			PENDING_TEXT: "Sending...",
 			MARKING_TEXT: "Marking for review...",
 			SUCCESS_TEXT: "Done!",
+			ERROR_TEXT: "Error :(",
 			DESC_SEL: "[id=desc]"
 		},
 		resetAll;
@@ -44,11 +45,7 @@ $(function () {
 			userID = u.UserID;
 		}).then(function () {
 
-			console.log("sending time");
-
 			XIGENTIMER.API.logTime(userID, taskID, dur, isBillable, desc, function (success) {
-
-				console.log(success);
 
 				if (success) {
 
@@ -64,6 +61,18 @@ $(function () {
 					}
 
 					XIGENTIMER.reset();
+
+				} else {
+
+					btn.removeClass("info")
+						.addClass("alert")
+						.text(config.ERROR_TEXT);
+
+					setTimeout(function () {
+						btn.text(config.DEFAULT_TEXT)
+							.addClass("info")
+							.removeClass("alert");
+					}, 1500);
 
 				}
 
