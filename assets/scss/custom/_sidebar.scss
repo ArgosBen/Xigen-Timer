@@ -146,6 +146,20 @@
 	.label {
 		float: left;
 		margin-right: 10px;
+
+		& + span {
+			float: right;
+			width: 82%;
+			display: inline-block;
+		}
+
+		&.success + span {
+			width: 73%;
+		}
+
+		&.alert + span {
+			width: 80%;
+		}
 	}
 
 	.side-nav .is-review {

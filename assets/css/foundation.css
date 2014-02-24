@@ -6754,6 +6754,17 @@ body {
   float: left;
   margin-right: 10px;
 }
+.sidebar .label + span {
+  float: right;
+  width: 82%;
+  display: inline-block;
+}
+.sidebar .label.success + span {
+  width: 73%;
+}
+.sidebar .label.alert + span {
+  width: 80%;
+}
 .sidebar .side-nav .is-review {
   display: none;
 }
