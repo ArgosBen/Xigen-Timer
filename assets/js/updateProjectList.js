@@ -117,6 +117,7 @@
 
 			if (typeof callback === "function") {
 				callback();
+				XIGENTIMER.updateDatePickers();
 			}
 
 		});

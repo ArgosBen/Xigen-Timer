@@ -81,7 +81,7 @@
 
 				timeSince = +moment(log.EntryDate, "YYYY-MM-DD/HH:mm:ss.SS");
 
-				return log.Locked !== "Locked" && timeSince >= dateRange[0] && timeSince <= dateRange[1];
+				return log.Locked !== "Locked" && !log.Approved && timeSince >= dateRange[0] && timeSince <= dateRange[1];
 
 			}).sort(function (a, b) {
 
@@ -218,7 +218,7 @@
 		from.setMaxDate(to.getDate());
 
 		dateRange.push(+from.getDate());
-		dateRange.push(+moment(to.getDate()).add('days', 1));
+		dateRange.push(+moment(to.getDate()).add('hours', 24));
 
 		XIGENTIMER.renderTimeLogs(dateRange);
 

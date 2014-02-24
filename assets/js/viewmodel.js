@@ -69,7 +69,7 @@
 			case 1:
 				return "Send for internal review";
 			case 2:
-				return "Mark as closed?";
+				return "Mark as fixed";
 			default:
 				return "Send for internal review";
 			}
