@@ -474,7 +474,12 @@ if (typeof XIGENTIMER !== "object") {
 			XIGENTIMER.VIEWMODEL.isChecking(true);
 
 			localforage.getItem("baseURL", function (b) {
-				makeRequest(b);
+				if (b) {
+					makeRequest(b);
+				} else {
+					XIGENTIMER.VIEWMODEL.isConnected(false);
+					XIGENTIMER.VIEWMODEL.isChecking(false);
+				}
 			});
 
 			makeRequest = function (baseURL) {
@@ -484,11 +489,19 @@ if (typeof XIGENTIMER !== "object") {
 					if (request.statusCode) {
 						XIGENTIMER.VIEWMODEL.isConnected(true);
 						XIGENTIMER.VIEWMODEL.isChecking(false);
+
+						if (typeof callback === "function") {
+							callback(true);
+						};
 					}
 
 				}).on("error", function () {
 					XIGENTIMER.VIEWMODEL.isConnected(false);
 					XIGENTIMER.VIEWMODEL.isChecking(false);
+
+					if (typeof callback === "function") {
+						callback(false);
+					};
 				});
 
 			};

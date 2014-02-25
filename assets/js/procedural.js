@@ -15,6 +15,9 @@ $(function () {
 	// Foundation
 	$(document).foundation();
 
+	// Hide the login form
+	$(".login").hide();
+
 	$(".datepicker").each(function () {
 		picker = new Pikaday({
 			field: this,
@@ -40,6 +43,7 @@ $(function () {
 		localforage.setItem("user", null);
 		XIGENTIMER.reset();
 		XIGENTIMER.VIEWMODEL.reset(true);
+		$(".login").fadeIn(200);
 	});
 
 	// Login fail function
@@ -70,9 +74,8 @@ $(function () {
 			localforage.setItem("baseURL", baseURL)
 				.then(XIGENTIMER.authoriseUser(user, password, function (user, token) {
 
-				console.log(user, token);
-
 				if (user) {
+
 					submit.text(defaultText);
 					localforage.setItem("user", user);
 					localforage.setItem("userToken", token);
@@ -83,6 +86,14 @@ $(function () {
 					XIGENTIMER.drawProjects(function () {
 						XIGENTIMER.updateDatePickers();
 					});
+
+					// Check for a connection
+					XIGENTIMER.API.pulse();
+
+					// Check every 30 seconds
+					setTimeout(function () {
+						XIGENTIMER.API.pulse();
+					}, 30000);
 					
 				} else {
 					failFn();
@@ -104,7 +115,15 @@ $(function () {
 					XIGENTIMER.drawProjects(function () {
 						XIGENTIMER.updateDatePickers();
 					});
+					XIGENTIMER.API.pulse();
+
+					// Check every 30 seconds
+					setTimeout(function () {
+						XIGENTIMER.API.pulse();
+					}, 30000);
 				});
+			} else {
+				$(".login").fadeIn(200);
 			}
 		});
 	});
@@ -138,14 +157,6 @@ $(function () {
 	$(".time-table").on("click", ".button", function () {
 		XIGENTIMER.editTimeLog($(this).parents("tr").attr("data-id"), this);
 	});
-
-	// Check for a connection
-	XIGENTIMER.API.pulse();
-
-	// Check every 30 seconds
-	setTimeout(function () {
-		XIGENTIMER.API.pulse();
-	}, 30000);
 
 	// Icons
 	$(".icon-min").on("click", function () {

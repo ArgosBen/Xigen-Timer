@@ -11,6 +11,8 @@
 
 	getToken = function (callback) {
 
+		console.log("Getting token");
+
 		localforage.getItem("userToken", function (t) {
 			userToken = t ? t : false;
 		}).then(
@@ -59,17 +61,12 @@
 
 	timer.authoriseUser = function (username, password, callback) {
 
-		var args = arguments;
+		var args = arguments,
+			that = this;
 
-		setTimeout(function () {
-			if (XIGENTIMER.VIEWMODEL.isConnected()) {
-				getToken(function () {
-					checkToken.apply(this, args);
-				});
-			} else {
-				return false;
-			}
-		}, 200);
+		getToken(function () {
+			checkToken.apply(that, args);
+		});
 
 	};
 
