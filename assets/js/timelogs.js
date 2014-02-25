@@ -124,7 +124,9 @@
 						if (loaded === logs.length) {
 							table.empty();
 							table[0].appendChild(frag);
-							ko.applyBindings(XIGENTIMER.VIEWMODEL, table[0]);
+							$.each(table.find("tr"), function () {
+								ko.applyBindings(XIGENTIMER.VIEWMODEL, this);
+							});
 						}
 
 					});
