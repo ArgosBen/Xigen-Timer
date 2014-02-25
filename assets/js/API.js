@@ -460,6 +460,35 @@ if (typeof XIGENTIMER !== "object") {
 
 			}).then(getOldLog);
 
+		},
+
+		pulse : function (callback) {
+
+			var makeRequest,
+				base;
+
+			XIGENTIMER.VIEWMODEL.isChecking(true);
+
+			localforage.getItem("baseURL", function (b) {
+				makeRequest(b);
+			});
+
+			makeRequest = function (baseURL) {
+
+				client.get(baseURL, function (data, request) {
+
+					if (request.statusCode) {
+						XIGENTIMER.VIEWMODEL.isConnected(true);
+						XIGENTIMER.VIEWMODEL.isChecking(false);
+					}
+
+				}).on("error", function () {
+					XIGENTIMER.VIEWMODEL.isConnected(false);
+					XIGENTIMER.VIEWMODEL.isChecking(false);
+				});
+
+			};
+
 		}
 
 	};

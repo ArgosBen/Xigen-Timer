@@ -58,7 +58,7 @@
 		this.canSendTime = ko.computed(function () {
 			// Put this here, so it is subscribed
 			that.dummy();
-			return !!that.activityDesc() && !that.isTiming() && XIGENTIMER.TIMER.getTime().time -1 > 0 && that.hasProjectSelected();
+			return !!that.activityDesc() && !that.isTiming() && XIGENTIMER.TIMER.getTime().time -1 > 0 && that.hasProjectSelected() && that.isConnected();
 		});
 
 		// Changes the text for the "Mark as waiting review" depending on the type of task selected
@@ -157,6 +157,28 @@
 			that.isTiming(false);
 			that.recalcCanSend();
 			that.selectedProject(false);
+
+		};
+
+		// Do we have a connection to the projects system?
+		this.isConnected = ko.observable(false);
+		this.isChecking = ko.observable(false);
+
+		this.connectedText = ko.computed(function () {
+
+			if (that.isConnected() && !that.isChecking()) {
+				return "Connected to System";
+			} else if (that.isChecking()) {
+				return "Checking pulse...";
+			} else {
+				return "Not Connected.";
+			}
+
+		});
+
+		this.checkPulse = function () {
+
+			XIGENTIMER.API.pulse();
 
 		};
 

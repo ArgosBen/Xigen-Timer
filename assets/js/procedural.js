@@ -139,6 +139,14 @@ $(function () {
 		XIGENTIMER.editTimeLog($(this).parents("tr").attr("data-id"), this);
 	});
 
+	// Check for a connection
+	XIGENTIMER.API.pulse();
+
+	// Check every 30 seconds
+	setTimeout(function () {
+		XIGENTIMER.API.pulse();
+	}, 30000);
+
 	// Icons
 	$(".icon-min").on("click", function () {
 		XIGENTIMER.minimize();
