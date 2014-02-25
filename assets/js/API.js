@@ -176,8 +176,6 @@ if (typeof XIGENTIMER !== "object") {
 				tidyActivites,
 				isEmpty;
 
-			console.log(filterFunc);
-
 			if (!callback) {
 				callback = filterFunc;
 				filterFunc = false;
@@ -309,8 +307,6 @@ if (typeof XIGENTIMER !== "object") {
 					return log.Duration;
 				});
 
-				console.log(total);
-
 				if (total.length) {
 					total = total.reduce(function (a, b) {
 						return a + b;
@@ -341,7 +337,7 @@ if (typeof XIGENTIMER !== "object") {
 				"-",
 				date.getDate().toString().length === 1 ? "0" + date.getDate() : date.getDate(),
 				"T",
-				date.getHours(),
+				date.getHours().toString().length === 1 ? "0" + date.getHours() : date.getHours(),
 				":",
 				date.getMinutes().toString().length === 1 ? "0" + date.getMinutes() : date.getMinutes(),
 				":",
@@ -356,7 +352,7 @@ if (typeof XIGENTIMER !== "object") {
 				"Billable" : isBillable,
 				"EntryDate" : formattedDate
 			}, function (success, data) {
-				callback(data);
+				callback(success);
 			});
 
 		},
