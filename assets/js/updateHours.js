@@ -1,14 +1,16 @@
 $(function () {
 
-	var config = {
-		ERROR_CLASS: "error",
-		UPDATE_CLASS: "do-update",
-		MODAL_ID: "customTime",
-		CLOSE_CLASS: "do-close"
-	};
+	"use strict";
 
-	// The popup for updating hours
-	$("." + config.UPDATE_CLASS).on("click", function (e) {
+	var config = {
+			ERROR_CLASS: "error",
+			UPDATE_CLASS: "do-update",
+			MODAL_ID: "customTime",
+			CLOSE_CLASS: "do-close"
+		},
+		successFn;
+
+	successFn = function (e) {
 
 		var h,
 			m,
@@ -56,6 +58,19 @@ $(function () {
 
 		}
 
+	};
+
+	// The popup for updating hours
+	$("." + config.UPDATE_CLASS).on("click", function (e) {
+		successFn(e);
+	});
+
+	$(document).on("keyup", function (e) {
+
+		if (e.which === 13) {
+			successFn(e);
+		}
+	
 	});
 
 	$("#" + config.MODAL_ID).on("click", "." + config.CLOSE_CLASS, function () {
