@@ -112,7 +112,7 @@
 						timeSince = moment(logs[i].EntryDate, "YYYY-MM-DD/HH:mm:ss.SS");
 
 						$(row).append("<td><strong>" + timeSince.calendar() + "</strong><br/>(" + timeSince.format('DD-MM-YYYY') + ")</td>");
-						$(row).append("<td><strong>" + name[1] + ":</strong><br/><a target='_system' href='http://projectsvm.xigen.co.uk/TaskDetails.aspx?ID=" + name[2] + "'>" + name[0] + "</a></td>");
+						$(row).append("<td><strong>" + name[1] + ":</strong><br/><a target='_system' href='http://projects.xigen.co.uk/TaskDetails.aspx?ID=" + name[2] + "'>" + name[0] + "</a></td>");
 						$(row).append("<td>" + logs[i].Duration.toFixed(2) + "</td>");
 						$(row).append("<td>" + logs[i].Description + "</td>");
 						$(row).append("<td><button class='button tiny success expand'>" + config.TEXT_EDIT + "</button></td>");

@@ -37,6 +37,7 @@ $(function () {
 		localforage.setItem("userToken", null);
 		localforage.setItem("userName", null);
 		localforage.setItem("baseURL", null);
+		localforage.setItem("user", null);
 		XIGENTIMER.reset();
 		XIGENTIMER.VIEWMODEL.reset(true);
 	});
