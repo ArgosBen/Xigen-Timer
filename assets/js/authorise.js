@@ -61,9 +61,15 @@
 
 		var args = arguments;
 
-		getToken(function () {
-			checkToken.apply(this, args);
-		});
+		setTimeout(function () {
+			if (XIGENTIMER.VIEWMODEL.isConnected()) {
+				getToken(function () {
+					checkToken.apply(this, args);
+				});
+			} else {
+				return false;
+			}
+		}, 200);
 
 	};
 

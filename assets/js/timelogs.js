@@ -115,7 +115,7 @@
 						$(row).append("<td><strong>" + name[1] + ":</strong><br/><a target='_system' href='http://projects.xigen.co.uk/TaskDetails.aspx?ID=" + name[2] + "'>" + name[0] + "</a></td>");
 						$(row).append("<td>" + logs[i].Duration.toFixed(2) + "</td>");
 						$(row).append("<td>" + logs[i].Description + "</td>");
-						$(row).append("<td><button class='button tiny success expand'>" + config.TEXT_EDIT + "</button></td>");
+						$(row).append("<td><button data-bind='disable: !isConnected()' class='button tiny success expand'>" + config.TEXT_EDIT + "</button></td>");
 
 						frag.appendChild(row);
 
@@ -124,6 +124,7 @@
 						if (loaded === logs.length) {
 							table.empty();
 							table[0].appendChild(frag);
+							ko.applyBindings(XIGENTIMER.VIEWMODEL, table[0]);
 						}
 
 					});

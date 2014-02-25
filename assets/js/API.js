@@ -94,6 +94,10 @@ if (typeof XIGENTIMER !== "object") {
 
 					}
 
+				}).on("error", function (err) {
+
+					alert("Network Error: " + JSON.stringify(err.request.options));
+
 				});
 
 			};

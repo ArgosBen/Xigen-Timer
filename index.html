@@ -125,7 +125,7 @@
 					<div class="sidebar-filter-wrap">
 						<input type="text" placeholder="Filter Projects..." />
 						<button class="tiny secondary do-clearfilter">X</button>
-						<button class="tiny secondary do-refresh"><img src="assets/svg/refresh.svg" /></button>
+						<button class="tiny secondary do-refresh" data-bind="disable: !isConnected()"><img src="assets/svg/refresh.svg" /></button>
 					</div>
 
 					<div class="sidebar-projects-wrap">
@@ -222,7 +222,7 @@
 				        	<span class="prefix">Show From:</span>
 				        </div>
 						<div class="small-9 columns">
-							<input type="text" id="startDate" data-start class='datepicker' />
+							<input type="text" id="startDate" data-start class="datepicker" data-bind="disable: !isConnected()" />
 						</div>
 					</div>
 				</div>
@@ -233,7 +233,7 @@
 				        	<span class="prefix">Show To:</span>
 				        </div>
 						<div class="small-9 columns">
-							<input type="text" id="startDate" data-end class='datepicker' />
+							<input type="text" id="startDate" data-end class="datepicker" data-bind="disable: !isConnected()" />
 						</div>
 					</div>
 				</div>
