@@ -6,12 +6,11 @@ if (typeof XIGENTIMER !== "object") {
 
 	"use strict";
 
-	var RESTClient = require('node-rest-client').Client,
-		baseURL,
+	var baseURL,
 		userName,
 		APIBaseFunction,
 		avatarURL = "http://projectsvm.xigen.co.uk/ImagePage.aspx?t=0",
-		client = new RESTClient(),
+		client = require('restler'),
 		config = {
 			userID : 0,
 			email: "matt@xigen.co.uk"
@@ -41,7 +40,7 @@ if (typeof XIGENTIMER !== "object") {
 						"Content-Type" : "application/json"
 					};
 
-					if (data) {
+					if (Object.keys(data).length !== 0) {
 						request.data = typeof data === "object" ? JSON.stringify(data) : data;
 					}
 
@@ -51,8 +50,7 @@ if (typeof XIGENTIMER !== "object") {
 			getData = function () {
 
 				client[method.toLowerCase()](baseURL + path,
-				request,
-				function(data, response) {
+				request).on("complete", function(data, response) {
 
 					if (!!data) {
 
@@ -129,14 +127,12 @@ if (typeof XIGENTIMER !== "object") {
 				{
 					headers: {
 						"Authorization" : userToken,
-						"Content-Type" : "application/json"
+						"Content-Type" : "application/json",
+						"Content-Length" : 2
 					}
-				},
-				function (data, response) {
+				}).on("complete", function (data) {
 
-					if (data) {
-						data = JSON.parse(data);
-					} else {
+					if (!data) {
 						callback(false);
 						return false;
 					}
@@ -145,7 +141,7 @@ if (typeof XIGENTIMER !== "object") {
 						return u.Login === username;
 					})[0];
 
-					callback(response.statusCode === 200, data);
+					callback(true, data);
 
 				});
 			};
@@ -470,15 +466,15 @@ if (typeof XIGENTIMER !== "object") {
 
 			makeRequest = function (baseURL) {
 
-				client.get(baseURL, function (data, request) {
+				client.get(baseURL).on("complete", function (data, response) {
 
-					if (request.statusCode) {
+					if (response.statusCode) {
 						XIGENTIMER.VIEWMODEL.isConnected(true);
 						XIGENTIMER.VIEWMODEL.isChecking(false);
 
 						if (typeof callback === "function") {
 							callback(true);
-						};
+						}
 					}
 
 				}).on("error", function () {
@@ -487,7 +483,7 @@ if (typeof XIGENTIMER !== "object") {
 
 					if (typeof callback === "function") {
 						callback(false);
-					};
+					}
 				});
 
 			};
