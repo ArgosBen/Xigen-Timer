@@ -56,6 +56,8 @@ if (typeof XIGENTIMER !== "object") {
 
 						if (typeof data !== "object") {
 							pureData = JSON.parse(data);
+						} else {
+							pureData = data;
 						}
 
 						if (typeof data !== "object") {
@@ -289,7 +291,9 @@ if (typeof XIGENTIMER !== "object") {
 
 			timer.API.base("GET", "timelogs", {}, function (success, data, unfilteredData) {
 				localforage.setItem("timelogCache", unfilteredData);
-				callback(data);
+				if (typeof callback === "function") {
+					callback(data);
+				}
 			});
 
 		},
@@ -392,10 +396,10 @@ if (typeof XIGENTIMER !== "object") {
 						"Authorization" : userToken,
 						"Content-Type" : "application/json"
 					}
-				},
+				}).on("complete",
 				function (data) {
 
-					oldLog = JSON.parse(data);
+					oldLog = data;
 
 					if (oldLog.Duration !== duration) {
 						diff = true;
@@ -427,7 +431,7 @@ if (typeof XIGENTIMER !== "object") {
 						"Content-Type" : "application/json"
 					},
 					data: JSON.stringify(oldLog)
-				},
+				}).on("complete",
 				function (data, response) {
 
 					if (typeof callback === "function") {

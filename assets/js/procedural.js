@@ -158,6 +158,79 @@ $(function () {
 		XIGENTIMER.editTimeLog($(this).parents("tr").attr("data-id"), this);
 	});
 
+	// Key bindings
+	$("#desc, .filter-text").on("keyup", function (e) {
+		if (e.which === 32) {
+			return false;
+		}
+	});
+
+	$(document).on("keyCombo", function (e, data) {
+
+		var combo = data.combo,
+			active;
+
+		if (combo === "SUBMIT") {
+			XIGENTIMER.sendTime();
+		}
+
+		if (combo === "REFRESH" || combo === "REFRESH_ALT") {
+			XIGENTIMER.VIEWMODEL.updateFromFilters();
+		}
+
+		if (combo === "SETTINGS" || combo === "SETTINGS_ALT") {
+			$("#settingsMenu").foundation("reveal", "open");
+		}
+
+		if (combo === "EDIT") {
+			if (!XIGENTIMER.VIEWMODEL.isTiming()) {
+				$("#customTime").foundation("reveal", "open");
+			}
+		}
+
+		if (combo === "FIND") {
+			$(".filter-text").focus();
+		}
+
+		if (combo === "PLAYPAUSE") {
+			$(".do-timestart").trigger("click");
+		}
+
+		if (combo === "LOGS") {
+			XIGENTIMER.VIEWMODEL.selectTiming();
+		}
+
+		if (combo === "TIMER") {
+			XIGENTIMER.VIEWMODEL.selectOverview();
+		}
+
+		if (combo === "DESC") {
+			$("#desc").focus();
+		}
+
+		if (combo === "LOGOUT") {
+			active = $(document.activeElement);
+			if (active[0].className === "filter-text") {
+				$(".do-clearfilter").trigger("click");
+			}
+		}
+
+		if (combo === "HELP") {
+			$("#shortcutMenu").foundation("reveal", "open");
+		}
+
+	});
+
+	// Make the edit modal focus the inputs itself wehn it's opened
+	$(document).on('open', '[data-reveal]', function () {
+		var modal = $(this);
+		if (modal[0].id === "customTime") {
+			setTimeout(function () {
+				modal.find("input").first().focus();
+			}, 200);
+		}
+	});
+
 	// Icons
 	$(".icon-min").on("click", function () {
 		XIGENTIMER.minimize();

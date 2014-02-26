@@ -40,6 +40,7 @@
 					<li data-bind="visible:isLoggedIn, css: { active: isOverview }"><a href="#" data-bind="click: selectOverview">Timer</a></li>
 					<li data-bind="visible:isLoggedIn, css: { active: isEditingTime }"><a href="#" data-bind="click: selectTiming">My Time</a></li>
 					<li data-bind="visible:isLoggedIn" data-reveal-id="settingsMenu" ><a href="#">Settings</a></li>
+					<li data-bind="visible:isLoggedIn" data-reveal-id="shortcutMenu" ><a href="#">Help</a></li>
 				</ul>
 			</section>
 		</nav>
@@ -123,7 +124,7 @@
 				<div class="small-4 columns sidebar">
 
 					<div class="sidebar-filter-wrap">
-						<input type="text" placeholder="Filter Projects..." />
+						<input tabindex="1" type="text" class="filter-text" placeholder="Filter Projects..." />
 						<button class="tiny secondary do-clearfilter">X</button>
 						<button class="tiny secondary do-refresh" data-bind="disable: !isConnected()"><img src="assets/svg/refresh.svg" /></button>
 					</div>
@@ -189,7 +190,7 @@
 
 						<div class="small-12 columns">
 							<label for="desc">Description*:</label>
-							<textarea id="desc" data-bind="value:activityDesc, valueUpdate: 'keyup'"></textarea>
+							<textarea tabindex="2" id="desc" data-bind="value:activityDesc, valueUpdate: 'keyup'"></textarea>
 						</div>
 
 						<div class="small-3 columns">
@@ -313,6 +314,24 @@
 			<a class="close-reveal-modal">&#215;</a>
 
 		</div>
+
+		<div id="shortcutMenu" class="reveal-modal" data-reveal>
+
+			<p><kbd>Ctrl</kbd> + <kbd>Enter</kbd> - Send time</p>
+			<p><kbd>Space</kbd> - Start/Stop timer</p>
+			<p><kbd>Ctrl/Cmd</kbd> + <kbd>F</kbd> - Filter Projects
+			<p><kbd>F5</kbd> or <kbd>Ctrl/Cmd</kbd> + <kbd>R</kbd> - Refresh projects</p>
+			<p><kbd>Ctrl/Cmd</kbd> + <kbd>E</kbd> - Edit timer value</p>
+			<p><kbd>Ctrl/Cmd</kbd> + <kbd>L</kbd> - Switch to "My Time"</p>
+			<p><kbd>Ctrl/Cmd</kbd> + <kbd>T</kbd> - Switch to "Timer"</p>
+			<p><kbd>Ctrl/Cmd</kbd> + <kbd>S</kbd> or <kbd>Ctrl/Cmd</kbd> + <kbd>,</kbd> - Settings</p>
+			<p><kbd>Ctrl/Cmd</kbd> + <kbd>D</kbd> - Edit Description</p>
+			<p><kbd>Esc</kbd> - Close Modal/Clear filter text</p>
+			<p><kbd>Ctrl/Cmd</kbd> + <kbd>?</kbd> - Show Help</p>
+
+			<a class="close-reveal-modal">&#215;</a>
+
+		</div>
 		
 		<!-- Libraries -->
 		<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
@@ -337,5 +356,6 @@
 		<script src="assets/js/timelogs.js"></script>
 		<script src="assets/js/authorise.js"></script>
 		<script src="assets/js/reset.js"></script>
+		<script src="assets/js/key.js"></script>
 	</body>
 </html>

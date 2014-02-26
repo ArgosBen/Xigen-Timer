@@ -30,6 +30,10 @@ $(function () {
 
 	$("." + config.DO_STARTTIME).on("click", function (e) {
 
+		if ($(this).attr("disabled")) {
+			return false;
+		}
+
 		if (!XIGENTIMER.VIEWMODEL.isTiming()) {
 
 			XIGENTIMER.TIMER.start();

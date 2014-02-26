@@ -114,9 +114,11 @@
 
 		var that = this;
 
-		this.input.on("keyup", function () {
+		this.input.on("keyup", function (e) {
 
-			that.showElements(that.matchText($(this).val()));
+			if (e.which !== 9) {
+				that.showElements(that.matchText($(this).val()));
+			}
 
 		});
 

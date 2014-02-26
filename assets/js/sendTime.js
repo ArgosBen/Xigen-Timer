@@ -15,6 +15,10 @@ $(function () {
 	config.DEFAULT_TEXT = $("." + config.SEND_CLASS).text();
 
 	$("." + config.SEND_CLASS).on("click", function () {
+		XIGENTIMER.sendTime();
+	});
+
+	XIGENTIMER.sendTime = function () {
 
 		var desc = $(config.DESC_SEL).val(),
 			taskID = XIGENTIMER.VIEWMODEL.selectedProject(),
@@ -24,7 +28,11 @@ $(function () {
 			userID,
 			logTime,
 			successFn,
-			btn = $(this);
+			btn = $("." + config.SEND_CLASS);
+
+		if (!XIGENTIMER.VIEWMODEL.canSendTime()) {
+			return false;
+		}
 
 		dur = XIGENTIMER.TIMER.getTime() / 3600;
 		dur = dur.toFixed(2);
@@ -39,7 +47,7 @@ $(function () {
 
 		};
 
-		$(this).text(config.PENDING_TEXT);
+		btn.text(config.PENDING_TEXT);
 
 		localforage.getItem("user", function (u) {
 			userID = u.UserID;
@@ -80,6 +88,6 @@ $(function () {
 
 		});
 
-	});
+	};
 
 });
