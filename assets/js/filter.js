@@ -190,7 +190,7 @@
 
 				ret = acts.filter(function (a) {
 					return a.EntityBaseID === targetID;
-				})[0];
+				})[0] || {};
 
 				estimatedHours = ret.EstimatedHours ? ret.EstimatedHours.toFixed(2) : false;
 

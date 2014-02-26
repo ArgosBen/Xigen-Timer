@@ -366,30 +366,16 @@ if (typeof XIGENTIMER !== "object") {
 			var getUserToken,
 				userToken,
 				makeRequest,
-				taskTypeID,
+				taskTypeID = XIGENTIMER.VIEWMODEL.taskTypeID(),
 				getTaskType,
 				ret;
 
-			localforage.getItem("activityCache", function (activities) {
-
-				ret = activities.filter(function (a) {
-					return a.TaskID === taskID;
-				})[0];
-
-				taskTypeID = ret.TaskTypeID;
-
-			}).then(makeRequest);
-
-			makeRequest = function () {
-
-				timer.API.base("PUT", "activities/" + taskID, {
-					"EntityBaseID" : taskID,
-					"TaskStatusID" : taskTypeID === 1 ? 18 : 8
-				}, function (success, data) {
-					callback(success);
-				});
-
-			};
+			timer.API.base("PUT", "activities/" + taskID, {
+				"EntityBaseID" : taskID,
+				"TaskStatusID" : taskTypeID === 1 ? 18 : 8
+			}, function (success, data) {
+				callback(success);
+			});
 
 		},
 
