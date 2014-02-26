@@ -6753,11 +6753,11 @@ body {
 }
 .sidebar .label {
   float: left;
-  margin-right: 10px;
+  margin-right: 0px;
 }
 .sidebar .label + span {
   float: right;
-  width: 82%;
+  width: 80%;
   display: inline-block;
 }
 .sidebar .label.success + span {
