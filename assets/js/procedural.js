@@ -83,7 +83,7 @@ $(function () {
 					localforage.setItem("baseURL", baseURL);
 
 					XIGENTIMER.VIEWMODEL.isLoggedIn(true);
-					XIGENTIMER.drawProjects(function () {
+					XIGENTIMER.VIEWMODEL.updateFromFilters(function () {
 						XIGENTIMER.updateDatePickers();
 					});
 
@@ -112,7 +112,7 @@ $(function () {
 			if (u && b) {
 				XIGENTIMER.authoriseUser(function () {
 					XIGENTIMER.VIEWMODEL.isLoggedIn(true);
-					XIGENTIMER.drawProjects(function () {
+					XIGENTIMER.VIEWMODEL.updateFromFilters(function () {
 						XIGENTIMER.updateDatePickers();
 					});
 					XIGENTIMER.API.pulse();

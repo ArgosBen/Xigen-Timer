@@ -1,6 +1,6 @@
 (function (timer) {
 
-	"use strict";
+	//"use strict";
 
 	var drawTree;
 

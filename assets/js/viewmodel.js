@@ -85,39 +85,77 @@
 		// If we aren't on OSX
 		this.notOSX = !/darwin/.test(os.platform());
 
+		// Stop the hooks firing on first init
+		this.supressChangeOne = ko.observable(true);
+		this.supressChangeTwo = ko.observable(true);
+
 		// If we should show items which are waiting for internal review
 		this.showReviewItems = ko.observable(false);
+
+		localforage.getItem("showReviewItems", function (val) {
+			if (val) {
+				that.showReviewItems(val);
+			}
+			that.supressChangeOne(false);
+		});
 
 		// If we should show items which have no end date
 		this.showInfiniteItems = ko.observable(false);
 
+		localforage.getItem("showInfiniteItems", function (val) {
+			if (val) {
+				that.showInfiniteItems(val);
+			}
+			that.supressChangeTwo(false);
+		});
+
 		// Update the body classs depending on if we are showing/hiding waiting internal review or not.
 		this.showReviewItems.subscribe(function (val) {
 
-			if (val === true) {
-				$("body").addClass("show-review");
-			} else {
-				$("body").removeClass("show-review");
-			}
+			if (!that.supressChangeOne()) {
 
-			that.updateFromFilters();
+				if (val === true) {
+					$("body").addClass("show-review");
+				} else {
+					$("body").removeClass("show-review");
+				}
+
+				localforage.setItem("showReviewItems", val);
+
+				that.updateFromFilters();
+
+			} else {
+
+				that.supressChangeOne(false);
+
+			}
 
 		});
 
 		// Update the body classs depending on if we are showing/hiding items waiting internal review or not.
 		this.showInfiniteItems.subscribe(function (val) {
 
-			if (val === true) {
-				$("body").addClass("show-infinite");
-			} else {
-				$("body").removeClass("show-infinite");
-			}
+			if (!that.supressChangeTwo()) {
 
-			that.updateFromFilters();
+				if (val === true) {
+					$("body").addClass("show-infinite");
+				} else {
+					$("body").removeClass("show-infinite");
+				}
+
+				localforage.setItem("showInfiniteItems", val);
+
+				that.updateFromFilters();
+
+			} else {
+
+				that.supressChangeTwo(false);
+
+			}
 
 		});
 
-		this.updateFromFilters = function () {
+		this.updateFromFilters = function (callback) {
 
 			var forReview = that.showReviewItems(),
 				isInfinite = that.showInfiniteItems();
@@ -126,6 +164,11 @@
 
 			XIGENTIMER.drawProjects(function () {
 				$(".do-refresh").removeClass("is-refreshing").removeAttr("disabled");
+
+				if (typeof callback === "function") {
+					callback();
+				}
+
 			}, forReview, isInfinite);
 
 		};
