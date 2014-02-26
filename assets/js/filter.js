@@ -3,10 +3,24 @@
 	"use strict";
 
 	var config = {
-		TEXT_ELEMENT: "span",
-		ACTIVE_CLASS: "is-open",
-		BREADCRUMB_CLASS: ".breadcrumbs",
-		CLEAR_CLASS: ".do-clearfilter"
+			TEXT_ELEMENT: "span",
+			ACTIVE_CLASS: "is-open",
+			BREADCRUMB_CLASS: ".breadcrumbs",
+			CLEAR_CLASS: ".do-clearfilter"
+		},
+		gui = require('nw.gui'),
+		menu = new gui.Menu(),
+		openExternal;
+
+	menu.append(new gui.MenuItem({ label: "Log time on this item" }));
+	menu.append(new gui.MenuItem({ label: "View in browser" }));
+
+	openExternal = function (ID) {
+
+		localforage.getItem("baseURL", function (b) {
+			XIGENTIMER.launchExternal(b + "/TaskDetails.aspx?ID=" + ID);
+		});
+
 	};
 
 	XIGENTIMER.ProjectFilter = function (list, input) {
@@ -121,6 +135,25 @@
 
 		});
 
+		$(document).on("contextmenu", function (e) {
+
+			if ($(e.target).parents("ul").length > 1) {
+				e.preventDefault();
+
+				menu.items[1].click = function() {
+					openExternal($(e.target).closest("li").attr("data-id"));
+				};
+
+				menu.items[0].click = function() {
+					that.selectActivity(e.target);
+				};
+
+				menu.popup(e.originalEvent.x, e.originalEvent.y);
+				return false;
+			}
+
+		});
+
 	};
 
 	XIGENTIMER.ProjectFilter.prototype.draw = function () {
@@ -131,13 +164,8 @@
 		var bc = $(config.BREADCRUMB_CLASS),
 			path = [],
 			ret,
-			targetID,
-			estimatedHours,
-			soFar,
 			handleClick,
-			getSoFar,
-			label,
-			that;
+			that = this;
 
 		if (!XIGENTIMER.BREADCRUMB_EMPTY) {
 			XIGENTIMER.BREADCRUMB_CONTAINER = bc;
@@ -148,61 +176,72 @@
 
 			e.preventDefault();
 
-			targetID = parseInt($(this).parents('li').attr("data-id"), 10);
-			that = this;
-			path = [];
-			label = $(that).find(".label");
+			that.selectActivity(this);
 
-			if (label.hasClass("alert")) {
-				XIGENTIMER.VIEWMODEL.taskTypeID(2);
-			} else if (label.hasClass("success")) {
-				XIGENTIMER.VIEWMODEL.taskTypeID(3);
+		});
+
+	};
+
+	XIGENTIMER.ProjectFilter.prototype.selectActivity = function (element) {
+
+		var targetID = parseInt($(element).parents('li').attr("data-id"), 10),
+			that = element,
+			path = [],
+			label = $(element).find(".label"),
+			bc = XIGENTIMER.BREADCRUMB_CONTAINER,
+			estimatedHours,
+			soFar,
+			ret;
+
+		if (label.hasClass("alert")) {
+			XIGENTIMER.VIEWMODEL.taskTypeID(2);
+		} else if (label.hasClass("success")) {
+			XIGENTIMER.VIEWMODEL.taskTypeID(3);
+		} else {
+			XIGENTIMER.VIEWMODEL.taskTypeID(1);
+		}
+
+		$(that).parents("li").each(function () {
+			path.push($(this).find("span").first().text());
+		});
+
+		path = path.filter(function (step) {
+			return step !== "";
+		}).reverse();
+
+		bc.empty();
+
+		$(path).each(function (i) {
+
+			if (i !== path.length - 1) {
+				bc.append("<li class='unavailable'><a href='#'>" + this + "</a></li>");
 			} else {
-				XIGENTIMER.VIEWMODEL.taskTypeID(1);
+				bc.append("<li class='current'><a href='#'>" + this + "</a></li>");
 			}
 
-			$(that).parents("li").each(function () {
-				path.push($(this).find("span").first().text());
-			});
+		});
 
-			path = path.filter(function (step) {
-				return step !== "";
-			}).reverse();
+		$("[data-estimate]").text(estimatedHours || "Working...");
+		$("[data-sofar]").text(soFar || "Working...");
 
-			bc.empty();
+		XIGENTIMER.VIEWMODEL.selectedProject(targetID);
 
-			$(path).each(function (i) {
+		localforage.getItem("activityCache", function (acts) {
 
-				if (i !== path.length - 1) {
-					bc.append("<li class='unavailable'><a href='#'>" + this + "</a></li>");
-				} else {
-					bc.append("<li class='current'><a href='#'>" + this + "</a></li>");
-				}
+			ret = acts.filter(function (a) {
+				return a.EntityBaseID === targetID;
+			})[0] || {};
 
-			});
+			estimatedHours = ret.EstimatedHours ? ret.EstimatedHours.toFixed(2) : false;
 
-			$("[data-estimate]").text(estimatedHours || "Working...");
-			$("[data-sofar]").text(soFar || "Working...");
+			XIGENTIMER.API.getTimeForTask(targetID, function (dur) {
+				soFar = dur.toFixed(2);
 
-			XIGENTIMER.VIEWMODEL.selectedProject(targetID);
-
-			localforage.getItem("activityCache", function (acts) {
-
-				ret = acts.filter(function (a) {
-					return a.EntityBaseID === targetID;
-				})[0] || {};
-
-				estimatedHours = ret.EstimatedHours ? ret.EstimatedHours.toFixed(2) : false;
-
-				XIGENTIMER.API.getTimeForTask(targetID, function (dur) {
-					soFar = dur.toFixed(2);
-
-					$("[data-estimate]").text(estimatedHours || "0.00");
-					$("[data-sofar]").text(soFar || "---");
-
-				});
+				$("[data-estimate]").text(estimatedHours || "0.00");
+				$("[data-sofar]").text(soFar || "---");
 
 			});
+
 		});
 
 	};
