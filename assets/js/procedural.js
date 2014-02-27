@@ -161,7 +161,7 @@ $(function () {
 	XIGENTIMER.BREADCRUMB_EMPTY= $(".breadcrumbs").contents();
 
 	// Edit timelog button
-	$(".time-table").on("click", ".button", function () {
+	$(".time-table").on("click", ".do-editTimeLog", function () {
 		XIGENTIMER.editTimeLog($(this).parents("tr").attr("data-id"), this);
 	});
 
