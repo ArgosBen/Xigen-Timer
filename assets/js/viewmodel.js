@@ -183,6 +183,7 @@
 		this.selectTiming = function () {
 			that.isEditingTime(true);
 			that.isRestoringTime(false);
+			that.isViewingTasks(false);
 		};
 
 		// Change to overview page
