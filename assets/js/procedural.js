@@ -41,6 +41,7 @@ $(function () {
 		localforage.setItem("userName", null);
 		localforage.setItem("baseURL", null);
 		localforage.setItem("user", null);
+		localforage.setItem("savedStates", null);
 		XIGENTIMER.reset();
 		XIGENTIMER.VIEWMODEL.reset(true);
 		$(".login").fadeIn(200);
@@ -136,7 +137,7 @@ $(function () {
 	// View online button
 	$(".do-viewonline").on("click", function () {
 		if ($(this).attr("disabled")) { return false; }
-		
+
 		localforage.getItem("baseURL", function (u) {
 			u = u.replace("/rest/v1/", "");
 			XIGENTIMER.launchExternal(u + "/TaskDetails.aspx?ID=" + XIGENTIMER.VIEWMODEL.selectedProject());

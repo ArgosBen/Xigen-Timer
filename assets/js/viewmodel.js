@@ -28,12 +28,15 @@
 		// If the user is currently editing their timelogs
 		this.isEditingTime = ko.observable(false);
 
+		// If the user is currently viewing stored time
+		this.isRestoringTime = ko.observable(false);
+
 		// The TaskTypeID of the currently selected task
 		this.taskTypeID = ko.observable(1);
 
 		// If the overview (timer page) is selected/open
 		this.isOverview = ko.computed(function () {
-			return !that.isEditingTime() && that.isLoggedIn();
+			return !that.isEditingTime() && that.isLoggedIn() && !that.isRestoringTime();
 		});
 
 		// Used to force update
@@ -176,11 +179,18 @@
 		// Change timing page
 		this.selectTiming = function () {
 			that.isEditingTime(true);
+			that.isRestoringTime(false);
 		};
 
 		// Change to overview page
 		this.selectOverview = function () {
 			that.isEditingTime(false);
+			that.isRestoringTime(false);
+		};
+
+		this.selectRestore = function () {
+			that.isEditingTime(false);
+			that.isRestoringTime(true);
 		};
 
 		// Update the dummy function so that canSendTime will recompute
@@ -224,6 +234,28 @@
 			XIGENTIMER.API.pulse();
 
 		};
+
+		this.savedStates = ko.observableArray();
+
+		localforage.getItem("savedStates", function (val) {
+			if (val) {
+				that.savedStates(val);
+			}
+		});
+
+		this.saveState = function () {
+			XIGENTIMER.STATE.save();
+		};
+
+		this.savedStates.subscribe(function (val) {
+			localforage.setItem("savedStates", val);
+		});
+
+		this.canSaveState = ko.computed(function () {
+
+			return !that.isTiming() && that.hasProjectSelected();
+
+		});
 
 	};
 

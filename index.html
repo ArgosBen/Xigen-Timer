@@ -39,6 +39,7 @@
 					<li data-bind="visible:isLoggedOut" class="active"><a href="#">Login</a></li>
 					<li data-bind="visible:isLoggedIn, css: { active: isOverview }"><a href="#" data-bind="click: selectOverview">Timer</a></li>
 					<li data-bind="visible:isLoggedIn, css: { active: isEditingTime }"><a href="#" data-bind="click: selectTiming">My Time</a></li>
+					<li data-bind="visible:isLoggedIn, css: { active: isRestoringTime }"><a href="#" data-bind="click: selectRestore">States</a></li>
 					<li data-bind="visible:isLoggedIn" data-reveal-id="settingsMenu" ><a href="#">Settings</a></li>
 					<li data-bind="visible:isLoggedIn" data-reveal-id="shortcutMenu" ><a href="#">Help</a></li>
 				</ul>
@@ -176,15 +177,19 @@
 							<div class="timer"></div>
 						</div>
 
-						<div class="small-4 columns">
+						<div class="small-3 columns">
 							<button class="do-timestart button expand success" disabled data-bind="enable: hasProjectSelected">Start</button>
 						</div>
 
-						<div class="small-4 columns">
+						<div class="small-3 columns">
+							<button class="button expand" data-bind="enable: canSaveState, click: saveState">Save State</button>
+						</div>
+
+						<div class="small-3 columns">
 							<button class="do-edit button secondary expand" data-reveal-id="customTime" data-bind="enable: canEdit" >Edit</button>
 						</div>
 
-						<div class="small-4 columns">
+						<div class="small-3 columns">
 							<button class="do-send button expand" data-bind="enable: canSendTime, css: { secondary: !canSendTime() }">Send Hours</button>
 						</div>
 
@@ -214,7 +219,42 @@
 
 			</div>
 
-			<!-- Edit Time -->
+			<!-- Restore Time -->
+			<div class="row scroll-container" data-bind="visible: isRestoringTime">
+
+				<div class="small-12 columns">
+
+					<table class="time-table-state">
+
+						<thead>
+							<tr>
+								<th>State Save Time:</th>
+								<th>Task</th>
+								<th>Duration</th>
+								<th>Description</th>
+								<th></th>
+							</tr>
+						</thead>
+
+						<tbody data-bind="foreach: savedStates">
+							<tr data-bind="attr: { 'data-id' : $index }">
+								<td data-bind="text: DateStored"></td>
+								<td data-bind="html: '<strong>' + ProjectName + ':</strong><br/>' + TaskName"></td>
+								<td data-bind="text: TimeLogged[0]"></td>
+								<td data-bind="text: Desc || '[Empty]'"></td>
+								<td>
+									<a class="button tiny info do-restore">Restore</a>
+									<a class="button tiny alert do-deleteState">Delete</a>
+								</td>
+							</tr>
+						</tbody>
+
+					</table>
+
+				</div>
+
+			</div>
+
 			<div class="row scroll-container" data-bind="visible: isEditingTime">
 
 				<div class="small-6 columns is-datepicker">
@@ -358,5 +398,6 @@
 		<script src="assets/js/authorise.js"></script>
 		<script src="assets/js/reset.js"></script>
 		<script src="assets/js/key.js"></script>
+		<script src="assets/js/state.js"></script>
 	</body>
 </html>

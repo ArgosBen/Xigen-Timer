@@ -10,7 +10,7 @@
 	
 	XIGENTIMER.launchExternal = function (url) {
 		gui.Shell.openExternal(url);
-	}
+	};
 
 	XIGENTIMER.close = function (url) {
 		if (XIGENTIMER.VIEWMODEL.isLoggedIn() && (XIGENTIMER.VIEWMODEL.isTiming() || XIGENTIMER.TIMER.getTime().time > 1)) {
@@ -30,11 +30,11 @@
 			win.close();
 	
 		}
-	}
+	};
 
 	XIGENTIMER.minimize = function (url) {
 		win.minimize();
-	}
+	};
 
 	XIGENTIMER.goToTray = function () {
 

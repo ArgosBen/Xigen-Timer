@@ -6876,44 +6876,65 @@ body {
   color: white;
 }
 
-.time-table {
+.time-table,
+.time-table-state {
   margin: 15px 0px;
   width: 100%;
 }
-.time-table th:nth-child(1) {
+.time-table th:nth-child(1),
+.time-table-state th:nth-child(1) {
   width: 25%;
 }
-.time-table th:nth-child(2) {
+.time-table th:nth-child(2),
+.time-table-state th:nth-child(2) {
   width: 25%;
 }
-.time-table th:nth-child(3) {
+.time-table th:nth-child(3),
+.time-table-state th:nth-child(3) {
   width: 10%;
 }
-.time-table th:nth-child(4) {
+.time-table th:nth-child(4),
+.time-table-state th:nth-child(4) {
   width: 25%;
 }
-.time-table th:nth-child(5) {
+.time-table th:nth-child(5),
+.time-table-state th:nth-child(5) {
   width: 10%;
 }
-.time-table td:nth-child(3) {
+.time-table td:nth-child(3),
+.time-table-state td:nth-child(3) {
   text-align: center;
 }
-.time-table td {
+.time-table td,
+.time-table-state td {
   vertical-align: top;
 }
-.time-table .button {
+.time-table .button,
+.time-table-state .button {
   margin-bottom: 0px;
 }
-.time-table textarea, .time-table input {
+.time-table textarea, .time-table input,
+.time-table-state textarea,
+.time-table-state input {
   margin-bottom: 0px;
 }
-.time-table textarea {
+.time-table textarea,
+.time-table-state textarea {
   resize: none;
   height: 85px;
 }
-.time-table .error {
+.time-table .error,
+.time-table-state .error {
   border-color: #f04124;
 }
-.time-table a:hover {
+.time-table a:hover,
+.time-table-state a:hover {
   text-decoration: underline;
+}
+
+.time-table-state .button {
+  width: 100%;
+}
+.time-table-state .button + .button {
+  margin-top: 5px;
 }
