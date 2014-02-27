@@ -135,6 +135,8 @@ $(function () {
 
 	// View online button
 	$(".do-viewonline").on("click", function () {
+		if ($(this).attr("disabled")) { return false; }
+		
 		localforage.getItem("baseURL", function (u) {
 			u = u.replace("/rest/v1/", "");
 			XIGENTIMER.launchExternal(u + "/TaskDetails.aspx?ID=" + XIGENTIMER.VIEWMODEL.selectedProject());
@@ -217,6 +219,10 @@ $(function () {
 
 		if (combo === "HELP") {
 			$("#shortcutMenu").foundation("reveal", "open");
+		}
+
+		if (combo === "VIEW") {
+			$(".do-viewonline").trigger("click");
 		}
 
 	});

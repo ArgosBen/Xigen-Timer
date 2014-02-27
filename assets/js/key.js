@@ -16,7 +16,8 @@
 			T: 84,
 			D: 68,
 			COMMA: 188,
-			QM: 191
+			QM: 191,
+			V: 86
 		},
 		matchesShortcut;
 
@@ -33,7 +34,8 @@
 		"SETTINGS" : [keys.CTRL, keys.S],
 		"SETTINGS_ALT" : [keys.CTRL, keys.COMMA],
 		"DESC" : [keys.CTRL, keys.D],
-		"HELP" : [keys.CTRL, keys.QM]
+		"HELP" : [keys.CTRL, keys.QM],
+		"VIEW" : [keys.CTRL, keys.V]
 	};
 
 	matchesShortcut = function (event) {
