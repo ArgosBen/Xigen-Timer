@@ -4,7 +4,7 @@
 	"use strict";
 
 	var config = {
-		TABLE_CLASS: ".time-table",
+		TABLE_CLASS: ".time-table-logs",
 		TEXT_EDIT: "Edit",
 		TEXT_SAVE: "Save",
 		TEXT_SAVING: "Saving..."

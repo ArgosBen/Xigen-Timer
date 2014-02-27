@@ -49,3 +49,32 @@
 	}
 
 }
+
+.time-table-tasks {
+
+	$hot-color: $alert-color;
+	$urgent-color: lighten($hot-color, 10%);
+	$high-color: lighten($urgent-color, 10%);
+	$medium-color: lighten($high-color, 10%);
+	$low-color: lighten($medium-color, 10%);
+
+	th:nth-child(1) { width: 20%; }
+	th:nth-child(2) { width: 20%; }
+	th:nth-child(3) { width: 15%; }
+	th:nth-child(4) { width: 15%; }
+	th:nth-child(5) { width: 15%; }
+	th:nth-child(6) { width: 15%; }
+
+	td {
+		vertical-align: middle;
+	}
+
+	[data-priority]  { text-align: center; }
+	[data-priority='5'] { background: $hot-color };
+	[data-priority='4'] { background: $urgent-color };
+	[data-priority='3'] { background: $high-color };
+	[data-priority='2'] { background: $medium-color };
+	[data-priority='1'] { background: $low-color };
+
+
+}

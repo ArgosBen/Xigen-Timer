@@ -31,12 +31,15 @@
 		// If the user is currently viewing stored time
 		this.isRestoringTime = ko.observable(false);
 
+		// If the user is currently viewing their tasks
+		this.isViewingTasks = ko.observable(false);
+
 		// The TaskTypeID of the currently selected task
 		this.taskTypeID = ko.observable(1);
 
 		// If the overview (timer page) is selected/open
 		this.isOverview = ko.computed(function () {
-			return !that.isEditingTime() && that.isLoggedIn() && !that.isRestoringTime();
+			return !that.isEditingTime() && that.isLoggedIn() && !that.isRestoringTime() && !that.isViewingTasks();
 		});
 
 		// Used to force update
@@ -186,11 +189,19 @@
 		this.selectOverview = function () {
 			that.isEditingTime(false);
 			that.isRestoringTime(false);
+			that.isViewingTasks(false);
 		};
 
 		this.selectRestore = function () {
 			that.isEditingTime(false);
 			that.isRestoringTime(true);
+			that.isViewingTasks(false);
+		};
+
+		this.selectTasks = function () {
+			that.isEditingTime(false);
+			that.isRestoringTime(false);
+			that.isViewingTasks(true);
 		};
 
 		// Update the dummy function so that canSendTime will recompute
@@ -235,7 +246,7 @@
 
 		};
 
-		this.savedStates = ko.observableArray();
+		this.savedStates = ko.observableArray([]);
 
 		localforage.getItem("savedStates", function (val) {
 			if (val) {
@@ -256,6 +267,16 @@
 			return !that.isTiming() && that.hasProjectSelected();
 
 		});
+
+		this.taskList = ko.observableArray([]);
+
+		this.priorities = {
+			5 : "<strong>Mission Critical</strong>",
+			4 : "Urgent",
+			3 : "High",
+			2 : "Medium",
+			1 : "Low",
+		};
 
 	};
 

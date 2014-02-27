@@ -325,6 +325,24 @@ if (typeof XIGENTIMER !== "object") {
 
 		},
 
+		getProjectName: function (projectID, callback) {
+
+			var ret;
+
+			localforage.getItem("projectCache", function (projects) {
+
+				ret = projects.filter(function (proj) {
+					return proj.ProjectID === projectID;
+				})[0].Name;
+
+				if (typeof callback === "function") {
+					callback(ret);
+				}
+
+			});
+
+		},
+
 		logTime: function (userID, taskID, duration, isBillable, description, callback) {
 
 			var getUserToken,

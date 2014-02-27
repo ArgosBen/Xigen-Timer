@@ -38,6 +38,7 @@
 				<ul class="left">
 					<li data-bind="visible:isLoggedOut" class="active"><a href="#">Login</a></li>
 					<li data-bind="visible:isLoggedIn, css: { active: isOverview }"><a href="#" data-bind="click: selectOverview">Timer</a></li>
+					<li data-bind="visible:isLoggedIn, css: { active: isViewingTasks }"><a href="#" data-bind="click: selectTasks">My Tasks</a></li>
 					<li data-bind="visible:isLoggedIn, css: { active: isEditingTime }"><a href="#" data-bind="click: selectTiming">My Time</a></li>
 					<li data-bind="visible:isLoggedIn, css: { active: isRestoringTime }"><a href="#" data-bind="click: selectRestore">States</a></li>
 					<li data-bind="visible:isLoggedIn" data-reveal-id="settingsMenu" ><a href="#">Settings</a></li>
@@ -254,7 +255,7 @@
 						<!-- ko if: savedStates().length === 0 -->
 						<tbody>
 							<tr>
-								<td colspan="4" align="center"><strong>No saved states. You clearly haven't been multitasking enough.</strong></td>
+								<td colspan="5" align="center"><strong>No saved states. You clearly haven't been multitasking enough.</strong></td>
 							</tr>
 						</tbody>
 						<!-- /ko -->
@@ -291,7 +292,7 @@
 
 				<div class="small-12 columns">
 
-					<table class="time-table">
+					<table class="time-table time-table-logs">
 
 						<thead>
 							<tr>
@@ -304,6 +305,51 @@
 						</thead>
 
 						<tbody></tbody>
+
+					</table>
+
+				</div>
+
+			</div>
+
+			<!-- View Tasks -->
+			<div class="row scroll-container" data-bind="visible: isViewingTasks">
+
+				<div class="small-12 columns">
+
+					<table class="time-table time-table-tasks">
+
+						<thead>
+							<tr>
+								<th>Project</th>
+								<th>Task</th>
+								<th>Estimated Hrs.</th>
+								<th>Due Date</th>
+								<th>Priority</th>
+								<th></th>
+							</tr>
+						</thead>
+
+						<!-- ko if: taskList().length > 0 -->
+						<tbody data-bind="foreach: taskList()">
+							<tr data-bind="attr: { 'data-id' : TaskID }">
+								<td><a target="_system" data-bind="attr: { 'href' : ProjectURL }, text: ProjectName"></a></td>
+								<td><a target="_system" data-bind="attr: { 'href' : TaskURL }, text: Name"></a></td>
+								<td data-bind="text: EstimatedHours || 'No Estimate'"></td>
+								<td data-bind="text: DueDate"></td>
+								<td data-bind="attr: {'data-priority':PriorityID}, html: $root.priorities[PriorityID]"></td>
+								<td><a class="button success expand tiny">Log Time</a></td>
+							</tr>
+						</tbody>
+						<!-- /ko -->
+
+						<!-- ko if: taskList().length === 0 -->
+						<tbody>
+							<tr>
+								<td colspan="6" align="center"><strong>No tasks. May as well go home...</strong></td>
+							</tr>
+						</tbody>
+						<!-- /ko -->
 
 					</table>
 
@@ -409,5 +455,6 @@
 		<script src="assets/js/reset.js"></script>
 		<script src="assets/js/key.js"></script>
 		<script src="assets/js/state.js"></script>
+		<script src="assets/js/tasks.js"></script>
 	</body>
 </html>

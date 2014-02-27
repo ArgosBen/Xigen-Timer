@@ -91,6 +91,9 @@ $(function () {
 					// Check for a connection
 					XIGENTIMER.API.pulse();
 
+					// Draw the task list
+					XIGENTIMER.drawTaskList();
+
 					// Check every 30 seconds
 					setTimeout(function () {
 						XIGENTIMER.API.pulse();
@@ -117,6 +120,7 @@ $(function () {
 						XIGENTIMER.updateDatePickers();
 					});
 					XIGENTIMER.API.pulse();
+					XIGENTIMER.drawTaskList();
 
 					// Check every 30 seconds
 					setTimeout(function () {
