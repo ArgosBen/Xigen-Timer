@@ -159,9 +159,9 @@ $(function () {
 	});
 
 	// Key bindings
-	$("#desc, .filter-text").on("keyup", function (e) {
-		if (e.which === 32) {
-			return false;
+	$("#desc, .filter-text").on("keydown", function (e) {
+		if (e.which === 32 || e.keyCode === 32) {
+			e.stopPropagation();
 		}
 	});
 
