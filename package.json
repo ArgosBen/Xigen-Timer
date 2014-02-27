@@ -35,6 +35,6 @@
     "restler": "~3.2.0"
   },
   "dependencies": {
-    "node-rest-client": ">=0.7.7"
+    "restler": "~3.2.0"
   }
 }
