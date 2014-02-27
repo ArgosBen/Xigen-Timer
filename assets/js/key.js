@@ -73,7 +73,7 @@
 
 	};
 
-	$(document).on("keyup", function (e) {
+	$(document).on("keydown", function (e) {
 
 		if (matchesShortcut(e)) {
 			e.preventDefault();
