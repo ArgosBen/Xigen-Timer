@@ -236,6 +236,7 @@
 							</tr>
 						</thead>
 
+						<!-- ko if: savedStates().length -->
 						<tbody data-bind="foreach: savedStates">
 							<tr data-bind="attr: { 'data-id' : $index }">
 								<td data-bind="text: DateStored"></td>
@@ -248,6 +249,15 @@
 								</td>
 							</tr>
 						</tbody>
+						<!-- /ko -->
+
+						<!-- ko if: savedStates().length === 0 -->
+						<tbody>
+							<tr>
+								<td colspan="4" align="center"><strong>No saved states. You clearly haven't been multitasking enough.</strong></td>
+							</tr>
+						</tbody>
+						<!-- /ko -->
 
 					</table>
 
