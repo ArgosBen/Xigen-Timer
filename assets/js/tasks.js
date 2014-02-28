@@ -96,8 +96,8 @@
 
 				t.TaskURL = baseURL + "TaskDetails.aspx?ID=" + t.TaskID;
 				t.ProjectURL = baseURL + "ProjectDetails.aspx?ID=" + t.ProjectID;
-				t.DueDate = moment(t.EndDate, "YYYY-MM-DD/HH:mm:ss.SS").startOf('day').add(17, 'h').add(30, 'm').fromNow();
-				t.moment = moment(t.EndDate, "YYYY-MM-DD/HH:mm:ss.SS").startOf('day').add(17, 'h').add(30, 'm');
+				t.DueDate = t.EndDate ? moment(t.EndDate, "YYYY-MM-DD/HH:mm:ss.SS").startOf('day').add(17, 'h').add(30, 'm').fromNow() : "--";
+				t.moment = t.EndDate ? moment(t.EndDate, "YYYY-MM-DD/HH:mm:ss.SS").startOf('day').add(17, 'h').add(30, 'm') : "--";
 
 				t.EstimatedHours = t.EstimatedHours ? parseFloat(t.EstimatedHours).toFixed(2) : null;
 
