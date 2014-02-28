@@ -102,7 +102,9 @@
 
 			});
 
-			timer.VIEWMODEL.savedStates.splice(id, 1);
+			if (typeof index === "number") {
+				timer.VIEWMODEL.savedStates.splice(id, 1);
+			}
 
 			XIGENTIMER.VIEWMODEL.selectOverview();
 
