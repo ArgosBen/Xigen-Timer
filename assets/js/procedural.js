@@ -138,6 +138,10 @@ $(function () {
 		XIGENTIMER.reset();
 	});
 
+	$(".time-table-tasks").on("click", ".do-selectTask", function () {
+		XIGENTIMER.selectTask(this);
+	});
+
 	// View online button
 	$(".do-viewonline").on("click", function () {
 		if ($(this).attr("disabled")) { return false; }

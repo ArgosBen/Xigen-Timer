@@ -18,8 +18,6 @@
 
 		timer.STATE.restore(id);
 
-		timer.VIEWMODEL.savedStates.splice(id, 1);
-
 	});
 
 	$(config.STATE_TABLE).on("click", config.DELETE_SEL, function () {
@@ -54,7 +52,7 @@
 
 		restore: function (index) {
 
-			var state = timer.VIEWMODEL.savedStates()[index],
+			var state = typeof index === "number" ? timer.VIEWMODEL.savedStates()[index] : index,
 				estimatedHours,
 				soFar,
 				ret;
@@ -66,6 +64,8 @@
 				}
 
 			}
+
+			XIGENTIMER.reset();
 
 			// Restore breadcrumb text
 			XIGENTIMER.BREADCRUMB_CONTAINER.html(state.Breadcrumb);
@@ -101,6 +101,8 @@
 				});
 
 			});
+
+			timer.VIEWMODEL.savedStates.splice(id, 1);
 
 			XIGENTIMER.VIEWMODEL.selectOverview();
 

@@ -2,7 +2,8 @@
 
 	"use strict";
 
-	var main;
+	var main,
+		projects;
 
 	timer.drawTaskList = function () {
 
@@ -16,7 +17,6 @@
 			baseTasks,
 			filterTasks,
 			getAdditionalData,
-			projects,
 			UID,
 			enhanceData,
 			baseURL;
@@ -49,7 +49,7 @@
 		filterTasks = function () {
 
 			tasks = tasks.filter(function (task) {
-				return task.EndDate && task.CanEdit && !task.HasChild;
+				return task.CanEdit && !task.HasChild;
 			});
 
 			if (timer.VIEWMODEL.showReviewItems()) {
@@ -59,6 +59,12 @@
 			} else {
 				tasks = tasks.filter(function (task) {
 					return task.TaskStatusID === 1 || task.TaskStatusID === 4;
+				});
+			}
+
+			if (!timer.VIEWMODEL.showInfiniteItems()) {
+				tasks = tasks.filter(function (task) {
+					return task.EndDate;
 				});
 			}
 
@@ -93,6 +99,8 @@
 				t.DueDate = moment(t.EndDate, "YYYY-MM-DD/HH:mm:ss.SS").startOf('day').add(17, 'h').add(30, 'm').fromNow();
 				t.moment = moment(t.EndDate, "YYYY-MM-DD/HH:mm:ss.SS").startOf('day').add(17, 'h').add(30, 'm');
 
+				t.EstimatedHours = t.EstimatedHours ? parseFloat(t.EstimatedHours).toFixed(2) : null;
+
 				t.ProjectName = projects.filter(function (proj) {
 					return proj.ProjectID === t.ProjectID;
 				})[0].Name;
@@ -100,11 +108,9 @@
 			});
 
 			tasks = tasks.sort(function (a, b) {
-
 				if (b.PriorityID === a.PriorityID) {
-					return +b.moment - +a.moment;
+					return +a.moment - +b.moment;
 				}
-
 				return b.PriorityID - a.PriorityID;
 			});
 
@@ -113,6 +119,46 @@
 			});
 
 		};
+
+	};
+
+	timer.selectTask = function (trigger) {
+
+		console.log("SelectingTask");
+
+		if (timer.VIEWMODEL.activityDesc() || timer.TIMER.getTime().time > 1) {
+			if (!confirm("There is time in the timer that hasn't been sent yet, or the timer is running. Are you sure you want to load this task?")) {
+				return false;
+			}
+		}
+
+		var task,
+			targetID = parseInt($(trigger).parents("tr").attr("data-id"), 10),
+			ProjectName;
+
+		localforage.getItem("activityCache", function (c) {
+			task = c.filter(function (task) {
+				return task.TaskID === targetID;
+			})[0];
+
+			ProjectName = projects.filter(function (proj) {
+				return proj.ProjectID === task.ProjectID;
+			})[0].Name;
+
+			timer.reset();
+			timer.TIMER.stop();
+			timer.STATE.restore({
+				"TaskName" : task.Name,
+				"Breadcrumb" : "<li class='unavailable'><a href='#'>" + ProjectName + "</a></li><li class='current'><a href='#'>" + task.Name + "</a></li>",
+				"TaskID" : task.TaskID,
+				"TaskType" : task.TaskTypeID,
+				"TimeLogged" : [0, 0],
+				"Desc" : "",
+				"Billable" : true,
+				"ForReview" : false
+			});
+
+		});
 
 	};
 

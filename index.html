@@ -40,7 +40,7 @@
 					<li data-bind="visible:isLoggedIn, css: { active: isOverview }"><a href="#" data-bind="click: selectOverview">Timer</a></li>
 					<li data-bind="visible:isLoggedIn, css: { active: isViewingTasks }"><a href="#" data-bind="click: selectTasks">My Tasks</a></li>
 					<li data-bind="visible:isLoggedIn, css: { active: isEditingTime }"><a href="#" data-bind="click: selectTiming">My Time</a></li>
-					<li data-bind="visible:isLoggedIn, css: { active: isRestoringTime }"><a href="#" data-bind="click: selectRestore">States</a></li>
+					<li data-bind="visible:isLoggedIn, css: { active: isRestoringTime }"><a href="#" data-bind="click: selectRestore">States <span data-bind="visible: savedStates().length > 0, text: savedStates().length" class='label secondary'></span></a></li>
 					<li data-bind="visible:isLoggedIn" data-reveal-id="settingsMenu" ><a href="#">Settings</a></li>
 					<li data-bind="visible:isLoggedIn" data-reveal-id="shortcutMenu" ><a href="#">Help</a></li>
 				</ul>
@@ -315,6 +315,14 @@
 			<!-- View Tasks -->
 			<div class="row scroll-container" data-bind="visible: isViewingTasks">
 
+				<div class="small-6 columns is-datepicker">
+					<div class="row collapse">
+						<div class="small-5 columns">
+				        	<a class="button secondary expand tiny do-refresh">Refresh List <img src="assets/svg/refresh.svg"></a>
+				        </div>
+					</div>
+				</div>
+
 				<div class="small-12 columns">
 
 					<table class="time-table time-table-tasks">
@@ -338,7 +346,7 @@
 								<td data-bind="text: EstimatedHours || 'No Estimate'"></td>
 								<td data-bind="text: DueDate"></td>
 								<td data-bind="attr: {'data-priority':PriorityID}, html: $root.priorities[PriorityID]"></td>
-								<td><a class="button success expand tiny">Log Time</a></td>
+								<td><a class="button success do-selectTask expand tiny">Send to Timer</a></td>
 							</tr>
 						</tbody>
 						<!-- /ko -->

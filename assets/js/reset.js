@@ -11,6 +11,11 @@
 	timer.reset = function () {
 
 		XIGENTIMER.TIMER.setTime(0);
+
+		if (timer.VIEWMODEL.isTiming()) {
+			$(".do-timestart").trigger("click");
+		}
+
 		XIGENTIMER.UPDATEPOPUP.find("input").val(0);
 		$(config.DESC_SEL).val("").trigger("change");
 		$(config.BILLABLE_CHECKBOX).prop("checked", true);

@@ -63,11 +63,10 @@
 	th:nth-child(3) { width: 15%; }
 	th:nth-child(4) { width: 15%; }
 	th:nth-child(5) { width: 15%; }
-	th:nth-child(6) { width: 15%; vertical-align: top; }
+	th:nth-child(6) { width: 15%; }
 
-	td {
-		vertical-align: middle;
-	}
+	td { vertical-align: middle; }
+	td:nth-child(6) { vertical-align: top; }
 
 	[data-priority]  { text-align: center; }
 	[data-priority='5'] { background: $hot-color };
@@ -75,6 +74,4 @@
 	[data-priority='3'] { background: $high-color };
 	[data-priority='2'] { background: $medium-color };
 	[data-priority='1'] { background: $low-color };
-
-
 }
