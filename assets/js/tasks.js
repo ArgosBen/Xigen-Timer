@@ -13,6 +13,7 @@
 	main = function () {
 
 		var tasks,
+			baseTasks,
 			filterTasks,
 			getAdditionalData,
 			projects,
@@ -22,6 +23,7 @@
 
 		localforage.getItem("activityCache", function (c) {
 			tasks = c;
+			baseTasks = c;
 
 			localforage.getItem("baseURL", function (u) {
 				baseURL = u.charAt(u.length - 1) === "/" ? u : u + "/";
@@ -47,8 +49,18 @@
 		filterTasks = function () {
 
 			tasks = tasks.filter(function (task) {
-				return task.EndDate && task.CanEdit && !task.HasChild && (task.TaskStatusID === 18 || task.TaskStatusID === 1);
+				return task.EndDate && task.CanEdit && !task.HasChild;
 			});
+
+			if (timer.VIEWMODEL.showReviewItems()) {
+				tasks = tasks.filter(function (task) {
+					return task.TaskStatusID === 18 || task.TaskStatusID === 1 || task.TaskStatusID === 4;
+				});
+			} else {
+				tasks = tasks.filter(function (task) {
+					return task.TaskStatusID === 1 || task.TaskStatusID === 4;
+				});
+			}
 
 			enhanceData();
 

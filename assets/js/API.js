@@ -267,12 +267,13 @@ if (typeof XIGENTIMER !== "object") {
 						loaded += 1;
 
 						activityCache = activityCache.concat(data);
-						localforage.setItem("activityCache", activityCache);
 
 						hierachy[item.EntityBaseID].Activities = tidyActivites(data, filterFunc);
 
 						if (loaded === projectCache.length && typeof callback === "function") {
-							callback(hierachy);
+							localforage.setItem("activityCache", activityCache, function () {
+								callback(hierachy);
+							});
 						}
 					});
 
