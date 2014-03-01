@@ -5,6 +5,7 @@ module.exports = function(grunt) {
     pkg: grunt.file.readJSON('package.json'),
     nodewebkit: {
       options: {
+          version: '0.9.2',
           build_dir: './webkitbuilds', // Where the build version of my node-webkit app is saved
           mac: false, // We want to build it for mac
           win: true, // We want to build it for win
