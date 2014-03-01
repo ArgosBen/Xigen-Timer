@@ -65,7 +65,7 @@ $(function () {
 
 		console.log(act);
 
-		$(".activity-content").html(act.Description);
+		$(".activity-content").html(act.Description || "<p>[No Description]</p>");
 
 		$(".content-wrap a").each(function () {
 			$(this).attr("target", "_system");
