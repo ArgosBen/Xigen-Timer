@@ -46,7 +46,7 @@
 			}
 
 			// If we dont have any children, make the item clickable.
-			if (this.HasChild === 0) {
+			if (this.HasChild === 0 || this.HasChild > 0 && this.Activities.length === 0) {
 				$(topLevel).append("<a href='#'>" + label + "<span>" + this.Name + "</span></a>");
 			} else {
 				$(topLevel).append("<span>" + this.Name + "</span>");
