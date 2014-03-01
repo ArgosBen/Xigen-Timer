@@ -58,6 +58,12 @@
 	$medium-color: lighten($high-color, 10%);
 	$low-color: lighten($medium-color, 10%);
 
+	$today-color: $success-color;
+	$overdue-color: darken($today-color, 20%);
+	$super-overdue-color: darken($overdue-color, 20%);
+	$ontime-color: lighten($today-color, 20%);
+	$super-ontime-color: lighten($ontime-color, 20%);
+
 	th:nth-child(1) { width: 20%; }
 	th:nth-child(2) { width: 20%; }
 	th:nth-child(3) { width: 15%; }
@@ -68,10 +74,19 @@
 	td { vertical-align: middle; }
 	td:nth-child(6) { vertical-align: top; }
 
-	[data-priority]  { text-align: center; }
+	[data-priority],
+	[data-urgency]  { text-align: center; }
 	[data-priority='5'] { background: $hot-color };
 	[data-priority='4'] { background: $urgent-color };
 	[data-priority='3'] { background: $high-color };
 	[data-priority='2'] { background: $medium-color };
 	[data-priority='1'] { background: $low-color };
+
+	[data-urgency='overdue'] { background: $overdue-color; color: #FFFFFF; font-weight: bold; };
+	[data-urgency='super-overdue'] { background: $super-overdue-color; color: #FFFFFF; font-weight: bold; };
+	[data-urgency='ontime'] { background: $ontime-color };
+	[data-urgency='super-ontime'] { background: $super-ontime-color };
+	[data-urgency='today'] { background: $today-color };
+	[data-urgency='nodate'] { background: darken(#FFFFFF, 5%) };
+
 }

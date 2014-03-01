@@ -282,6 +282,24 @@
 			1 : "Low",
 		};
 
+		this.dateMagnitude = function (val) {
+
+			if (val === 0) {
+				return 'today'
+			} else if (val < 0 && val >= -7) {
+				return 'overdue'
+			} else if (val < -7) {
+				return 'super-overdue'
+			} else if (val > 0 && val <= 7) {
+				return 'ontime'
+			} else if (val > 7) {
+				return 'super-ontime'
+			} else {
+				return 'nodate';
+			}
+
+		}
+
 	};
 
 	$(function () {

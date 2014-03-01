@@ -98,6 +98,7 @@
 				t.ProjectURL = baseURL + "ProjectDetails.aspx?ID=" + t.ProjectID;
 				t.DueDate = t.EndDate ? moment(t.EndDate, "YYYY-MM-DD/HH:mm:ss.SS").startOf('day').add(17, 'h').add(30, 'm').fromNow() : "--";
 				t.moment = t.EndDate ? moment(t.EndDate, "YYYY-MM-DD/HH:mm:ss.SS").startOf('day').add(17, 'h').add(30, 'm') : "--";
+				t.daysDifference = typeof t.moment !== "string" ? t.moment.diff(moment(), 'days') : null;
 
 				t.EstimatedHours = t.EstimatedHours ? parseFloat(t.EstimatedHours).toFixed(2) : null;
 

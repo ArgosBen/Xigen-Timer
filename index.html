@@ -344,7 +344,7 @@
 								<td><a target="_system" data-bind="attr: { 'href' : ProjectURL }, text: ProjectName"></a></td>
 								<td><a target="_system" data-bind="attr: { 'href' : TaskURL }, text: Name"></a></td>
 								<td data-bind="text: EstimatedHours || 'No Estimate'"></td>
-								<td data-bind="text: DueDate"></td>
+								<td data-bind="text: DueDate, attr: { 'data-urgency' : $root.dateMagnitude(daysDifference) }"></td>
 								<td data-bind="attr: {'data-priority':PriorityID}, html: $root.priorities[PriorityID]"></td>
 								<td><a class="button success do-selectTask expand tiny">Send to Timer</a></td>
 							</tr>
