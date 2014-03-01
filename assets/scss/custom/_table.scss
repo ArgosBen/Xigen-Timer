@@ -58,7 +58,7 @@
 	$medium-color: lighten($high-color, 10%);
 	$low-color: lighten($medium-color, 10%);
 
-	$today-color: $success-color;
+	$today-color: #ee8822;
 	$overdue-color: darken($today-color, 20%);
 	$super-overdue-color: darken($overdue-color, 20%);
 	$ontime-color: lighten($today-color, 20%);

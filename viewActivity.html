@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="description" content="Demo project">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,300' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" href="assets/css/foundation.css">
+		<link rel="stylesheet" href="assets/css/flipclock.css">
+		<link rel="stylesheet" href="assets/css/pikaday.css">
+		<style type="text/css"></style>
+	</head>
+	<body>
+		<!-- App Nav -->
+		<nav class="top-bar" data-topbar>
+			<ul class="title-area">
+				<li class="name">
+					<h1><img src="assets/svg/xigen_logo_whiteout.svg" alt="Xigen" /></h1>
+				</li>
+			</ul>
+
+			<section class="top-bar-section">
+				<!-- Right Nav Section -->
+				<ul class="right">
+					<li class="has-form">
+						<a class="button secondary is-refreshactivity do-refresh"><img src="assets/svg/refresh.svg"></a>
+					</li>
+					<li class="has-form">
+						<a class="button success do-viewonline" disabled>View Online</a>
+					</li>
+					<li class='icon icon-min'><a href="#"><img src="assets/svg/minimise.svg" /></a></li>
+					<li class='icon icon-close'><a href="#"><img src="assets/svg/close.svg" /></a></li>
+				</ul>
+			</section>
+		</nav>
+
+		<div class="content-wrap">
+			
+			<div class="row collapse">
+
+				<div class="small-4 columns full-height">
+
+					<div class="message_container">
+						<!-- ko if: messages().length > 0 -->
+						<ul class="activity_messages" data-bind="foreach: messages()">
+							<li>
+								<img data-bind="attr: { 'src' : AvatarURL }" alt="">
+								<h3 data-bind="html: UserName + '<span>(' + TimeSince + ')</span>:'"></h3>
+								<p data-bind="text: MessageText"></p>
+							</li>
+						</ul>
+						<!-- /ko -->
+
+						<!-- ko if: messages().length === 0 -->
+							<span>No messages posted :(</span>
+						<!-- /ko -->
+					</div>
+
+					<button class="message_send expand small button info" data-reveal-id="addMessage">
+						Add Message
+					</button>
+
+				</div>
+
+				<div class="small-8 columns full-height">
+
+					<div class="activity-content"></div>
+
+				</div>
+
+			</div>
+
+		</div>
+
+		<div id="addMessage" class="reveal-modal" data-reveal>
+			<h3>Add Message to Task...</h3>
+			<div class="row collapse">
+
+				<div class="small-12 columns">
+					<textarea data-bind="value: newMessage, valueUpdate: 'keyup'"></textarea>
+				</div>
+
+			</div>
+
+			<div class="row collapse">
+
+				<div class="small-4 columns">
+					<a class="button small expand secondary do-close">Cancel</a>
+				</div>
+
+				<div class="small-4 columns">
+					<button class="button small expand success do-update" data-bind="enable: newMessage">Post</button>
+				</div>
+
+			</div>
+		</div>
+		
+		<!-- Libraries -->
+		<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+		<script src="http://cdnjs.cloudflare.com/ajax/libs/knockout/3.0.0/knockout-min.js"></script>
+		<script src="assets/js/foundation/foundation.js"></script>
+		<script src="assets/js/foundation/foundation.reveal.js"></script>
+		<script src="assets/js/localforage.js"></script>
+		<script src="assets/js/flipclock.js"></script>
+		<script src="assets/js/moment.min.js"></script>
+		<script src="assets/js/pikaday.js"></script>
+
+		<!-- Custom JS -->
+		<script src="assets/js/API.js"></script>
+		<script src="assets/js/window.js"></script>
+		<script src="assets/js/procedural_activityView.js"></script>
+	</body>
+</html>

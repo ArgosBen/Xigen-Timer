@@ -5,6 +5,7 @@ $(function () {
 
 	var avatarURL = "http://projectsvm.xigen.co.uk/ImagePage.aspx?t=0",
 		defaultText,
+		gui = require('nw.gui'),
 		submit = $(".login [type=submit]"),
 		datepickers= [],
 		picker,
@@ -157,6 +158,25 @@ $(function () {
 		if ($(this).attr("target") === "_system") {
 			e.preventDefault();
 			XIGENTIMER.launchExternal($(this).attr("href"));
+		}
+
+		if ($(this).attr("target") === "_viewProject") {
+			e.preventDefault();
+
+			var title = $(this).text();
+			
+			gui.Window.open('./viewActivity.html?activityID=' + $(this).attr("data-id"), {
+				frame: false,
+				title: title,
+				width: 850,
+				max_width: 850,
+				height: 450,
+				max_height: 450,
+				min_width: 800,
+				min_height: 400,
+				toolbar: false
+			});
+
 		}
 	});
 

@@ -90,6 +90,7 @@ if (typeof XIGENTIMER !== "object") {
 							callback(true, returnedData, pureData);
 						} else {
 							callback(false);
+							console.log(request.data, data);
 						}
 
 					}
@@ -138,6 +139,8 @@ if (typeof XIGENTIMER !== "object") {
 						callback(false);
 						return false;
 					}
+
+					localforage.setItem("userCache", data);
 
 					data = data.filter(function (u) {
 						return u.Login === username;
