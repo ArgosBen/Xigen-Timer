@@ -176,6 +176,8 @@ if (typeof XIGENTIMER !== "object") {
 				loaded = 0,
 				getActivities,
 				tidyActivites,
+				getProjects,
+				myActivities,
 				isEmpty;
 
 			if (!callback) {
@@ -195,6 +197,10 @@ if (typeof XIGENTIMER !== "object") {
 					parentID,
 					parent,
 					parentIndex;
+
+				dataRef = dataRef.filter(function (act) {
+					return myActivities.indexOf(act.TaskID) > -1;
+				});
 
 				if (!filterFunc) {
 					dataRef = dataRef.filter(function (act) {
@@ -253,31 +259,45 @@ if (typeof XIGENTIMER !== "object") {
 
 			};
 
-			timer.API.base("GET", "projects", {}, function (success, data) {
+			getProjects = function () {
+				timer.API.base("GET", "projects", {}, function (success, data) {
 
-				projectCache = data;
-				localforage.setItem("projectCache", data);
+					projectCache = data;
+					localforage.setItem("projectCache", data);
 
-				$.each(data, function (i, item) {
-					item.Activities = [];
-					hierachy[item.EntityBaseID] = this;
+					$.each(data, function (i, item) {
+						item.Activities = [];
+						hierachy[item.EntityBaseID] = this;
 
-					timer.API.base("GET", "projects/" + item.EntityBaseID + "/activities", {},
-					function (success, data) {
-						loaded += 1;
+						timer.API.base("GET", "projects/" + item.EntityBaseID + "/activities", {},
+						function (success, data) {
+							loaded += 1;
 
-						activityCache = activityCache.concat(data);
+							activityCache = activityCache.concat(data);
 
-						hierachy[item.EntityBaseID].Activities = tidyActivites(data, filterFunc);
+							hierachy[item.EntityBaseID].Activities = tidyActivites(data, filterFunc);
 
-						if (loaded === projectCache.length && typeof callback === "function") {
-							localforage.setItem("activityCache", activityCache, function () {
-								callback(hierachy);
-							});
-						}
+							if (loaded === projectCache.length && typeof callback === "function") {
+								localforage.setItem("activityCache", activityCache, function () {
+									callback(hierachy);
+								});
+							}
+						});
+
 					});
 
 				});
+			};
+
+			timer.API.base("GET", "myactivities", {}, function (success, data) {
+
+				console.log(success, data);
+
+				myActivities = data.map(function (act) {
+					return act.TaskID;
+				});
+
+				getProjects();
 
 			});
 
