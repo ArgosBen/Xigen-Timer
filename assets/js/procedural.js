@@ -147,9 +147,16 @@ $(function () {
 	$(".do-viewonline").on("click", function () {
 		if ($(this).attr("disabled")) { return false; }
 
-		localforage.getItem("baseURL", function (u) {
-			u = u.replace("/rest/v1/", "");
-			XIGENTIMER.launchExternal(u + "/TaskDetails.aspx?ID=" + XIGENTIMER.VIEWMODEL.selectedProject());
+		gui.Window.open('./viewActivity.html?activityID=' + $(this).attr("data-id"), {
+			frame: false,
+			title: $(".breadcrumb li").last().text(),
+			width: 850,
+			max_width: 850,
+			height: 450,
+			max_height: 450,
+			min_width: 800,
+			min_height: 400,
+			toolbar: false
 		});
 	});
 
