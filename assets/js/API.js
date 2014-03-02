@@ -276,7 +276,9 @@ if (typeof XIGENTIMER !== "object") {
 						function (success, data) {
 							loaded += 1;
 
-							activityCache = activityCache.concat(data);
+							activityCache = activityCache.concat(data.filter(function (act) {
+								return myActivities.indexOf(act.TaskID) > -1;
+							}));
 
 							hierachy[item.EntityBaseID].Activities = tidyActivites(data, filterFunc);
 
