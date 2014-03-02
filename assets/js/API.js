@@ -263,7 +263,7 @@ if (typeof XIGENTIMER !== "object") {
 			};
 
 			getProjects = function () {
-				timer.API.base("GET", "myprojects", {}, function (success, data) {
+				timer.API.base("GET", "projects", {}, function (success, data) {
 
 					projectCache = data;
 					localforage.setItem("projectCache", data);

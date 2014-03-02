@@ -32,10 +32,13 @@
 
 	timer.STATE = {
 		save: function () {
+
+			var path = $(".is-projectText").text().split("»");
+
 			timer.VIEWMODEL.savedStates.push({
-				"TaskName" : $(".breadcrumbs li").last().text().trim(),
-				"ProjectName" : $(".breadcrumbs li").first().text().trim(),
-				"Breadcrumb" : $(".breadcrumbs").html(),
+				"TaskName" : path[path.length - 1].trim(),
+				"ProjectName" : path[0].trim(),
+				"Breadcrumb" : $(".is-projectText").text().split("Selected Task:")[1],
 				"TaskID" : XIGENTIMER.VIEWMODEL.selectedProject(),
 				"TaskType" : XIGENTIMER.VIEWMODEL.taskTypeID(),
 				"TimeLogged" : [(XIGENTIMER.TIMER.getTime().time / 3600).toFixed(2), XIGENTIMER.TIMER.getTime().time],
@@ -68,7 +71,9 @@
 			XIGENTIMER.reset();
 
 			// Restore breadcrumb text
-			XIGENTIMER.BREADCRUMB_CONTAINER.html(state.Breadcrumb);
+			$(".is-projectText").text("Selected Task: " + state.Breadcrumb);
+			Foundation.libs.tooltip.getTip($('.is-projectText')).remove();
+			$(".is-projectText").attr("title", state.Breadcrumb);
 
 			// Restore selected project ID
 			XIGENTIMER.VIEWMODEL.selectedProject(state.TaskID);

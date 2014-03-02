@@ -148,9 +148,10 @@
 
 			timer.reset();
 			timer.TIMER.stop();
+
 			timer.STATE.restore({
 				"TaskName" : task.Name,
-				"Breadcrumb" : "<li class='unavailable'><a href='#'>" + ProjectName + "</a></li><li class='current'><a href='#'>" + task.Name + "</a></li>",
+				"Breadcrumb" : ProjectName + " » " + task.Name,
 				"TaskID" : task.TaskID,
 				"TaskType" : task.TaskTypeID,
 				"TimeLogged" : [0, 0],
@@ -158,6 +159,8 @@
 				"Billable" : true,
 				"ForReview" : false
 			});
+
+			$(".do-timestart").trigger("click");
 
 		});
 

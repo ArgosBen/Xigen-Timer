@@ -101,6 +101,8 @@ $(function () {
 
 			loaded = 0;
 
+			console.log(unfilteredData);
+
 			data = unfilteredData.sort(function (a, b) {
 				return (+moment(a.PostDate, "YYYY-MM-DD/HH:mm:ss.SS")) - (+moment(b.PostDate, "YYYY-MM-DD/HH:mm:ss.SS"));
 			});
@@ -130,6 +132,8 @@ $(function () {
 
 					// Time Since
 					message.TimeSince = moment(message.PostDate, "YYYY-MM-DD/HH:mm:ss.SS").fromNow();
+
+					message.MessageText = message.MessageText ? message.MessageText : "<span>&lt;No Message&gt;</span>"
 
 					loaded += 1;
 

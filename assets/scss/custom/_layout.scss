@@ -136,9 +136,24 @@ body {
 	}
 }
 
+.is-projectText {
+	padding: 10px 0px;
+	display: inline-block;
+	white-space: nowrap;
+	overflow-x: hidden;
+	text-overflow: ellipsis;
+	max-width: 100%;
+	font-size: 14px;
+	border-bottom-width: 0px;
+
+	&:hover {
+		border-bottom-width: 0px;
+	}
+}
+
 #desc {
 	resize: none;
-	height: 80px;
+	height: 100px;
 }
 
 .scroll-container {

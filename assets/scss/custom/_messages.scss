@@ -28,6 +28,10 @@
 		display: block;
 		height: auto;
 		overflow: hidden;
+
+		p > span {
+			color: #999;
+		}
 	}
 
 	li + li {

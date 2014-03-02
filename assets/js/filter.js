@@ -211,17 +211,11 @@
 			return step !== "";
 		}).reverse();
 
-		bc.empty();
-
-		$(path).each(function (i) {
-
-			if (i !== path.length - 1) {
-				bc.append("<li class='unavailable'><a href='#'>" + this + "</a></li>");
-			} else {
-				bc.append("<li class='current'><a href='#'>" + this + "</a></li>");
-			}
-
-		});
+		path = path.join(" » ");
+		
+		$(".is-projectText").text("Selected Task: " + path);
+		Foundation.libs.tooltip.getTip($('.is-projectText')).remove();
+		$(".is-projectText").attr("title", path);
 
 		$("[data-estimate]").text(estimatedHours || "Working...");
 		$("[data-sofar]").text(soFar || "Working...");

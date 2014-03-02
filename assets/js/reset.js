@@ -24,7 +24,9 @@
 		// Reset - false for not logging out
 		XIGENTIMER.VIEWMODEL.reset(false);
 
-		XIGENTIMER.BREADCRUMB_CONTAINER.empty().append(XIGENTIMER.BREADCRUMB_EMPTY);
+		$(".is-projectText").text("Select a task on the left to begin.");
+		Foundation.libs.tooltip.getTip($('.is-projectText')).remove();
+		$(".is-projectText").attr("title", "Select a task on the left to begin.");
 
 		XIGENTIMER.updateDatePickers();
 
