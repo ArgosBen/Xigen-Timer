@@ -63,9 +63,9 @@ $(function () {
 			return act.TaskID === activityID;
 		})[0];
 
-		console.log(act);
+		win.title = act.Name;
 
-		$(".activity-content").html(act.Description || "<p>[No Description]</p>");
+		$(".activity-content").html(act.Description);
 
 		$(".content-wrap a").each(function () {
 			$(this).attr("target", "_system");

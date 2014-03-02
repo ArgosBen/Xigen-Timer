@@ -156,7 +156,7 @@ $(function () {
 			max_height: 450,
 			min_width: 800,
 			min_height: 400,
-			toolbar: false
+			toolbar: true
 		});
 	});
 
@@ -181,7 +181,7 @@ $(function () {
 				max_height: 450,
 				min_width: 800,
 				min_height: 400,
-				toolbar: false
+				toolbar: true
 			});
 
 		}

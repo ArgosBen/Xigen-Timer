@@ -193,6 +193,12 @@ body {
 	line-height: 1.3;
 }
 
+.activity-content:empty {
+	background: url(../svg/sadface.svg) no-repeat;
+	background-size: 25%;
+	background-position: center center;
+}
+
 .activity-content * {
 	line-height: 1.2;
 	font-family: Arial, Helvetica, sans-serif;
