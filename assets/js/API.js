@@ -284,7 +284,21 @@ if (typeof XIGENTIMER !== "object") {
 
 							if (loaded === projectCache.length && typeof callback === "function") {
 								localforage.setItem("activityCache", activityCache, function () {
-									callback(hierachy);
+
+									var newHier = [];
+
+									$.each(hierachy, function () {
+										newHier.push(this);
+									});
+
+									newHier = newHier.sort(function (a, b) {
+										if (a.Name < b.Name) { return -1 };
+									    if (a.Name > b.Name) { return 1 };
+									    return 0;
+									});
+
+									console.log(newHier);
+									callback(newHier);
 								});
 							}
 						});
