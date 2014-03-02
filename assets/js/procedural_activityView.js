@@ -191,6 +191,25 @@ $(function () {
 			});
 		};
 
-	}
+	};
+
+	// Copy patse implementation
+	var contextMenu = new gui.Menu(),
+		clipboard = gui.Clipboard.get(),
+		copy = new gui.MenuItem({
+			type: "normal",
+			label: "Copy",
+			click: function () {
+				if (window.getSelection().toString()) {
+					clipboard.set(window.getSelection().toString());
+				}
+			}
+		});
+
+	contextMenu.append(copy);
+
+	$(".activity-content").on("contextmenu", function (e) {
+		contextMenu.popup(e.originalEvent.x, e.originalEvent.y);
+	});
 
 });

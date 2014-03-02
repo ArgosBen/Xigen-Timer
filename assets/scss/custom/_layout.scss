@@ -191,6 +191,12 @@ body {
 	padding: 10px;
 	border-left: 1px solid #DDDDDD;
 	line-height: 1.3;
+	-webkit-user-select: all;
+	-moz-user-select: all;
+	-ms-user-select: all;
+	-o-user-select: all;
+	user-select: all;
+	cursor: auto;
 }
 
 .activity-content:empty {
