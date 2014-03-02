@@ -221,12 +221,13 @@ $(function () {
 
 	$(".activity-content, .message_container").on("contextmenu", function (e) {
 
-		if (e.target.tagName !== "A") {
+		if (e.target.tagName !== "A" && !$(e.target).parents("a").length) {
+			console.log(e.target);
 			contextMenu.popup(e.originalEvent.x, e.originalEvent.y);
 		} else {
 
 			linkMenu.items[1].click = function () {
-				clipboard.set($(e.target).attr("href"));
+				clipboard.set($(e.target).closest("a").attr("href"));
 			};
 
 			linkMenu.popup(e.originalEvent.x, e.originalEvent.y);
