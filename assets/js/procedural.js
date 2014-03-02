@@ -258,7 +258,11 @@ $(function () {
 		}
 
 		if (combo === "VIEW") {
-			$(".do-viewonline").trigger("click");
+			if (document.activeElement.tagName !== "TEXTAREA") {
+				$(".do-viewonline").trigger("click");
+			} else {
+				$(document.activeElement).val($(document.activeElement).val() + gui.Clipboard.get().get('text'));
+			}
 		}
 
 	});

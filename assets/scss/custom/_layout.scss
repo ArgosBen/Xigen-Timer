@@ -222,4 +222,8 @@ body {
 	text-overflow: ellipsis;
 	display: inline-block;
 	white-space: nowrap;
+
+	&:hover {
+		text-decoration: underline;
+	}
 }

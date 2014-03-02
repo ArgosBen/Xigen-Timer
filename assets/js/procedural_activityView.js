@@ -195,6 +195,7 @@ $(function () {
 
 	// Copy patse implementation
 	var contextMenu = new gui.Menu(),
+		linkMenu = new gui.Menu(),
 		clipboard = gui.Clipboard.get(),
 		copy = new gui.MenuItem({
 			type: "normal",
@@ -204,12 +205,37 @@ $(function () {
 					clipboard.set(window.getSelection().toString());
 				}
 			}
+		}),
+		copyLink = new gui.MenuItem({
+			type: "normal",
+			label: "Copy URL"
 		});
 
+	linkMenu.append(copy);
+	linkMenu.append(copyLink);
 	contextMenu.append(copy);
 
-	$(".activity-content").on("contextmenu", function (e) {
-		contextMenu.popup(e.originalEvent.x, e.originalEvent.y);
+	$(".activity-content, .message_container").on("contextmenu", function (e) {
+
+		if (e.target.tagName !== "A") {
+			contextMenu.popup(e.originalEvent.x, e.originalEvent.y);
+		} else {
+
+			linkMenu.items[1].click = function () {
+				clipboard.set($(e.target).attr("href"));
+			};
+
+			linkMenu.popup(e.originalEvent.x, e.originalEvent.y);
+		}
+
+	});
+
+	$(document).on("keyCombo", function (e, data) {
+
+		if (data.combo === "VIEW" && document.activeElement.tagName === "TEXTAREA") {
+			$(document.activeElement).val($(document.activeElement).val() + clipboard.get('text'));
+		}
+
 	});
 
 });
