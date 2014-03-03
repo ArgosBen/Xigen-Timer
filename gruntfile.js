@@ -12,7 +12,7 @@ module.exports = function(grunt) {
           linux32: false, // We don't need linux32
           linux64: false // We don't need linux64
       },
-      src: ['./package.json', './index.html', './node_modules/**/*', './assets/**/*'] // Your node-wekit app
+      src: ['./package.json', './index.html', './viewActivity.html', './node_modules/**/*', './assets/**/*'] // Your node-wekit app
     },
   });
 
