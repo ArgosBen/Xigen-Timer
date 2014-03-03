@@ -147,7 +147,7 @@ $(function () {
 	$(".do-viewonline").on("click", function () {
 		if ($(this).attr("disabled")) { return false; }
 
-		gui.Window.open('./viewActivity.html?activityID=' + $(this).attr("data-id"), {
+		gui.Window.open('app://timer/viewActivity.html?activityID=' + $(this).attr("data-id"), {
 			frame: false,
 			title: $(".breadcrumb li").last().text(),
 			width: 850,
@@ -172,7 +172,7 @@ $(function () {
 
 			var title = $(this).text();
 			
-			gui.Window.open('./viewActivity.html?activityID=' + $(this).attr("data-id"), {
+			gui.Window.open('app://timer/viewActivity.html?activityID=' + $(this).attr("data-id"), {
 				frame: false,
 				title: title,
 				width: 850,
