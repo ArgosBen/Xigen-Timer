@@ -93,6 +93,10 @@
 			};
 		}
 
+		$(".side-nav .is-open").each(function () {
+			open.push($(this).text());
+		});
+
 		timer.API.getHierachy(filterFunc, function (hierachy) {
 
 			$.each(hierachy, function () {
@@ -108,9 +112,7 @@
 				XIGENTIMER.SidebarFilter = new XIGENTIMER.ProjectFilter($(".side-nav"), $(".sidebar-filter-wrap input"));
 			} else {
 
-				$(".side-nav .is-open").each(function () {
-					open.push($(this).parent("li").attr("data-id"));
-				});
+				console.log(open);
 
 				XIGENTIMER.SidebarFilter.refresh(open);
 			}

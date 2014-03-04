@@ -310,8 +310,6 @@ if (typeof XIGENTIMER !== "object") {
 
 			timer.API.base("GET", "myactivities", {}, function (success, data) {
 
-				console.log(success, data);
-
 				myActivities = data.map(function (act) {
 					return act.TaskID;
 				});
