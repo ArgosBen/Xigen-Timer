@@ -37,7 +37,7 @@ $topbar-link-font-size: rem-calc(13) !default;
 $topbar-link-hover-lightness: -10% !default; // Darken by 10%
 $topbar-link-bg-hover: lighten($topbar-bg-color, 15%) !default;
 $topbar-link-bg-active: lighten($primary-color, 10%) !default;
-$topbar-link-bg-active-hover: scale-color($primary-color, $lightness: -14%) !default;
+$topbar-link-bg-active-hover: $topbar-link-bg-active !default;
 $topbar-link-font-family: $body-font-family !default;
 $topbar-link-padding: $topbar-height / 3 !default;
 

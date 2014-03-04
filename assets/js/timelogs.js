@@ -74,6 +74,7 @@
 				loaded = 0,
 				frag = document.createDocumentFragment(),
 				timeSince,
+				total = 0,
 				dateA,
 				dateB;
 
@@ -81,7 +82,7 @@
 
 				timeSince = +moment(log.EntryDate, "YYYY-MM-DD/HH:mm:ss.SS");
 
-				return log.Locked !== "Locked" && !log.Approved && timeSince >= dateRange[0] && timeSince <= dateRange[1];
+				return log.Locked !== "Locked" && log.Duration && !log.Approved && timeSince >= dateRange[0] && timeSince <= dateRange[1];
 
 			}).sort(function (a, b) {
 
@@ -96,6 +97,12 @@
 				return 0;
 
 			}).reverse();
+
+			$(logs).each(function () {
+				total += this.Duration;
+			});
+
+			$("[data-totalHours]").val(total.toFixed(2));
 
 			if (logs.length > 0) {
 				

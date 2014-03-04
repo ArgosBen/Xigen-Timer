@@ -79,26 +79,28 @@ $(function () {
 				if (user) {
 
 					submit.text(defaultText);
-					localforage.setItem("user", user);
 					localforage.setItem("userToken", token);
 					localforage.setItem("userName", user.Login);
 					localforage.setItem("baseURL", baseURL);
 
 					XIGENTIMER.VIEWMODEL.isLoggedIn(true);
-					XIGENTIMER.VIEWMODEL.updateFromFilters(function () {
-						XIGENTIMER.updateDatePickers();
-					});
 
-					// Check for a connection
-					XIGENTIMER.API.pulse();
+					localforage.setItem("user", user).then(function () {
+						XIGENTIMER.VIEWMODEL.updateFromFilters(function () {
+							XIGENTIMER.updateDatePickers();
+						});
 
-					// Draw the task list
-					XIGENTIMER.drawTaskList();
-
-					// Check every 30 seconds
-					setTimeout(function () {
+						// Check for a connection
 						XIGENTIMER.API.pulse();
-					}, 30000);
+
+						// Draw the task list
+						XIGENTIMER.drawTaskList();
+
+						// Check every 30 seconds
+						setTimeout(function () {
+							XIGENTIMER.API.pulse();
+						}, 30000);
+					});
 					
 				} else {
 					failFn();

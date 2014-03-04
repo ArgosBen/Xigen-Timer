@@ -1832,6 +1832,7 @@ button, .button {
 }
 button:hover, button:focus, .button:hover, .button:focus {
   background-color: #223b59;
+  outline: none;
 }
 button:hover, button:focus, .button:hover, .button:focus {
   color: white;
@@ -1843,6 +1844,7 @@ button.secondary, .button.secondary {
 }
 button.secondary:hover, button.secondary:focus, .button.secondary:hover, .button.secondary:focus {
   background-color: #b9b9b9;
+  outline: none;
 }
 button.secondary:hover, button.secondary:focus, .button.secondary:hover, .button.secondary:focus {
   color: #333333;
@@ -1854,6 +1856,7 @@ button.success, .button.success {
 }
 button.success:hover, button.success:focus, .button.success:hover, .button.success:focus {
   background-color: #368a55;
+  outline: none;
 }
 button.success:hover, button.success:focus, .button.success:hover, .button.success:focus {
   color: white;
@@ -1865,6 +1868,7 @@ button.alert, .button.alert {
 }
 button.alert:hover, button.alert:focus, .button.alert:hover, .button.alert:focus {
   background-color: #cf2a0e;
+  outline: none;
 }
 button.alert:hover, button.alert:focus, .button.alert:hover, .button.alert:focus {
   color: white;
@@ -1925,6 +1929,7 @@ button.disabled, button[disabled], .button.disabled, .button[disabled] {
 }
 button.disabled:hover, button.disabled:focus, button[disabled]:hover, button[disabled]:focus, .button.disabled:hover, .button.disabled:focus, .button[disabled]:hover, .button[disabled]:focus {
   background-color: #223b59;
+  outline: none;
 }
 button.disabled:hover, button.disabled:focus, button[disabled]:hover, button[disabled]:focus, .button.disabled:hover, .button.disabled:focus, .button[disabled]:hover, .button[disabled]:focus {
   color: white;
@@ -1943,6 +1948,7 @@ button.disabled.secondary, button[disabled].secondary, .button.disabled.secondar
 }
 button.disabled.secondary:hover, button.disabled.secondary:focus, button[disabled].secondary:hover, button[disabled].secondary:focus, .button.disabled.secondary:hover, .button.disabled.secondary:focus, .button[disabled].secondary:hover, .button[disabled].secondary:focus {
   background-color: #b9b9b9;
+  outline: none;
 }
 button.disabled.secondary:hover, button.disabled.secondary:focus, button[disabled].secondary:hover, button[disabled].secondary:focus, .button.disabled.secondary:hover, .button.disabled.secondary:focus, .button[disabled].secondary:hover, .button[disabled].secondary:focus {
   color: #333333;
@@ -1961,6 +1967,7 @@ button.disabled.success, button[disabled].success, .button.disabled.success, .bu
 }
 button.disabled.success:hover, button.disabled.success:focus, button[disabled].success:hover, button[disabled].success:focus, .button.disabled.success:hover, .button.disabled.success:focus, .button[disabled].success:hover, .button[disabled].success:focus {
   background-color: #368a55;
+  outline: none;
 }
 button.disabled.success:hover, button.disabled.success:focus, button[disabled].success:hover, button[disabled].success:focus, .button.disabled.success:hover, .button.disabled.success:focus, .button[disabled].success:hover, .button[disabled].success:focus {
   color: white;
@@ -1979,6 +1986,7 @@ button.disabled.alert, button[disabled].alert, .button.disabled.alert, .button[d
 }
 button.disabled.alert:hover, button.disabled.alert:focus, button[disabled].alert:hover, button[disabled].alert:focus, .button.disabled.alert:hover, .button.disabled.alert:focus, .button[disabled].alert:hover, .button[disabled].alert:focus {
   background-color: #cf2a0e;
+  outline: none;
 }
 button.disabled.alert:hover, button.disabled.alert:focus, button[disabled].alert:hover, button[disabled].alert:focus, .button.disabled.alert:hover, .button.disabled.alert:focus, .button[disabled].alert:hover, .button[disabled].alert:focus {
   color: white;
@@ -4733,7 +4741,7 @@ meta.foundation-mq-topbar {
   color: white;
 }
 .top-bar-section ul li.active > a:hover {
-  background: #25405f;
+  background: #396394;
   color: white;
 }
 .top-bar-section .has-form {
@@ -4881,7 +4889,7 @@ meta.foundation-mq-topbar {
     background: #396394;
   }
   .top-bar-section li.active:not(.has-form) a:not(.button):hover {
-    background: #25405f;
+    background: #396394;
   }
   .top-bar-section .has-dropdown > a {
     padding-right: 35px !important;
@@ -6961,6 +6969,7 @@ body {
 }
 .reset-button:hover, .reset-button:focus {
   background-color: #cf2a0e;
+  outline: none;
 }
 .reset-button:hover, .reset-button:focus {
   color: white;

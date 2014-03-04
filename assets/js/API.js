@@ -297,7 +297,6 @@ if (typeof XIGENTIMER !== "object") {
 									    return 0;
 									});
 
-									console.log(newHier);
 									callback(newHier);
 								});
 							}
