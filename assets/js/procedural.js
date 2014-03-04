@@ -38,6 +38,13 @@ $(function () {
 	// Logout button
 	$("[data-logout]").on("click", function (e) {
 		e.preventDefault();
+
+		if (XIGENTIMER.VIEWMODEL.savedStates().length > 0) {
+			if (!confirm("You have saved states which will be lost if you log out. Are you sure you want to continue?")) {
+				return false;
+			}
+		}
+
 		localforage.setItem("userToken", null);
 		localforage.setItem("userName", null);
 		localforage.setItem("baseURL", null);
