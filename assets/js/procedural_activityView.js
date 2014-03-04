@@ -57,6 +57,10 @@ $(function () {
 		addMessage(this);
 	});
 
+	$(".message_send").on("click", function () {
+		alert("Click!");
+	});
+
 	localforage.getItem("activityCache", function (c) {
 
 		activities = c;
