@@ -17,7 +17,13 @@
 			D: 68,
 			COMMA: 188,
 			QM: 191,
-			V: 86
+			V: 86,
+			ONE: 49,
+			TWO: 50,
+			THREE: 51,
+			FOUR: 52,
+			FIVE: 53,
+			SIX: 54
 		},
 		matchesShortcut;
 
@@ -35,7 +41,11 @@
 		"SETTINGS_ALT" : [keys.CTRL, keys.COMMA],
 		"DESC" : [keys.CTRL, keys.D],
 		"HELP" : [keys.CTRL, keys.QM],
-		"VIEW" : [keys.CTRL, keys.V]
+		"VIEW" : [keys.CTRL, keys.V],
+		"ONE" : [keys.CTRL, keys.ONE],
+		"TWO" : [keys.CTRL, keys.TWO],
+		"THREE" : [keys.CTRL, keys.THREE],
+		"FOUR" : [keys.CTRL, keys.FOUR]
 	};
 
 	matchesShortcut = function (event) {

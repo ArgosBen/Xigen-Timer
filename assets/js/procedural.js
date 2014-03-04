@@ -243,13 +243,22 @@ $(function () {
 			$(".do-timestart").trigger("click");
 		}
 
-		if (combo === "LOGS") {
+		if (combo === "ONE") {
+			XIGENTIMER.VIEWMODEL.selectOverview();
+		}
+
+		if (combo === "TWO") {
+			XIGENTIMER.VIEWMODEL.selectTasks();
+		}
+
+		if (combo === "THREE") {
 			XIGENTIMER.VIEWMODEL.selectTiming();
 		}
 
-		if (combo === "TIMER") {
-			XIGENTIMER.VIEWMODEL.selectOverview();
+		if (combo === "FOUR") {
+			XIGENTIMER.VIEWMODEL.selectRestore();
 		}
+
 
 		if (combo === "DESC") {
 			$("#desc").focus();

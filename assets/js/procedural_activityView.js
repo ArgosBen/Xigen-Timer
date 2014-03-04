@@ -245,6 +245,14 @@ $(function () {
 
 		});
 
+		$("textarea").on("keydown keyup", function (e) {
+
+			if (e.which === 32) {
+				e.stopPropagation();
+			}
+
+		});
+
 	};
 
 });
