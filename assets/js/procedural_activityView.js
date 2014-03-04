@@ -6,30 +6,31 @@ $(function () {
 		win = gui.Window.get(),
 		qs = window.location.search.replace('?', ''),
 		activityID = parseInt(qs.split("=")[1], 10),
+		os = require('os'),
 		activities,
 		baseURL,
 		getMessages,
 		act,
-		miniViewModel,
+		MiniViewModel,
 		addMessage,
 		defaultText,
 		loaded,
 		user;
 
-	miniViewModel = function () {
+	MiniViewModel = function () {
 
 		this.newMessage = ko.observable();
 
 		this.messages = ko.observableArray();
 
+		this.notOSX = !/darwin/.test(os.platform());
+
 	};
 
-	var VM = new miniViewModel();
+	var VM = new MiniViewModel();
 	window.VM = VM;
 
 	ko.applyBindings(VM);
-
-	win.emit("loaded");
 
 	$(document).foundation();
 
@@ -198,49 +199,52 @@ $(function () {
 	};
 
 	// Copy patse implementation
-	var contextMenu = new gui.Menu(),
-		linkMenu = new gui.Menu(),
-		clipboard = gui.Clipboard.get(),
-		copy = new gui.MenuItem({
-			type: "normal",
-			label: "Copy",
-			click: function () {
-				if (window.getSelection().toString()) {
-					clipboard.set(window.getSelection().toString());
+	if (VM.notOSX) {
+		var contextMenu = new gui.Menu(),
+			linkMenu = new gui.Menu(),
+			clipboard = gui.Clipboard.get(),
+			copy = new gui.MenuItem({
+				type: "normal",
+				label: "Copy",
+				click: function () {
+					if (window.getSelection().toString()) {
+						clipboard.set(window.getSelection().toString());
+					}
 				}
+			}),
+			copyLink = new gui.MenuItem({
+				type: "normal",
+				label: "Copy URL"
+			});
+
+		linkMenu.append(copy);
+		linkMenu.append(copyLink);
+		contextMenu.append(copy);
+
+		$(".activity-content, .message_container").on("contextmenu", function (e) {
+
+			if (e.target.tagName !== "A" && !$(e.target).parents("a").length) {
+				console.log(e.target);
+				contextMenu.popup(e.originalEvent.x, e.originalEvent.y);
+			} else {
+
+				linkMenu.items[1].click = function () {
+					clipboard.set($(e.target).closest("a").attr("href"));
+				};
+
+				linkMenu.popup(e.originalEvent.x, e.originalEvent.y);
 			}
-		}),
-		copyLink = new gui.MenuItem({
-			type: "normal",
-			label: "Copy URL"
+
 		});
 
-	linkMenu.append(copy);
-	linkMenu.append(copyLink);
-	contextMenu.append(copy);
+		$(document).on("keyCombo", function (e, data) {
 
-	$(".activity-content, .message_container").on("contextmenu", function (e) {
+			if (data.combo === "VIEW" && document.activeElement.tagName === "TEXTAREA") {
+				$(document.activeElement).val($(document.activeElement).val() + clipboard.get('text'));
+			}
 
-		if (e.target.tagName !== "A" && !$(e.target).parents("a").length) {
-			console.log(e.target);
-			contextMenu.popup(e.originalEvent.x, e.originalEvent.y);
-		} else {
+		});
 
-			linkMenu.items[1].click = function () {
-				clipboard.set($(e.target).closest("a").attr("href"));
-			};
-
-			linkMenu.popup(e.originalEvent.x, e.originalEvent.y);
-		}
-
-	});
-
-	$(document).on("keyCombo", function (e, data) {
-
-		if (data.combo === "VIEW" && document.activeElement.tagName === "TEXTAREA") {
-			$(document.activeElement).val($(document.activeElement).val() + clipboard.get('text'));
-		}
-
-	});
+	};
 
 });
