@@ -175,6 +175,7 @@ if (typeof XIGENTIMER !== "object") {
 
 			var projectCache = [],
 				activityCache = [],
+				rawActivityCache = [],
 				hierachy = {},
 				loaded = 0,
 				getActivities,
@@ -280,24 +281,30 @@ if (typeof XIGENTIMER !== "object") {
 								return myActivities.indexOf(act.TaskID) > -1;
 							}));
 
+							rawActivityCache = rawActivityCache.concat(data);
+
 							hierachy[item.EntityBaseID].Activities = tidyActivites(data, filterFunc);
 
 							if (loaded === projectCache.length && typeof callback === "function") {
 								localforage.setItem("activityCache", activityCache, function () {
 
-									var newHier = [];
+									localforage.setItem("rawActivityCache", rawActivityCache, function () {
 
-									$.each(hierachy, function () {
-										newHier.push(this);
+										var newHier = [];
+
+										$.each(hierachy, function () {
+											newHier.push(this);
+										});
+
+										newHier = newHier.sort(function (a, b) {
+											if (a.Name < b.Name) { return -1 };
+											if (a.Name > b.Name) { return 1 };
+											return 0;
+										});
+
+										callback(newHier);
+
 									});
-
-									newHier = newHier.sort(function (a, b) {
-										if (a.Name < b.Name) { return -1 };
-									    if (a.Name > b.Name) { return 1 };
-									    return 0;
-									});
-
-									callback(newHier);
 								});
 							}
 						});

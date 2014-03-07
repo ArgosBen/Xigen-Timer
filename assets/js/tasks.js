@@ -11,7 +11,13 @@
 
 	};
 
-	main = function () {
+	timer.drawManagedTaskList = function () {
+
+		main(true);
+
+	};
+
+	main = function (management) {
 
 		var tasks,
 			baseTasks,
@@ -19,9 +25,10 @@
 			getAdditionalData,
 			UID,
 			enhanceData,
-			baseURL;
+			baseURL,
+			targetCache = management ? "rawActivityCache" : "activityCache";
 
-		localforage.getItem("activityCache", function (c) {
+		localforage.getItem(targetCache, function (c) {
 			tasks = c;
 			baseTasks = c;
 
@@ -48,23 +55,29 @@
 
 		filterTasks = function () {
 
-			tasks = tasks.filter(function (task) {
-				return task.CanEdit && !task.HasChild;
-			});
-
-			if (timer.VIEWMODEL.showReviewItems()) {
+			if (!management) {
 				tasks = tasks.filter(function (task) {
-					return task.TaskStatusID === 18 || task.TaskStatusID === 1 || task.TaskStatusID === 4;
+					return task.CanEdit && !task.HasChild;
 				});
+
+				if (timer.VIEWMODEL.showReviewItems()) {
+					tasks = tasks.filter(function (task) {
+						return task.TaskStatusID === 18 || task.TaskStatusID === 1 || task.TaskStatusID === 4;
+					});
+				} else {
+					tasks = tasks.filter(function (task) {
+						return task.TaskStatusID === 1 || task.TaskStatusID === 4;
+					});
+				}
+
+				if (!timer.VIEWMODEL.showInfiniteItems()) {
+					tasks = tasks.filter(function (task) {
+						return task.EndDate;
+					});
+				}
 			} else {
 				tasks = tasks.filter(function (task) {
-					return task.TaskStatusID === 1 || task.TaskStatusID === 4;
-				});
-			}
-
-			if (!timer.VIEWMODEL.showInfiniteItems()) {
-				tasks = tasks.filter(function (task) {
-					return task.EndDate;
+					return task.CreatorID === UID;
 				});
 			}
 
@@ -74,7 +87,48 @@
 
 		enhanceData = function () {
 
-			XIGENTIMER.VIEWMODEL.taskList([]);
+			var complete = 0,
+				finalTasks;
+
+			finalTasks = function () {
+				tasks = tasks.sort(function (a, b) {
+					if (b.PriorityID === a.PriorityID) {
+						return +a.moment - +b.moment;
+					}
+					return b.PriorityID - a.PriorityID;
+				});
+
+				if (!management) {
+					XIGENTIMER.VIEWMODEL.taskList([]);
+				} else {
+					XIGENTIMER.VIEWMODEL.managedTaskList([]);
+				}
+
+				if (!management) {
+					$.each(tasks, function () {
+						XIGENTIMER.VIEWMODEL.taskList.push(this);
+					});
+				} else {
+					XIGENTIMER.VIEWMODEL.managedTaskList(tasks.filter(function (task) {
+						
+						var validIDs = [];
+						if (XIGENTIMER.VIEWMODEL.managedShowOpen()) {
+							validIDs.push(1);
+						}
+
+						if (XIGENTIMER.VIEWMODEL.managedShowReview()) {
+							validIDs.push(18);
+						}
+
+						if (XIGENTIMER.VIEWMODEL.managedShowPending()) {
+							validIDs.push(20);
+						}
+						
+						return validIDs.indexOf(task.TaskStatusID) > -1;
+
+					}));
+				}
+			};
 
 			$.each(tasks, function (i, t) {
 
@@ -106,17 +160,25 @@
 					return proj.ProjectID === t.ProjectID;
 				})[0].Name;
 
-			});
+				if (!management) {
+					complete += 1;
+					console.log("Not Management: " + complete + " | " + tasks.length);
 
-			tasks = tasks.sort(function (a, b) {
-				if (b.PriorityID === a.PriorityID) {
-					return +a.moment - +b.moment;
+					if (complete === tasks.length) {
+						finalTasks();
+					}
+
+				} else {
+					XIGENTIMER.API.getTimeForTask(t.TaskID, function (total) {
+						t.TotalHours = total.toFixed(2);
+						complete += 1;
+
+						if (complete === tasks.length) {
+							finalTasks();
+						}
+					});
 				}
-				return b.PriorityID - a.PriorityID;
-			});
 
-			$.each(tasks, function () {
-				XIGENTIMER.VIEWMODEL.taskList.push(this);
 			});
 
 		};

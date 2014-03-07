@@ -59,7 +59,7 @@ $(function () {
 
 	$(".message_send").on("click", function () {});
 
-	localforage.getItem("activityCache", function (c) {
+	localforage.getItem("rawActivityCache", function (c) {
 
 		activities = c;
 		act = activities.filter(function (act) {

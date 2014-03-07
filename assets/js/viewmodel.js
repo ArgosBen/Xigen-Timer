@@ -22,6 +22,17 @@
 		// Is the user currently timing something?
 		this.isTiming = ko.observable(false);
 
+		// Is the user an admin or project manager?
+		this.isProjectManager = ko.observable(false);
+
+		localforage.getItem("user", function (u) {
+
+			if (u && (u.RoleID === 1 || u.RoleID === 2)) {
+				that.isProjectManager(true);
+			}
+
+		});
+
 		// The current description for the timer which is running - Updated by the textarea [name=desc]
 		this.activityDesc = ko.observable("");
 
@@ -34,12 +45,15 @@
 		// If the user is currently viewing their tasks
 		this.isViewingTasks = ko.observable(false);
 
+		// If the user is currently managing their projects
+		this.isManaging = ko.observable(false);
+
 		// The TaskTypeID of the currently selected task
 		this.taskTypeID = ko.observable(1);
 
 		// If the overview (timer page) is selected/open
 		this.isOverview = ko.computed(function () {
-			return !that.isEditingTime() && that.isLoggedIn() && !that.isRestoringTime() && !that.isViewingTasks();
+			return !that.isEditingTime() && that.isLoggedIn() && !that.isRestoringTime() && !that.isViewingTasks() && !that.isManaging();
 		});
 
 		// Used to force update
@@ -172,6 +186,10 @@
 				
 				$(".do-refresh").removeClass("is-refreshing").removeAttr("disabled");
 
+				if (that.isProjectManager()) {
+					XIGENTIMER.drawManagedTaskList();
+				}
+
 				XIGENTIMER.drawTaskList();
 
 				if (typeof callback === "function") {
@@ -187,6 +205,7 @@
 			that.isEditingTime(true);
 			that.isRestoringTime(false);
 			that.isViewingTasks(false);
+			that.isManaging(false);
 		};
 
 		// Change to overview page
@@ -194,18 +213,28 @@
 			that.isEditingTime(false);
 			that.isRestoringTime(false);
 			that.isViewingTasks(false);
+			that.isManaging(false);
 		};
 
 		this.selectRestore = function () {
 			that.isEditingTime(false);
 			that.isRestoringTime(true);
 			that.isViewingTasks(false);
+			that.isManaging(false);
 		};
 
 		this.selectTasks = function () {
 			that.isEditingTime(false);
 			that.isRestoringTime(false);
 			that.isViewingTasks(true);
+			that.isManaging(false);
+		};
+
+		this.selectManagement = function () {
+			that.isEditingTime(false);
+			that.isRestoringTime(false);
+			that.isViewingTasks(false);
+			that.isManaging(true);
 		};
 
 		// Update the dummy function so that canSendTime will recompute
@@ -234,12 +263,22 @@
 
 		this.connectedText = ko.computed(function () {
 
-			if (that.isConnected() && !that.isChecking()) {
-				return "Connected to System";
-			} else if (that.isChecking()) {
-				return "Checking pulse...";
+			if (!that.isProjectManager()) {
+				if (that.isConnected() && !that.isChecking()) {
+					return "Connected to System";
+				} else if (that.isChecking()) {
+					return "Checking pulse...";
+				} else {
+					return "Not Connected.";
+				}
 			} else {
-				return "Not Connected.";
+				if (that.isConnected() && !that.isChecking()) {
+					return "OK";
+				} else if (that.isChecking()) {
+					return "...";
+				} else {
+					return "!OK";
+				}
 			}
 
 		});
@@ -273,6 +312,21 @@
 		});
 
 		this.taskList = ko.observableArray([]);
+		this.managedTaskList = ko.observableArray([]);
+
+		this.managedShowOpen = ko.observable(true);
+		this.managedShowReview = ko.observable(false);
+		this.managedShowPending = ko.observable(false);
+
+		this.managedShowOpen.subscribe(function () {
+			XIGENTIMER.drawManagedTaskList();
+		});
+		this.managedShowReview.subscribe(function () {
+			XIGENTIMER.drawManagedTaskList();
+		});
+		this.managedShowPending.subscribe(function () {
+			XIGENTIMER.drawManagedTaskList();
+		});
 
 		this.priorities = {
 			5 : "<strong>Mission Critical</strong>",

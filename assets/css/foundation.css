@@ -7103,6 +7103,13 @@ body {
 .time-table-tasks [data-urgency='nodate'] {
   background: #f2f2f2;
 }
+.time-table-tasks.time-table-manage td {
+  text-align: center;
+  vertical-align: middle;
+}
+.time-table-tasks.time-table-manage th {
+  width: 16.6666667%;
+}
 
 .message_container {
   height: 85%;

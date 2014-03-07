@@ -89,4 +89,13 @@
 	[data-urgency='today'] { background: $today-color };
 	[data-urgency='nodate'] { background: darken(#FFFFFF, 5%) };
 
+	&.time-table-manage td {
+		text-align: center;
+		vertical-align: middle;
+	}
+
+	&.time-table-manage th {
+		width: 16.6666667%;
+	}
+
 }

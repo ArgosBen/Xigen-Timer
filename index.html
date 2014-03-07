@@ -41,6 +41,7 @@
 					<li data-bind="visible:isLoggedIn, css: { active: isViewingTasks }"><a href="#" data-bind="click: selectTasks">My Tasks <span data-bind="visible: taskList().length > 0, text: taskList().length" class='label secondary'></a></li>
 					<li data-bind="visible:isLoggedIn, css: { active: isEditingTime }"><a href="#" data-bind="click: selectTiming">My Time</a></li>
 					<li data-bind="visible:isLoggedIn, css: { active: isRestoringTime }"><a href="#" data-bind="click: selectRestore">States <span data-bind="visible: savedStates().length > 0, text: savedStates().length" class='label secondary'></span></a></li>
+					<li data-bind="visible:isLoggedIn && isProjectManager, css: { active: isManaging }"><a href="#" data-bind="click: selectManagement">Management<span data-bind="visible: managedTaskList().length > 0, text: managedTaskList().length" class='label secondary'></span></a></li>
 					<li data-bind="visible:isLoggedIn" data-reveal-id="settingsMenu" ><a href="#">Settings</a></li>
 					<li data-bind="visible:isLoggedIn" data-reveal-id="shortcutMenu" ><a href="#">Help</a></li>
 				</ul>
@@ -367,6 +368,72 @@
 						<tbody>
 							<tr>
 								<td colspan="6" align="center"><strong>No tasks. Go make the tea!</strong></td>
+							</tr>
+						</tbody>
+						<!-- /ko -->
+
+					</table>
+
+				</div>
+
+			</div>
+
+			<!-- View Tasks -->
+			<div class="row scroll-container" data-bind="visible: isManaging">
+
+				<div class="small-12 columns is-datepicker">
+					<div class="row collapse">
+						<div class="small-2 columns">
+				        	<a class="button secondary expand tiny do-refresh">Refresh List <img src="assets/svg/refresh.svg"></a>
+				        </div>
+
+				        <div class="small-offset-1 small-2 columns">
+				        	<input type="checkbox" checked data-bind="checked: managedShowOpen" id="managementShowOpen">
+				        	<label for="managementShowOpen">Show Open?</label>
+				        </div>
+				        <div class="small-4 columns">
+				        	<input type="checkbox" data-bind="checked: managedShowReview" id="managementShowReview">
+				        	<label for="managementShowReview">Show Waiting Internal Review?</label>
+				        </div>
+				        <div class="small-3 columns">
+				        	<input type="checkbox" data-bind="checked: managedShowPending" id="managementShowPending">
+				        	<label for="managementShowPending">Show Client Pending?</label>
+				        </div>
+					</div>
+				</div>
+
+				<div class="small-12 columns">
+
+					<table class="time-table time-table-tasks time-table-manage">
+
+						<thead>
+							<tr>
+								<th>Project</th>
+								<th>Task</th>
+								<th>Estimated Hrs.</th>
+								<th>Hours Logged</th>
+								<th>Due Date</th>
+								<th>Priority</th>
+							</tr>
+						</thead>
+
+						<!-- ko if: managedTaskList().length > 0 -->
+						<tbody data-bind="foreach: managedTaskList()">
+							<tr data-bind="attr: { 'data-id' : TaskID }">
+								<td><a target="_system" data-bind="attr: { 'href' : ProjectURL }, text: ProjectName"></a></td>
+								<td><a target="_viewProject" data-bind="attr: { 'href' : TaskURL, 'data-id' : TaskID }, text: Name"></a></td>
+								<td data-bind="text: EstimatedHours || 'No Estimate'"></td>
+								<td data-bind="text: TotalHours"></td>
+								<td data-bind="text: DueDate, attr: { 'data-urgency' : $root.dateMagnitude(daysDifference) }"></td>
+								<td data-bind="attr: {'data-priority':PriorityID}, html: $root.priorities[PriorityID]"></td>
+							</tr>
+						</tbody>
+						<!-- /ko -->
+
+						<!-- ko if: managedTaskList().length === 0 -->
+						<tbody>
+							<tr>
+								<td colspan="6" align="center"><strong>No managed tasks. Go make the tea!</strong></td>
 							</tr>
 						</tbody>
 						<!-- /ko -->
