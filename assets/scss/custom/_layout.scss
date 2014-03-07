@@ -242,3 +242,28 @@ body {
 		text-decoration: underline;
 	}
 }
+
+.activity-content table {
+	width: 100%;
+}
+
+.activity_users h3 {
+	max-width: 75%;
+}
+
+.row .columns.manage-panel {
+	padding: 10px 10px 0 10px;
+	border-left: 1px solid #DDDDDD;
+	position: relative;
+
+	.row {
+		height: auto;
+	}
+
+	button {
+		position: absolute;
+		bottom: 0px;
+		left: 0px;
+		margin-bottom: 0px;
+	}
+}

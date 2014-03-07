@@ -162,7 +162,6 @@
 
 				if (!management) {
 					complete += 1;
-					console.log("Not Management: " + complete + " | " + tasks.length);
 
 					if (complete === tasks.length) {
 						finalTasks();

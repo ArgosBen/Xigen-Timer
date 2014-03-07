@@ -194,6 +194,25 @@ $(function () {
 			});
 
 		}
+
+		if ($(this).attr("target") === "_manageProject") {
+			e.preventDefault();
+
+			var title = $(this).text();
+			
+			gui.Window.open('ManageActivity.html?activityID=' + $(this).attr("data-id"), {
+				frame: false,
+				title: title,
+				width: 850,
+				max_width: 850,
+				height: 450,
+				max_height: 450,
+				min_width: 800,
+				min_height: 400,
+				toolbar: true
+			});
+
+		}
 	});
 
 	// breadcrumbs

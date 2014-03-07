@@ -421,7 +421,7 @@
 						<tbody data-bind="foreach: managedTaskList()">
 							<tr data-bind="attr: { 'data-id' : TaskID }">
 								<td><a target="_system" data-bind="attr: { 'href' : ProjectURL }, text: ProjectName"></a></td>
-								<td><a target="_viewProject" data-bind="attr: { 'href' : TaskURL, 'data-id' : TaskID }, text: Name"></a></td>
+								<td><a target="_manageProject" data-bind="attr: { 'href' : TaskURL, 'data-id' : TaskID }, text: Name"></a></td>
 								<td data-bind="text: EstimatedHours || 'No Estimate'"></td>
 								<td data-bind="text: TotalHours"></td>
 								<td data-bind="text: DueDate, attr: { 'data-urgency' : $root.dateMagnitude(daysDifference) }"></td>
@@ -433,7 +433,7 @@
 						<!-- ko if: managedTaskList().length === 0 -->
 						<tbody>
 							<tr>
-								<td colspan="6" align="center"><strong>No managed tasks. Go make the tea!</strong></td>
+								<td colspan="6" align="center"><strong>No managed tasks. Try changing your filters!</strong></td>
 							</tr>
 						</tbody>
 						<!-- /ko -->

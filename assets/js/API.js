@@ -40,7 +40,7 @@ if (typeof XIGENTIMER !== "object") {
 						"Content-Type" : "application/json"
 					};
 
-					if (Object.keys(data).length !== 0) {
+					if (Object.keys(data) && Object.keys(data).length !== 0) {
 						request.data = typeof data === "object" ? JSON.stringify(data) : data;
 					}
 
