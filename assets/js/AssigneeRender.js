@@ -30,6 +30,9 @@
 		// An object of UserID vs ProjectMemberID
 		this.UIDvsPMID = {};
 
+		// An object of ProjectMemberID vs EntityBaseID
+		this.PMIDvsEBID = {};
+
 		var that = this;
 
 		XIGENTIMER.API.base("GET", "projects-members?$filter=ProjectID eq " + that.ProjectID, {}, function (success, data, unfilteredData) {
@@ -42,6 +45,8 @@
 				that.UIDvsPMID[u.UserID] = u.ProjectMemberID;
 			});
 
+			console.log(that.UIDvsPMID);
+
 			XIGENTIMER.API.getUserDetails(that.ProjectMemberIDs, function (details) {
 
 				that.possibleAssignees = details;
@@ -49,6 +54,7 @@
 				XIGENTIMER.API.base("GET", "activities-assignees?$filter=TaskID eq " + that.ActivityID, {}, function (success, data, unfilteredData) {
 
 					that.assignedProjectMembers = unfilteredData.map(function (u) {
+						that.PMIDvsEBID[u.ProjectMemberID] = u.EntityBaseID;
 						return u.ProjectMemberID;
 					});
 
@@ -62,7 +68,7 @@
 
 	};
 
-	timer.AssigneeGenerator.prototype.formatData = function ( projectMemberIDs, assignedProjectMemberIDs) {
+	timer.AssigneeGenerator.prototype.formatData = function (projectMemberIDs, assignedProjectMemberIDs) {
 
 		var record,
 			userDetails = this.possibleAssignees;
@@ -107,10 +113,6 @@
 
 		});
 
-		for (var i = 0; i < 5; i += 1) {
-			this.possibleAssignees = this.possibleAssignees.concat(this.possibleAssignees);
-		}
-
 		this.doCallback();
 
 	};
@@ -119,6 +121,94 @@
 
 		if (typeof this.callback === "function") {
 			this.callback(this.possibleAssignees);
+		}
+
+	};
+
+	timer.AssigneeGenerator.prototype.updateAssigness = function (dataSource, callback) {
+
+		var toAssign = dataSource.filter(function (t) {
+				return t.isAssigned();
+			}).map(function (m) {
+				return m.ProjectMemberID;
+			}),
+			toRemove = dataSource.filter(function (t) {
+				return !t.isAssigned();
+			}).map(function (m) {
+				return m.ProjectMemberID;
+			}),
+			that = this,
+			alreadyAssigned = this.assignedProjectMembers,
+			finalToRemove = [],
+			finalToAdd = [],
+			totalDeletions = 0,
+			totalAdditions = 0,
+			completedDeletions = false,
+			completedAdditions = false;
+
+		// If they arent in already assigned, we don't need to remove any
+		$.each(toRemove, function () {
+
+			if (alreadyAssigned.indexOf(this) >= 0) {
+				finalToRemove.push(that.PMIDvsEBID[this]);
+			}
+
+		});
+
+		// If they are to assign and are already assigned, we dont need to add them
+		$.each(toAssign, function () {
+
+			if (alreadyAssigned.indexOf(this) < 0) {
+				finalToAdd.push(this);
+			}
+
+		});
+
+		if (finalToRemove.length > 0) {
+
+			console.log("ToRemove: activities-assignees/" + finalToRemove);
+
+			$.each(finalToRemove, function (index) {
+
+				var id = this;
+
+				timer.API.base("DELETE", "activities-assignees/" + id.toString().trim(), {}, function (s, d, ud) {
+
+					console.log("activities-assignees/" + id, ud);
+
+					totalDeletions += 1;
+
+					if (totalDeletions === toRemove.length) {
+						completedDeletions = true;
+					}
+
+				});
+			});
+
+		}
+
+		if (finalToAdd.length > 0) {
+
+			console.log("toAssign: activities-assignees/" + finalToAdd);
+
+			$.each(finalToAdd, function () {
+				timer.API.base("POST", "activities-assignees?$filter=TaskID eq " + that.ActivityID, {
+					"TaskID" : that.ActivityID,
+					"WorkIsDone" : false,
+					"ProjectMemberID" : this
+				}, function (s, d) {
+
+					console.log(d);
+
+					totalAdditions += 1;
+
+					if (totalAdditions === toAssign.length) {
+						completedAdditions = true;
+					}
+
+				});
+			});
+
 		}
 
 	};

@@ -15,16 +15,25 @@ $(function () {
 		VM,
 		assigneeHandler,
 		userCache,
+		loadActivityDetails,
 		getAssigness,
 		getTimeLogs;
 
 	MiniViewModel = function () {
 
-		this.users = ko.observableArray();
+		var that = this;
 
 		this.timeLogs = ko.observableArray();
 
 		this.possibleAssigness = ko.observableArray([]);
+
+		this.users = ko.computed(function () {
+
+			return that.possibleAssigness().filter(function (u) {
+				return u.isAssigned();
+			});
+
+		});
 
 		this.notOSX = !/darwin/.test(os.platform());
 
@@ -52,55 +61,74 @@ $(function () {
 		}
 	});
 
-	// Get start and end dates
-	localforage.getItem("rawActivityCache", function (c) {
+	$(document).on('close', '[data-reveal]', function () {
 
-		activities = c;
-		act = activities.filter(function (act) {
-			return act.TaskID === activityID;
-		})[0];
+		var modal = $(this);
 
-		win.title = act.Name;
+		if (modal[0].id === "addAssignees") {
 
-		$(".content-wrap a").each(function () {
-			$(this).attr("target", "_system");
-		});
+			assigneeHandler.updateAssigness(VM.possibleAssigness(), function () {
 
-		$("li.name").addClass("wide");
-		$("li.name h1").append("<a href='#'>" + act.Name + "</a>");
-
-		var startDate = new Pikaday({
-				field: $("#startDate")[0],
-				firstDay: 1,
-				defaultDate:  moment(act.StartDate, "YYYY-MM-DD/HH:mm:ss.SS").toDate(),
-				setDefaultDate: true,
-				format: "D MMM YYYY"
-			}),
-			endDate = new Pikaday({
-				field: $("#endDate")[0],
-				firstDay: 1,
-				defaultDate:  moment(act.EndDate, "YYYY-MM-DD/HH:mm:ss.SS").toDate(),
-				setDefaultDate: true,
-				format: "D MMM YYYY"
 			});
 
-		$("#endDate").data('picker', endDate);
-		$("#startDate").data('picker', startDate);
-
-		$("#changeStatus").val(act.TaskStatusID);
-		$("#changePriority").val(act.PriorityID);
-
-		getAssigness();
+		}
 
 	});
+
+	// Get start and end dates
+	loadActivityDetails = function () {
+		localforage.getItem("rawActivityCache", function (c) {
+
+			activities = c;
+			act = activities.filter(function (act) {
+				return act.TaskID === activityID;
+			})[0];
+
+			win.title = act.Name;
+
+			$(".content-wrap a").each(function () {
+				$(this).attr("target", "_system");
+			});
+
+			$("li.name").addClass("wide");
+			$("li.name h1").append("<a href='#'>" + act.Name + "</a>");
+
+			if ($("#endDate").data('picker')) {
+				$("#endDate").data('picker').destroy();
+				$("#startDate").data('picker').destroy();
+			}
+
+			var startDate = new Pikaday({
+					field: $("#startDate")[0],
+					firstDay: 1,
+					defaultDate:  moment(act.StartDate, "YYYY-MM-DD/HH:mm:ss.SS").toDate(),
+					setDefaultDate: true,
+					format: "D MMM YYYY"
+				}),
+				endDate = new Pikaday({
+					field: $("#endDate")[0],
+					firstDay: 1,
+					defaultDate:  moment(act.EndDate, "YYYY-MM-DD/HH:mm:ss.SS").toDate(),
+					setDefaultDate: true,
+					format: "D MMM YYYY"
+				});
+
+			$("#endDate").data('picker', endDate);
+			$("#startDate").data('picker', startDate);
+
+			$("#changeStatus").val(act.TaskStatusID);
+			$("#changePriority").val(act.PriorityID);
+
+			$("#Estimate").val(act.EstimatedHours.toFixed(2));
+
+			getAssigness();
+
+		});
+	};
 
 	getAssigness = function () {
 
 		assigneeHandler = new XIGENTIMER.AssigneeGenerator(activityID, act.ProjectID, function (users) {
-
-			VM.users(users.filter(function (u) {
-				return u.isAssigned();
-			}));
 
 			VM.possibleAssigness(users);
 
@@ -136,6 +164,8 @@ $(function () {
 		});
 	};
 
+	loadActivityDetails();
+
 	localforage.getItem("baseURL", function (u) {
 
 		baseURL = u;
@@ -148,10 +178,16 @@ $(function () {
 	});
 
 	$(".do-refresh").on("click", function () {
-		$(this).addClass("is-refreshing").attr("disabled", "disabled");
-		getUsers(function () {
-			$(".do-refresh").removeClass("is-refreshing").removeAttr("disabled");
+
+		var btn = $(this);
+
+		btn.addClass("is-refreshing").attr("disabled", "disabled");
+		
+		XIGENTIMER.API.getHierachy(function () {
+			loadActivityDetails();
+			btn.removeClass("is-refreshing").removeAttr("disabled");
 		});
+
 	});
 
 	$(".assignee-list").on("click", "li a", function () {
@@ -160,7 +196,9 @@ $(function () {
 		target.trigger("change");
 	});
 
-	$(".assignee-list").on("change", "input", function () {
+	$(".assignee-list").on("change", "input", function (e) {
+
+		e.preventDefault();
 
 		var targetID = $(this).closest("li").attr("data-index");
 
@@ -182,15 +220,22 @@ $(function () {
 
 		var data = {
 			"TaskID" : activityID,
-			"StartDate" : $("#startDate").val() ? $("#startDate").data("picker").getMoment().format("YYYY-MM-DDTHH:mm:ss.SS") : null,
+			"StartDate" : $("#startDate").val() ? $("#startDate").data("picker").getMoment().format("YYYY-MM-DDTHH:mm:ss.SS") : "0000-00-00T00:00:00.00",
 			"EndDate" : $("#endDate").val() ? $("#endDate").data("picker").getMoment().format("YYYY-MM-DDTHH:mm:ss.SS") : null,
 			"PriorityID" : parseInt($("#changePriority").val(), 10),
-			"TaskStatusID" : parseInt($("#changeStatus").val(), 10)
+			"TaskStatusID" : parseInt($("#changeStatus").val(), 10),
+			"EstimatedHours" : parseInt($("#Estimate").val(), 10).toFixed(2)
 		};
+
+		console.log(JSON.stringify(data));
 
 		XIGENTIMER.API.base("PUT", "activities/" + activityID, data, function () {
 
-			btn.text("Save").removeAttr("disabled");
+			setTimeout(function () {
+				XIGENTIMER.API.getHierachy(function () {
+					btn.text("Save").removeAttr("disabled");
+				});
+			}, 200);
 
 		});
 

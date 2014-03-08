@@ -90,4 +90,7 @@
 	    // Default: $reveal-position-top or 50px
 	    $top-offset: 40px
 	);
+
+	max-height: 85%;
+	overflow: auto;
 }

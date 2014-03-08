@@ -29,6 +29,10 @@ if (typeof XIGENTIMER !== "object") {
 				returnedData,
 				request = {};
 
+			if (method.toLowerCase() === "delete") {
+				method = "del";
+			}
+
 			getUserID = function () {
 				localforage.getItem("user", function (user) {
 					
