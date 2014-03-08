@@ -16,6 +16,14 @@
 
 	};
 
+	timer.AssigneeGenerator.prototype.update = function (callback) {
+
+		this.callback = callback;
+
+		this.getRequiredData();
+
+	};
+
 	timer.AssigneeGenerator.prototype.getRequiredData = function () {
 
 		// All the project member IDs for the parent project
@@ -144,7 +152,8 @@
 			totalDeletions = 0,
 			totalAdditions = 0,
 			completedDeletions = false,
-			completedAdditions = false;
+			completedAdditions = false,
+			checkComplete;
 
 		// If they arent in already assigned, we don't need to remove any
 		$.each(toRemove, function () {
@@ -164,6 +173,14 @@
 
 		});
 
+		checkComplete = function () {
+
+			if (typeof callback === "function") {
+				callback();
+			}
+
+		};
+
 		if (finalToRemove.length > 0) {
 
 			console.log("ToRemove: activities-assignees/" + finalToRemove);
@@ -180,11 +197,14 @@
 
 					if (totalDeletions === toRemove.length) {
 						completedDeletions = true;
+						checkComplete();
 					}
 
 				});
 			});
 
+		} else {
+			checkComplete();
 		}
 
 		if (finalToAdd.length > 0) {
@@ -204,11 +224,14 @@
 
 					if (totalAdditions === toAssign.length) {
 						completedAdditions = true;
+						checkComplete();
 					}
 
 				});
 			});
 
+		} else {
+			checkComplete();
 		}
 
 	};

@@ -208,8 +208,8 @@ $(function () {
 				height: 450,
 				max_height: 450,
 				min_width: 800,
-				min_height: 400,
-				toolbar: true
+				min_height: 450,
+				toolbar: false
 			});
 
 		}

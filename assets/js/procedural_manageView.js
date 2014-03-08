@@ -67,9 +67,7 @@ $(function () {
 
 		if (modal[0].id === "addAssignees") {
 
-			assigneeHandler.updateAssigness(VM.possibleAssigness(), function () {
-
-			});
+			assigneeHandler.updateAssigness(VM.possibleAssigness(), function () {});
 
 		}
 
@@ -119,7 +117,7 @@ $(function () {
 			$("#changeStatus").val(act.TaskStatusID);
 			$("#changePriority").val(act.PriorityID);
 
-			$("#Estimate").val(act.EstimatedHours.toFixed(2));
+			$("#Estimate").val(act.EstimatedHours ? act.EstimatedHours.toFixed(2) : "");
 
 			getAssigness();
 
@@ -186,6 +184,10 @@ $(function () {
 		XIGENTIMER.API.getHierachy(function () {
 			loadActivityDetails();
 			btn.removeClass("is-refreshing").removeAttr("disabled");
+		});
+
+		assigneeHandler.refresh(function (assignees) {
+			VM.possibleAssigness(assignees);
 		});
 
 	});
