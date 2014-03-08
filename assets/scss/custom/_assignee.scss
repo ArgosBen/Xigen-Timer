@@ -1,0 +1,93 @@
+.assignee-list {
+	list-style: none outside none;
+	width: 100%;
+	display: inline-block;
+	margin: 0;
+	padding: 0;
+
+	* {
+		box-sizing: border-box;
+	}
+
+	li {
+		width: 33.333333333333%;
+		float: left;
+	}
+
+	a {
+		display: inline-block;
+		width: 100%;
+		height: 100%;
+		padding: 5px;
+
+		&:hover {
+			background: lighten($primary-color, 60%);
+		}
+	}
+
+	.is-assigned a {
+		background: lighten($success-color, 40%);
+
+		&:hover {
+			background: lighten($success-color, 45%);
+		}
+
+	}
+
+	h3 {
+		font-size: 14px;
+		padding: 0 10px 0 10px;
+		margin: 0;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+
+	img {
+		max-width: 25%;
+	}
+
+	img,
+	h3,
+	.checkbox_holder {
+		float: left;
+	}
+
+	.checkbox_holder {
+		padding: 0 10px 0 10px;
+		margin: 0;
+
+		input {
+			margin: 0px;
+		}
+	}
+
+	h3,
+	.checkbox_holder {
+		width: 75%;
+	}
+
+	input + label {
+		margin-left: 0px;
+	}
+
+}
+
+#addAssignees {
+	@include reveal-modal-style(
+	    // Sets background color of reveal modal. Default: $reveal-modal-bg or #fff
+	    $bg:$reveal-modal-bg,
+	    // Set reveal border style. Default: $reveal-border-style or solid
+	    $border:true,
+	    // Width of border (i.e. 1px). Default: $reveal-border-width.
+	    $border-style:$reveal-border-style,
+	    // Color of border. Default: $reveal-border-color.
+	    $border-width:$reveal-border-width,
+	    // Color of border. Default: $reveal-border-color.
+	    $border-color:$reveal-border-color,
+	    // Choose whether or not to include the default box-shadow. Default: true, Options: false
+	    $box-shadow:true,
+	    // Default: $reveal-position-top or 50px
+	    $top-offset: 40px
+	);
+}

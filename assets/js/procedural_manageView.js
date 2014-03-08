@@ -10,28 +10,27 @@ $(function () {
 		activities,
 		baseURL,
 		getUsers,
-		users,
 		act,
 		MiniViewModel,
-		addMessage,
-		defaultText,
-		loaded,
+		VM,
+		assigneeHandler,
 		userCache,
+		getAssigness,
 		getTimeLogs;
 
 	MiniViewModel = function () {
-
-		this.newMessage = ko.observable();
 
 		this.users = ko.observableArray();
 
 		this.timeLogs = ko.observableArray();
 
+		this.possibleAssigness = ko.observableArray([]);
+
 		this.notOSX = !/darwin/.test(os.platform());
 
 	};
 
-	var VM = new MiniViewModel();
+	VM = new MiniViewModel();
 	window.VM = VM;
 
 	ko.applyBindings(VM);
@@ -53,16 +52,7 @@ $(function () {
 		}
 	});
 
-	$("#addMessage .secondary").on("click", function () {
-		$("#addMessage").foundation("reveal", "close");
-	});
-
-	$("#addMessage .success").on("click", function () {
-		addMessage(this);
-	});
-
-	$(".message_send").on("click", function () {});
-
+	// Get start and end dates
 	localforage.getItem("rawActivityCache", function (c) {
 
 		activities = c;
@@ -100,7 +90,23 @@ $(function () {
 		$("#changeStatus").val(act.TaskStatusID);
 		$("#changePriority").val(act.PriorityID);
 
+		getAssigness();
+
 	});
+
+	getAssigness = function () {
+
+		assigneeHandler = new XIGENTIMER.AssigneeGenerator(activityID, act.ProjectID, function (users) {
+
+			VM.users(users.filter(function (u) {
+				return u.isAssigned();
+			}));
+
+			VM.possibleAssigness(users);
+
+		});
+
+	};
 
 	getTimeLogs = function () {
 		localforage.getItem("timelogCache", function (tlc) {
@@ -139,7 +145,6 @@ $(function () {
 			"target" : "_system"
 		}).removeAttr("disabled");
 
-		getUsers();
 	});
 
 	$(".do-refresh").on("click", function () {
@@ -147,6 +152,24 @@ $(function () {
 		getUsers(function () {
 			$(".do-refresh").removeClass("is-refreshing").removeAttr("disabled");
 		});
+	});
+
+	$(".assignee-list").on("click", "li a", function () {
+		var target = $("[type=checkbox]", this);
+		target.prop("checked") ? target.prop("checked", false) : target.prop("checked", true);
+		target.trigger("change");
+	});
+
+	$(".assignee-list").on("change", "input", function () {
+
+		var targetID = $(this).closest("li").attr("data-index");
+
+		if ($(this).prop("checked")) {
+			VM.possibleAssigness()[targetID].isAssigned(true);
+		} else {
+			VM.possibleAssigness()[targetID].isAssigned(false);
+		}
+
 	});
 
 	$(".do-save").on("click", function (e) {
@@ -165,111 +188,12 @@ $(function () {
 			"TaskStatusID" : parseInt($("#changeStatus").val(), 10)
 		};
 
-		XIGENTIMER.API.base("PUT", "activities/" + activityID, data, function (success, response) {
+		XIGENTIMER.API.base("PUT", "activities/" + activityID, data, function () {
 
 			btn.text("Save").removeAttr("disabled");
 
 		});
 
 	});
-
-	// Get Messages
-	getUsers = function (callback) {
-
-		var loaded = 0,
-			assignees,
-			userIDs = [],
-			makeList;
-
-		XIGENTIMER.API.base("GET", "activities/" + activityID + "/assignees/", {}, function (success, data, unfilteredData) {
-
-			assignees = unfilteredData;
-
-			$.each(unfilteredData, function () {
-
-				XIGENTIMER.API.base("GET", "projects-members?$filter=ProjectMemberID eq " + this.ProjectMemberID, {}, function (success, data, unfilteredData) {
-					loaded += 1;
-					userIDs.push(data[0].UserID);
-
-					if (loaded === assignees.length) {
-						makeList();
-					}
-				});
-
-			});
-				
-		});
-
-		makeList = function () {
-
-			localforage.getItem("userCache", function (u) {
-
-				userCache = u;
-
-				var users = u.filter(function (i) {
-					return userIDs.indexOf(i.UserID) > -1;
-				});
-
-				localforage.getItem("baseURL", function (b) {
-
-					$.each(users, function (index, user) {
-						user.AvatarURL = b + "/ImagePage.aspx?t=0&h=" + user.AvatarHash + "&id=" + user.UserID;
-					});
-
-					VM.users(users);
-
-					getTimeLogs();
-
-				});
-
-			});
-
-		};
-	};
-
-	// Add message
-	addMessage = function (triggerEl) {
-
-		var makeRequest,
-			userID;
-
-		defaultText = defaultText ? defaultText : $(triggerEl).text();
-
-		$(triggerEl).attr("disabled", "disabled").text("Adding...");
-
-		localforage.getItem("user", function (u) {
-			userID = u.UserID;
-			makeRequest();
-		});
-
-		makeRequest = function () {
-			XIGENTIMER.API.base("POST", "messages", {
-				"UserID" : userID,
-				"TaskID" : act.TaskID,
-				"MessageText" : VM.newMessage(),
-				"PostDate" : moment().format("YYYY-MM-DDTHH:mm:ss.SS")
-			}, function (success) {
-
-				if (success) {
-
-					$(triggerEl).text(defaultText).removeAttr("disabled");
-					$("#addMessage").foundation("reveal", "close");
-					VM.newMessage("");
-					getUsers();
-
-				} else {
-
-					$(triggerEl).text("Error :(").removeAttr("disabled").removeClass("success").addClass("alert");
-
-					setTimeout(function () {
-						$(triggerEl).text(defaultText).removeClass("alert").addClass("success");
-					}, 1500);
-
-				}
-
-			});
-		};
-
-	};
 
 });

@@ -554,6 +554,25 @@ if (typeof XIGENTIMER !== "object") {
 
 			};
 
+		},
+
+		getUserDetails: function (IDs, callback) {
+
+			var users = [],
+				loaded = 0;
+
+			localforage.getItem("userCache", function (uc) {
+
+				users = uc.filter(function (user) {
+					return IDs.indexOf(user.UserID) > -1;
+				});
+
+				if (typeof callback === "function") {
+					callback(users);
+				}
+
+			});
+
 		}
 
 	};

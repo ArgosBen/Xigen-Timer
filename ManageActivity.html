@@ -56,8 +56,8 @@
 						<!-- /ko -->
 					</div>
 
-					<button class="message_send expand small button info" data-reveal-id="addMessage">
-						Assign another User
+					<button class="message_send expand small button info" data-reveal-id="addAssignees">
+						Manage Assignees...
 					</button>
 
 				</div>
@@ -76,6 +76,7 @@
 								</tr>
 							</thead>
 
+							<!-- ko if: timeLogs().length > 0 -->
 							<tbody data-bind="foreach: timeLogs">
 								<tr>
 									<td data-bind="text: UserID"></td>
@@ -83,6 +84,15 @@
 									<td data-bind="text: Duration"></td>
 								</tr>
 							</tbody>
+							<!-- /ko -->
+
+							<!-- ko if: timeLogs().length === 0 -->
+							<tbody>
+								<tr>
+									<td align="center" colspan="3">No time logged on this task yet...</td>
+								</tr>
+							</tbody>
+							<!-- /ko -->
 
 						</table>
 
@@ -111,7 +121,15 @@
 						<option value="5">Hot</option>
 					</select>
 
-					<div class="row collapse" style="margin-top: 40px;">
+					<div class="row collapse">
+
+						<div class="small-4 columns">
+				        	<span class="prefix">Est. Hrs.</span>
+				        </div>
+						<div class="small-8 columns">
+							<input type="text" id="Estimate"/>
+						</div>
+
 						<div class="small-4 columns">
 				        	<span class="prefix">Start Date:</span>
 				        </div>
@@ -135,27 +153,26 @@
 
 		</div>
 
-		<div id="addMessage" class="reveal-modal" data-reveal>
-			<h3>Add Message to Task...</h3>
-			<div class="row collapse">
+		<div id="addAssignees" class="reveal-modal" data-reveal>
+			<h3>Edit Assignees</h3>
 
-				<div class="small-12 columns">
-					<textarea data-bind="value: newMessage, valueUpdate: 'keyup'"></textarea>
-				</div>
+			<p>Showing users assigned to the parent project:</p>
 
-			</div>
+			<ul data-bind="foreach: possibleAssigness" class="assignee-list">
+				
+				<li data-bind="css: { 'is-assigned' : isAssigned }, attr: { 'data-index' : $index() }">
+					<a href="#">
+						<img data-bind="attr: {src: AvatarURL, alt: Name}">
+						<h3 data-bind="text: Name"></h3>
+						<div class="checkbox_holder">
+							<input class="hidden" type="checkbox" data-bind="checked: isAssigned, attr: { 'id' : 'assigned_' + $index() }" />
+							<label data-bind="attr: { 'for' : 'assigned_' + $index() }, html: isAssigned() ? '<strong>Assigned</strong>' : 'Not Assigned'">Assigned?</label>
+						</div>
+					</a>
+				</li>
 
-			<div class="row collapse">
-
-				<div class="small-4 columns">
-					<a class="button small expand secondary do-close">Cancel</a>
-				</div>
-
-				<div class="small-4 columns">
-					<button class="button small expand success do-update" data-bind="enable: newMessage">Post</button>
-				</div>
-
-			</div>
+			</ul>
+			
 		</div>
 		
 		<!-- Libraries -->
@@ -170,6 +187,7 @@
 
 		<!-- Custom JS -->
 		<script src="assets/js/API.js"></script>
+		<script src="assets/js/AssigneeRender.js"></script>
 		<script src="assets/js/key.js"></script>
 		<script src="assets/js/window.js"></script>
 		<script src="assets/js/procedural_manageView.js"></script>

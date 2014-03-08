@@ -21,12 +21,15 @@
     "predef"        : [  // Custom globals.
         "XIGENTIMER",
         "localforage",
-        "ko"
+        "ko",
+        "moment",
+        "Pikaday"
     ],
  
     // Development.
     "debug"         : false,  // Allow debugger statements e.g. browser breakpoints.
-    "devel"         : true,   // Allow developments statements e.g. `console.log();`.
+    "devel"         : true,   // Allow developments statements e.g. `console.log();`,
+    "unused"        : true,
  
  
     // ECMAScript 5.
