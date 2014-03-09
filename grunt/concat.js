@@ -26,7 +26,8 @@ module.exports = {
                 'assets/js/reset.js',
                 'assets/js/key.js',
                 'assets/js/state.js',
-                'assets/js/tasks.js'
+                'assets/js/tasks.js',
+                'assets/js/notify.js'
             ],
             'assets/dist/src/EasyTimer_ViewTask.js' : [
                 'assets/js/lib/jquery.js',

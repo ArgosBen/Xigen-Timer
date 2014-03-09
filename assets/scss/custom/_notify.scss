@@ -1,0 +1,25 @@
+.is-notification {
+
+	display: block;
+	width: 100%;
+	height: 100%;
+	padding: 15px;
+
+	background: #333333;
+
+	h2 {
+		color: #FFF;
+		font-size: 16px;
+		margin: 0 0 10px 0;
+	}
+
+	p {
+		margin: 0 0 0 0;
+		color: #FFFFFF;
+	}
+
+	h2, p {
+		display: none;
+	}
+
+}
