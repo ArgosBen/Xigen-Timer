@@ -1,11 +1,12 @@
 module.exports = {
     my_target: {
         options: {
-            sourceMap: true,
-            sourceMapName: 'assets/dist/EasyTimer.map'
+            sourceMap: function(path) { return path.replace(/.js/,".map") },
         },
         files: {
-            'assets/dist/EasyTimer.min.js': ['assets/dist/EasyTimer_Production.js']
+            'assets/dist/EasyTimer.min.js': ['assets/dist/src/EasyTimer_Production.js'],
+            'assets/dist/EasyTimer_ViewTask.min.js': ['assets/dist/src/EasyTimer_ViewTask.js'],
+            'assets/dist/EasyTimer_ManageTask.min.js': ['assets/dist/src/EasyTimer_ManageTask.js']
         }
     }
 };

@@ -19,7 +19,7 @@
     "url": "https://github.com/XigenBen/Xigen-Timer/issues"
   },
   "window": {
-    "toolbar": false,
+    "toolbar": true,
     "title": "Xigen Timer",
     "width": 900,
     "height": 510,
@@ -35,7 +35,8 @@
     "restler": "~3.2.0",
     "load-grunt-config": "~0.7.1",
     "grunt-contrib-concat": "~0.3.0",
-    "grunt-contrib-uglify": "~0.3.2"
+    "grunt-contrib-uglify": "~0.3.2",
+    "grunt-contrib-clean": "~0.5.0"
   },
   "dependencies": {
     "restler": "~3.2.0"
