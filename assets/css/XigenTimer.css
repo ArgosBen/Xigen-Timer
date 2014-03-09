@@ -5122,14 +5122,24 @@ body {
   display: block;
   width: 100%;
   height: 100%;
-  padding: 15px;
-  background: #333333; }
+  padding: 5px;
+  position: relative;
+  cursor: pointer;
+  background: #666666; }
   .is-notification h2 {
     color: #FFF;
     font-size: 16px;
-    margin: 0 0 10px 0; }
+    font-weight: bold;
+    margin: 0 0 0 0; }
   .is-notification p {
     margin: 0 0 0 0;
-    color: #FFFFFF; }
+    color: #FFFFFF;
+    font-size: 12px; }
   .is-notification h2, .is-notification p {
-    display: none; }
+    display: none;
+    margin-left: 45px; }
+  .is-notification img {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    max-width: 35px; }

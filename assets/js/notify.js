@@ -5,9 +5,9 @@
 	var gui = require('nw.gui'),
 		config = {
 			WINDOW_WIDTH: 290,
-			WINDOW_HEIGHT: 120,
+			WINDOW_HEIGHT: 70,
 			TARGET_X: screen.availWidth - 290 - 10,
-			TARGET_Y: screen.availHeight - 120 - 10
+			TARGET_Y: screen.availHeight - 70 - 10
 		};
 
 	timer.notify = function (message) {
@@ -22,6 +22,8 @@
 				y: screen.availHeight + 100
 			}),
 			interval;
+
+		notificationWindow.setAlwaysOnTop(true);
 
 		interval = setInterval(function () {
 
