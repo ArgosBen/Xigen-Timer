@@ -1,3 +1,9 @@
 default:
     - 'concat'
     - 'uglify'
+build:
+    - 'concat'
+    - 'uglify'
+    - 'sass'
+    - 'nodewebkit'
+    - 'notify:nodewebkit'
