@@ -5,14 +5,14 @@
 	var gui = require('nw.gui'),
 		config = {
 			WINDOW_WIDTH: 290,
-			WINDOW_HEIGHT: 70,
+			WINDOW_HEIGHT: 55,
 			TARGET_X: screen.availWidth - 290 - 10,
-			TARGET_Y: screen.availHeight - 70 - 10
+			TARGET_Y: screen.availHeight - 55 - 10
 		};
 
-	timer.notify = function (message) {
+	timer.notify = function (title, message) {
 
-		var notificationWindow = gui.Window.open("notification.html", {
+		var notificationWindow = gui.Window.open("notification.html?title=" + encodeURIComponent(title) + "&message=" + encodeURIComponent(message), {
 				frame: false,
 				title: "Notification Window",
 				toolbar: false,

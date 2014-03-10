@@ -5,7 +5,8 @@
 	height: 100%;
 	padding: 5px;
 	position: relative;
-	cursor: pointer;
+	cursor: default;
+	overflow: hidden;
 
 	background: lighten(#333333, 20%);
 
@@ -20,6 +21,9 @@
 		margin: 0 0 0 0;
 		color: #FFFFFF;
 		font-size: 12px;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
 	}
 
 	h2, p {

@@ -5124,7 +5124,8 @@ body {
   height: 100%;
   padding: 5px;
   position: relative;
-  cursor: pointer;
+  cursor: default;
+  overflow: hidden;
   background: #666666; }
   .is-notification h2 {
     color: #FFF;
@@ -5134,7 +5135,10 @@ body {
   .is-notification p {
     margin: 0 0 0 0;
     color: #FFFFFF;
-    font-size: 12px; }
+    font-size: 12px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap; }
   .is-notification h2, .is-notification p {
     display: none;
     margin-left: 45px; }

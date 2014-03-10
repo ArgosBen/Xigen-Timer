@@ -16413,6 +16413,19 @@ if (typeof XIGENTIMER !== "object") {
 							hierachy[item.EntityBaseID].Activities = tidyActivites(data, filterFunc);
 
 							if (loaded === projectCache.length && typeof callback === "function") {
+
+								localforage.getItem("activityCache", function (c) {
+
+									var diff = activityCache.length -= activityCache.length;
+
+									if (diff > 0) {
+										XIGENTIMER.notify("Tasks Assigned", "You have " + diff+ " new tasks assigned.");
+									} else {
+										XIGENTIMER.notify("Refreshed Tasks", "No new tasks assigned.");
+									}
+
+								});
+
 								localforage.setItem("activityCache", activityCache, function () {
 
 									localforage.setItem("rawActivityCache", rawActivityCache, function () {
@@ -17625,6 +17638,10 @@ $(function () {
 						setTimeout(function () {
 							XIGENTIMER.API.pulse();
 						}, 30000);
+
+						setTimeout(function () {
+							XIGENTIMER.VIEWMODEL.updateFromFilters();
+						}, 900000);
 					});
 					
 				} else {
@@ -17654,6 +17671,10 @@ $(function () {
 					setTimeout(function () {
 						XIGENTIMER.API.pulse();
 					}, 30000);
+
+					setTimeout(function () {
+						XIGENTIMER.VIEWMODEL.updateFromFilters();
+					}, 900000);
 				});
 			} else {
 				$(".login").fadeIn(200);
@@ -18908,14 +18929,14 @@ $(function () {
 	var gui = require('nw.gui'),
 		config = {
 			WINDOW_WIDTH: 290,
-			WINDOW_HEIGHT: 70,
+			WINDOW_HEIGHT: 55,
 			TARGET_X: screen.availWidth - 290 - 10,
-			TARGET_Y: screen.availHeight - 70 - 10
+			TARGET_Y: screen.availHeight - 55 - 10
 		};
 
-	timer.notify = function (message) {
+	timer.notify = function (title, message) {
 
-		var notificationWindow = gui.Window.open("notification.html", {
+		var notificationWindow = gui.Window.open("notification.html?title=" + encodeURIComponent(title) + "&message=" + encodeURIComponent(message), {
 				frame: false,
 				title: "Notification Window",
 				toolbar: false,

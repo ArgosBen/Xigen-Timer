@@ -111,6 +111,10 @@ $(function () {
 						setTimeout(function () {
 							XIGENTIMER.API.pulse();
 						}, 30000);
+
+						setTimeout(function () {
+							XIGENTIMER.VIEWMODEL.updateFromFilters();
+						}, 900000);
 					});
 					
 				} else {
@@ -140,6 +144,10 @@ $(function () {
 					setTimeout(function () {
 						XIGENTIMER.API.pulse();
 					}, 30000);
+
+					setTimeout(function () {
+						XIGENTIMER.VIEWMODEL.updateFromFilters();
+					}, 900000);
 				});
 			} else {
 				$(".login").fadeIn(200);
