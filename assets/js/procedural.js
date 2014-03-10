@@ -97,6 +97,10 @@ $(function () {
 							XIGENTIMER.updateDatePickers();
 						});
 
+						if  (user.RoleID === 1 || user.RoleID === 2) {
+							XIGENTIMER.VIEWMODEL.isProjectManager(true);
+						}
+
 						// Check for a connection
 						XIGENTIMER.API.pulse();
 
