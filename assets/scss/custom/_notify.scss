@@ -8,7 +8,7 @@
 	cursor: default;
 	overflow: hidden;
 
-	background: lighten(#333333, 20%);
+	background: -webkit-linear-gradient(#333, lighten(#333, 5%));
 
 	h2 {
 		color: #FFF;
@@ -36,6 +36,7 @@
 		top: 5px;
 		left: 5px;
 		max-width: 35px;
+		margin-top: 3px;
 	}
 
 }

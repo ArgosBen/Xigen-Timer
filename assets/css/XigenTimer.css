@@ -5130,7 +5130,7 @@ p.ver {
   position: relative;
   cursor: default;
   overflow: hidden;
-  background: #666666; }
+  background: -webkit-linear-gradient(#333, #404040); }
   .is-notification h2 {
     color: #FFF;
     font-size: 16px;
@@ -5150,4 +5150,5 @@ p.ver {
     position: absolute;
     top: 5px;
     left: 5px;
-    max-width: 35px; }
+    max-width: 35px;
+    margin-top: 3px; }
