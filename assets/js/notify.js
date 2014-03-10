@@ -8,9 +8,14 @@
 			WINDOW_HEIGHT: 55,
 			TARGET_X: screen.availWidth - 290 - 10,
 			TARGET_Y: screen.availHeight - 55 - 10
-		};
+		},
+		popupIsOpen = false;
 
 	timer.notify = function (title, message) {
+
+		if (popupIsOpen) {
+			return false;
+		}
 
 		var notificationWindow = gui.Window.open("notification.html?title=" + encodeURIComponent(title) + "&message=" + encodeURIComponent(message), {
 				frame: false,
@@ -22,6 +27,8 @@
 				y: screen.availHeight + 100
 			}),
 			interval;
+
+		popupIsOpen = true;
 
 		notificationWindow.setAlwaysOnTop(true);
 
@@ -44,6 +51,7 @@
 				} else {
 					clearInterval(interval);
 					notificationWindow.close();
+					popupIsOpen = false;
 				}
 
 			}, 5);

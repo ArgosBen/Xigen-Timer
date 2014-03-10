@@ -4722,6 +4722,10 @@ body {
 .hidden {
   display: none; }
 
+p.ver {
+  text-align: right;
+  color: #CCCCCC; }
+
 @-webkit-keyframes spin {
   0% {
     -webkit-transform: rotate(0deg); }

@@ -17533,6 +17533,7 @@ $(function () {
 	var avatarURL = "http://projectsvm.xigen.co.uk/ImagePage.aspx?t=0",
 		defaultText,
 		gui = require('nw.gui'),
+		pkg = require('./package.json'),
 		submit = $(".login [type=submit]"),
 		datepickers= [],
 		picker,
@@ -17641,7 +17642,7 @@ $(function () {
 
 						setTimeout(function () {
 							XIGENTIMER.VIEWMODEL.updateFromFilters();
-						}, 900000);
+						}, 600000);
 					});
 					
 				} else {
@@ -17674,7 +17675,7 @@ $(function () {
 
 					setTimeout(function () {
 						XIGENTIMER.VIEWMODEL.updateFromFilters();
-					}, 900000);
+					}, 600000);
 				});
 			} else {
 				$(".login").fadeIn(200);
@@ -17852,6 +17853,9 @@ $(function () {
 			}, 200);
 		}
 	});
+
+	// Version Number
+	$("[data-version]").text("XigenTimer v" + pkg.version);
 
 	// Icons
 	$(".icon-min").on("click", function () {
@@ -18932,9 +18936,14 @@ $(function () {
 			WINDOW_HEIGHT: 55,
 			TARGET_X: screen.availWidth - 290 - 10,
 			TARGET_Y: screen.availHeight - 55 - 10
-		};
+		},
+		popupIsOpen = false;
 
 	timer.notify = function (title, message) {
+
+		if (popupIsOpen) {
+			return false;
+		}
 
 		var notificationWindow = gui.Window.open("notification.html?title=" + encodeURIComponent(title) + "&message=" + encodeURIComponent(message), {
 				frame: false,
@@ -18946,6 +18955,8 @@ $(function () {
 				y: screen.availHeight + 100
 			}),
 			interval;
+
+		popupIsOpen = true;
 
 		notificationWindow.setAlwaysOnTop(true);
 
@@ -18968,6 +18979,7 @@ $(function () {
 				} else {
 					clearInterval(interval);
 					notificationWindow.close();
+					popupIsOpen = false;
 				}
 
 			}, 5);

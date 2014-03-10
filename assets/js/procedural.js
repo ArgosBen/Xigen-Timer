@@ -6,6 +6,7 @@ $(function () {
 	var avatarURL = "http://projectsvm.xigen.co.uk/ImagePage.aspx?t=0",
 		defaultText,
 		gui = require('nw.gui'),
+		pkg = require('./package.json'),
 		submit = $(".login [type=submit]"),
 		datepickers= [],
 		picker,
@@ -114,7 +115,7 @@ $(function () {
 
 						setTimeout(function () {
 							XIGENTIMER.VIEWMODEL.updateFromFilters();
-						}, 900000);
+						}, 600000);
 					});
 					
 				} else {
@@ -147,7 +148,7 @@ $(function () {
 
 					setTimeout(function () {
 						XIGENTIMER.VIEWMODEL.updateFromFilters();
-					}, 900000);
+					}, 600000);
 				});
 			} else {
 				$(".login").fadeIn(200);
@@ -325,6 +326,9 @@ $(function () {
 			}, 200);
 		}
 	});
+
+	// Version Number
+	$("[data-version]").text("XigenTimer v" + pkg.version);
 
 	// Icons
 	$(".icon-min").on("click", function () {
