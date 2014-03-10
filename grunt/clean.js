@@ -1,1 +1,1 @@
-module.exports = ['assets/dist/src'];
+module.exports = ['webkitbuilds/releases/'];
