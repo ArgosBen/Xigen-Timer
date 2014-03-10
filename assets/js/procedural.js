@@ -109,11 +109,11 @@ $(function () {
 						XIGENTIMER.drawTaskList();
 
 						// Check every 30 seconds
-						setTimeout(function () {
+						setInterval(function () {
 							XIGENTIMER.API.pulse();
 						}, 30000);
 
-						setTimeout(function () {
+						setInterval(function () {
 							XIGENTIMER.VIEWMODEL.updateFromFilters();
 						}, 600000);
 					});
@@ -142,11 +142,11 @@ $(function () {
 					XIGENTIMER.drawTaskList();
 
 					// Check every 30 seconds
-					setTimeout(function () {
+					setInterval(function () {
 						XIGENTIMER.API.pulse();
 					}, 30000);
 
-					setTimeout(function () {
+					setInterval(function () {
 						XIGENTIMER.VIEWMODEL.updateFromFilters();
 					}, 600000);
 				});
