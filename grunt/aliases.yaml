@@ -1,10 +1,14 @@
 default:
-    - 'concat'
-    - 'uglify'
-build:
-    - 'concat'
-    - 'uglify'
-    - 'sass'
+    - 'concurrent:build'
     - 'clean'
+js:
+    - 'concat:js'
+    - 'uglify'
+css:
+    - 'sass'
+    - 'concat:css'
+    - 'cssmin'
+build:
+    - 'default'
     - 'nodewebkit'
     - 'notify:nodewebkit'

@@ -1,5 +1,5 @@
 module.exports = {
-    dist: {
+    js: {
         files: {
             'assets/dist/src/EasyTimer_Production.js' : [
                 'assets/js/lib/jquery.js',
@@ -57,6 +57,15 @@ module.exports = {
                 'assets/js/key.js',
                 'assets/js/window.js',
                 'assets/js/procedural_manageView.js'
+            ]
+        }
+    },
+    css: {
+        files: {
+            'assets/dist/XigenTimer.css' : [
+                'assets/css/XigenTimer.css',
+                'assets/css/pikaday.css',
+                'assets/css/flipclock.css'
             ]
         }
     }
