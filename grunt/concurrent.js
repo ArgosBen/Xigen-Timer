@@ -1,5 +1,5 @@
 module.exports = {
-	build: {
+	compress: {
 		tasks: ['js', 'css'],
 		options: {
 			logConcurrentOutput: false

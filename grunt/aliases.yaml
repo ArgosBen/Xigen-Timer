@@ -1,5 +1,5 @@
 default:
-    - 'concurrent:build'
+    - 'concurrent:compress'
     - 'clean:dev'
 js:
     - 'concat:js'
@@ -8,9 +8,25 @@ css:
     - 'sass'
     - 'concat:css'
     - 'cssmin'
-build:
-    - 'default'
-    - 'clean:build'
-    - 'nodewebkit'
+postbuild:
     - 'notify:nodewebkit'
     - 'compress'
+prebuild:
+    - 'default'
+    - 'clean:build'
+build-all:
+    - 'prebuild'
+    - 'nodewebkit:all'
+    - 'postbuild'
+build-mac:
+    - 'prebuild'
+    - 'nodewebkit:mac'
+    - 'postbuild'
+build-win:
+    - 'prebuild'
+    - 'nodewebkit:win'
+    - 'postbuild'
+build-linux:
+    - 'prebuild'
+    - 'nodewebkit:linux'
+    - 'postbuild'
