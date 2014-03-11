@@ -1,6 +1,6 @@
 default:
     - 'concurrent:build'
-    - 'clean'
+    - 'clean:dev'
 js:
     - 'concat:js'
     - 'uglify'
@@ -10,5 +10,6 @@ css:
     - 'cssmin'
 build:
     - 'default'
+    - 'clean:build'
     - 'nodewebkit'
     - 'notify:nodewebkit'
