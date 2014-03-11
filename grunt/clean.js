@@ -4,6 +4,8 @@ module.exports = {
 		'assets/dist/src'
 	],
 	build: [
-		'webkitbuilds/releases/**/*'
+		'webkitbuilds/releases/**/**/**/*',
+		'webkitbuilds/releases/**/**/*',
+		'webkitbuilds/releases/**/*',
 	]
 };
