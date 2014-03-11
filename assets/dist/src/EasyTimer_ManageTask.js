@@ -15628,6 +15628,7 @@ $(function () {
 			$("#Estimate").val(act.EstimatedHours ? act.EstimatedHours.toFixed(2) : "");
 
 			getAssigness();
+			getTimeLogs();
 
 		});
 	};
