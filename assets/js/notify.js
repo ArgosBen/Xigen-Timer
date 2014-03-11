@@ -9,55 +9,76 @@
 			TARGET_X: screen.availWidth - 290 - 10,
 			TARGET_Y: screen.availHeight - 55 - 10
 		},
-		popupIsOpen = false;
+		popupIsOpen = false,
+		os = require('os'),
+		notifier;
 
-	timer.notify = function (title, message) {
+	if (!/darwin/.test(os.platform())) {
+		timer.notify = function (title, message) {
 
-		if (popupIsOpen) {
-			return false;
-		}
-
-		var notificationWindow = gui.Window.open("notification.html?title=" + encodeURIComponent(title) + "&message=" + encodeURIComponent(message), {
-				frame: false,
-				title: "Notification Window",
-				toolbar: false,
-				width: config.WINDOW_WIDTH,
-				height: config.WINDOW_HEIGHT,
-				x: screen.availWidth - config.WINDOW_WIDTH - 10,
-				y: screen.availHeight + 100
-			}),
-			interval;
-
-		popupIsOpen = true;
-
-		notificationWindow.setAlwaysOnTop(true);
-
-		interval = setInterval(function () {
-
-			if (notificationWindow.y > config.TARGET_Y) {
-				notificationWindow.moveTo(notificationWindow.x, notificationWindow.y -= 5);
-			} else {
-				clearInterval(interval);
+			if (popupIsOpen) {
+				return false;
 			}
 
-		}, 5);
+			var notificationWindow = gui.Window.open("notification.html?title=" + encodeURIComponent(title) + "&message=" + encodeURIComponent(message), {
+					frame: false,
+					title: "Notification Window",
+					toolbar: false,
+					width: config.WINDOW_WIDTH,
+					height: config.WINDOW_HEIGHT,
+					x: screen.availWidth - config.WINDOW_WIDTH - 10,
+					y: screen.availHeight + 100
+				}),
+				interval;
 
-		setTimeout(function () {
+			popupIsOpen = true;
+
+			notificationWindow.setAlwaysOnTop(true);
 
 			interval = setInterval(function () {
 
-				if (notificationWindow.y < screen.availHeight + 50) {
-					notificationWindow.moveTo(notificationWindow.x, notificationWindow.y += 5);
+				if (notificationWindow.y > config.TARGET_Y) {
+					notificationWindow.moveTo(notificationWindow.x, notificationWindow.y -= 5);
 				} else {
 					clearInterval(interval);
-					notificationWindow.close();
-					popupIsOpen = false;
 				}
 
 			}, 5);
-		
-		}, 5000);
 
-	};
+			setTimeout(function () {
+
+				interval = setInterval(function () {
+
+					if (notificationWindow.y < screen.availHeight + 50) {
+						notificationWindow.moveTo(notificationWindow.x, notificationWindow.y += 5);
+					} else {
+						clearInterval(interval);
+						notificationWindow.close();
+						popupIsOpen = false;
+					}
+
+				}, 5);
+			
+			}, 5000);
+
+		};
+	} else {
+
+		if (!notifier) {
+			notifier = require('osx-notifier');
+		}
+
+		timer.notify = function (title, message) {
+
+			notifier({
+				type: 'info',
+				title: title,
+				message: message,
+				group: 'XigenTimer',
+			});
+
+		};
+
+	}
 
 }(XIGENTIMER));
