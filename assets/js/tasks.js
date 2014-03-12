@@ -88,7 +88,8 @@
 		enhanceData = function () {
 
 			var complete = 0,
-				finalTasks;
+				finalTasks,
+				current = XIGENTIMER.VIEWMODEL.taskList().length;
 
 			finalTasks = function () {
 				tasks = tasks.sort(function (a, b) {
@@ -104,10 +105,21 @@
 					XIGENTIMER.VIEWMODEL.managedTaskList([]);
 				}
 
+				if (XIGENTIMER.activityCount !== undefined) {
+					var diff = tasks.length - current;
+
+					if (diff > 0) {
+						XIGENTIMER.notify("Tasks Assigned", diff + " new. " + tasks.length + " total.");
+					} else {
+						XIGENTIMER.notify("Refreshed Tasks", "No new tasks assigned. " + tasks.length + " total.");
+					}
+				}
+
 				if (!management) {
 					$.each(tasks, function () {
 						XIGENTIMER.VIEWMODEL.taskList.push(this);
 					});
+					XIGENTIMER.activityCount = XIGENTIMER.VIEWMODEL.taskList().length;
 				} else {
 					XIGENTIMER.VIEWMODEL.managedTaskList(tasks.filter(function (task) {
 						
@@ -127,7 +139,9 @@
 						return validIDs.indexOf(task.TaskStatusID) > -1;
 
 					}));
+
 				}
+
 			};
 
 			$.each(tasks, function (i, t) {

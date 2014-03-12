@@ -14,26 +14,30 @@
 	if (!/darwin/.test(os.platform())) {
 		timer.notify = function (title, message) {
 
-			if (popupIsOpen) {
+			if (XIGENTIMER.popupIsOpen) {
 				return false;
 			}
 
-			var notificationWindow = gui.Window.open("notification.html?title=" + encodeURIComponent(title) + "&message=" + encodeURIComponent(message), {
-					frame: false,
-					title: "Notification Window",
-					toolbar: false,
-					width: config.WINDOW_WIDTH,
-					height: config.WINDOW_HEIGHT,
-					x: screen.availWidth - config.WINDOW_WIDTH - 10,
-					y: screen.availHeight - config.WINDOW_HEIGHT - 10,
-					"always-on-top" : true,
-					"show_in_taskbar" : false,
-					show: true
-				});
+			gui.Window.open("notification.html?title=" + encodeURIComponent(title) + "&message=" + encodeURIComponent(message), {
+				frame: false,
+				title: "Notification Window",
+				toolbar: false,
+				width: config.WINDOW_WIDTH,
+				height: config.WINDOW_HEIGHT,
+				x: screen.availWidth - config.WINDOW_WIDTH - 10,
+				y: screen.availHeight - config.WINDOW_HEIGHT - 10,
+				"always-on-top" : true,
+				show_in_taskbar : false,
+				show: true
+			});
+
+			XIGENTIMER.popupIsOpen = true;
 
 			setTimeout(function () {
-				popupIsOpen = false;
-			}, 5000);
+
+				XIGENTIMER.popupIsOpen = false;
+
+			}, 2000);
 
 		};
 	} else {

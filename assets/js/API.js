@@ -291,18 +291,6 @@ if (typeof XIGENTIMER !== "object") {
 
 							if (loaded === projectCache.length && typeof callback === "function") {
 
-								localforage.getItem("activityCache", function (c) {
-
-									var diff = activityCache.length -= activityCache.length;
-
-									if (diff > 0) {
-										XIGENTIMER.notify("Tasks Assigned", "You have " + diff+ " new tasks assigned.");
-									} else {
-										XIGENTIMER.notify("Refreshed Tasks", "No new tasks assigned.");
-									}
-
-								});
-
 								localforage.setItem("activityCache", activityCache, function () {
 
 									localforage.setItem("rawActivityCache", rawActivityCache, function () {
@@ -314,8 +302,8 @@ if (typeof XIGENTIMER !== "object") {
 										});
 
 										newHier = newHier.sort(function (a, b) {
-											if (a.Name < b.Name) { return -1 };
-											if (a.Name > b.Name) { return 1 };
+											if (a.Name < b.Name) { return -1; }
+											if (a.Name > b.Name) { return 1; }
 											return 0;
 										});
 

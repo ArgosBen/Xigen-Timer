@@ -16414,18 +16414,6 @@ if (typeof XIGENTIMER !== "object") {
 
 							if (loaded === projectCache.length && typeof callback === "function") {
 
-								localforage.getItem("activityCache", function (c) {
-
-									var diff = activityCache.length -= activityCache.length;
-
-									if (diff > 0) {
-										XIGENTIMER.notify("Tasks Assigned", "You have " + diff+ " new tasks assigned.");
-									} else {
-										XIGENTIMER.notify("Refreshed Tasks", "No new tasks assigned.");
-									}
-
-								});
-
 								localforage.setItem("activityCache", activityCache, function () {
 
 									localforage.setItem("rawActivityCache", rawActivityCache, function () {
@@ -16437,8 +16425,8 @@ if (typeof XIGENTIMER !== "object") {
 										});
 
 										newHier = newHier.sort(function (a, b) {
-											if (a.Name < b.Name) { return -1 };
-											if (a.Name > b.Name) { return 1 };
+											if (a.Name < b.Name) { return -1; }
+											if (a.Name > b.Name) { return 1; }
 											return 0;
 										});
 
@@ -17640,9 +17628,9 @@ $(function () {
 							XIGENTIMER.API.pulse();
 						}, 30000);
 
-						// setInterval(function () {
-						// 	XIGENTIMER.VIEWMODEL.updateFromFilters();
-						// }, 600000);
+						setInterval(function () {
+							XIGENTIMER.VIEWMODEL.updateFromFilters();
+						}, 600000);
 					});
 					
 				} else {
@@ -17673,9 +17661,9 @@ $(function () {
 						XIGENTIMER.API.pulse();
 					}, 30000);
 
-					// setInterval(function () {
-					// 	XIGENTIMER.VIEWMODEL.updateFromFilters();
-					// }, 600000);
+					setInterval(function () {
+						XIGENTIMER.VIEWMODEL.updateFromFilters();
+					}, 600000);
 				});
 			} else {
 				$(".login").fadeIn(200);
@@ -18786,7 +18774,8 @@ $(function () {
 		enhanceData = function () {
 
 			var complete = 0,
-				finalTasks;
+				finalTasks,
+				current = XIGENTIMER.VIEWMODEL.taskList().length;
 
 			finalTasks = function () {
 				tasks = tasks.sort(function (a, b) {
@@ -18802,10 +18791,21 @@ $(function () {
 					XIGENTIMER.VIEWMODEL.managedTaskList([]);
 				}
 
+				if (XIGENTIMER.activityCount !== undefined) {
+					var diff = tasks.length - current;
+
+					if (diff > 0) {
+						XIGENTIMER.notify("Tasks Assigned", diff + " new. " + tasks.length + " total.");
+					} else {
+						XIGENTIMER.notify("Refreshed Tasks", "No new tasks assigned. " + tasks.length + " total.");
+					}
+				}
+
 				if (!management) {
 					$.each(tasks, function () {
 						XIGENTIMER.VIEWMODEL.taskList.push(this);
 					});
+					XIGENTIMER.activityCount = XIGENTIMER.VIEWMODEL.taskList().length;
 				} else {
 					XIGENTIMER.VIEWMODEL.managedTaskList(tasks.filter(function (task) {
 						
@@ -18825,7 +18825,9 @@ $(function () {
 						return validIDs.indexOf(task.TaskStatusID) > -1;
 
 					}));
+
 				}
+
 			};
 
 			$.each(tasks, function (i, t) {
@@ -18942,26 +18944,30 @@ $(function () {
 	if (!/darwin/.test(os.platform())) {
 		timer.notify = function (title, message) {
 
-			if (popupIsOpen) {
+			if (XIGENTIMER.popupIsOpen) {
 				return false;
 			}
 
-			var notificationWindow = gui.Window.open("notification.html?title=" + encodeURIComponent(title) + "&message=" + encodeURIComponent(message), {
-					frame: false,
-					title: "Notification Window",
-					toolbar: false,
-					width: config.WINDOW_WIDTH,
-					height: config.WINDOW_HEIGHT,
-					x: screen.availWidth - config.WINDOW_WIDTH - 10,
-					y: screen.availHeight - config.WINDOW_HEIGHT - 10,
-					"always-on-top" : true,
-					"show_in_taskbar" : false,
-					show: true
-				});
+			gui.Window.open("notification.html?title=" + encodeURIComponent(title) + "&message=" + encodeURIComponent(message), {
+				frame: false,
+				title: "Notification Window",
+				toolbar: false,
+				width: config.WINDOW_WIDTH,
+				height: config.WINDOW_HEIGHT,
+				x: screen.availWidth - config.WINDOW_WIDTH - 10,
+				y: screen.availHeight - config.WINDOW_HEIGHT - 10,
+				"always-on-top" : true,
+				show_in_taskbar : false,
+				show: true
+			});
+
+			XIGENTIMER.popupIsOpen = true;
 
 			setTimeout(function () {
-				popupIsOpen = false;
-			}, 5000);
+
+				XIGENTIMER.popupIsOpen = false;
+
+			}, 2000);
 
 		};
 	} else {
