@@ -5,9 +5,7 @@
 	var gui = require('nw.gui'),
 		config = {
 			WINDOW_WIDTH: 290,
-			WINDOW_HEIGHT: 55,
-			TARGET_X: screen.availWidth - 290 - 10,
-			TARGET_Y: screen.availHeight - 55 - 10
+			WINDOW_HEIGHT: 55
 		},
 		popupIsOpen = false,
 		os = require('os'),
@@ -27,38 +25,14 @@
 					width: config.WINDOW_WIDTH,
 					height: config.WINDOW_HEIGHT,
 					x: screen.availWidth - config.WINDOW_WIDTH - 10,
-					y: screen.availHeight + 100
-				}),
-				interval;
-
-			popupIsOpen = true;
-
-			notificationWindow.setAlwaysOnTop(true);
-
-			interval = setInterval(function () {
-
-				if (notificationWindow.y > config.TARGET_Y) {
-					notificationWindow.moveTo(notificationWindow.x, notificationWindow.y -= 5);
-				} else {
-					clearInterval(interval);
-				}
-
-			}, 5);
+					y: screen.availHeight - config.WINDOW_HEIGHT - 10,
+					"always-on-top" : true,
+					"show_in_taskbar" : false,
+					show: true
+				});
 
 			setTimeout(function () {
-
-				interval = setInterval(function () {
-
-					if (notificationWindow.y < screen.availHeight + 50) {
-						notificationWindow.moveTo(notificationWindow.x, notificationWindow.y += 5);
-					} else {
-						clearInterval(interval);
-						notificationWindow.close();
-						popupIsOpen = false;
-					}
-
-				}, 5);
-			
+				popupIsOpen = false;
 			}, 5000);
 
 		};

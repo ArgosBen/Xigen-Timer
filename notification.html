@@ -14,33 +14,41 @@
 		"use strict";
 
 		var qs = (function(a) {
-			if (a === "") {
-				return {};
-			}
-			
-			var b = {};
-			for (var i = 0; i < a.length; i+=1) {
-				var p=a[i].split('=');
-				if (p.length !== 2) {
-					continue;
+				if (a === "") {
+					return {};
 				}
-				b[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " "));
-			}
-			return b;
-		})(window.location.search.substr(1).split('&'));
+				
+				var b = {};
+				for (var i = 0; i < a.length; i+=1) {
+					var p=a[i].split('=');
+					if (p.length !== 2) {
+						continue;
+					}
+					b[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " "));
+				}
+				return b;
+			})(window.location.search.substr(1).split('&')),
+			gui = require('nw.gui'),
+			win = gui.Window.get();
 
 		$("h2").text(qs.title);
 		$("p").text(qs.message);
 
+		$("h2, p, img").fadeIn(500);
+
 		setTimeout(function () {
-			$("h2, p").fadeIn(500);
-		}, 100);
+			$("h2, p, img").fadeOut(500);
+		}, 4300);
+
+		setTimeout(function () {
+			win.close();
+		}, 5000);
 	});
 	</script>
 </head>
-<body>
+<body class="notification">
 <div class="is-notification">
-	<img src="assets/svg/xigen_logo_whiteout.svg" />
+	<img src="assets/svg/xigen_logo.svg" />
 	<h2>Example Title</h2>
 	<p>This is a notification</p>
 </div>
