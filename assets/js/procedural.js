@@ -113,9 +113,9 @@ $(function () {
 							XIGENTIMER.API.pulse();
 						}, 30000);
 
-						// setInterval(function () {
-						// 	XIGENTIMER.VIEWMODEL.updateFromFilters();
-						// }, 600000);
+						setInterval(function () {
+							XIGENTIMER.VIEWMODEL.updateFromFilters();
+						}, 600000);
 					});
 					
 				} else {
@@ -146,9 +146,9 @@ $(function () {
 						XIGENTIMER.API.pulse();
 					}, 30000);
 
-					// setInterval(function () {
-					// 	XIGENTIMER.VIEWMODEL.updateFromFilters();
-					// }, 600000);
+					setInterval(function () {
+						XIGENTIMER.VIEWMODEL.updateFromFilters();
+					}, 600000);
 				});
 			} else {
 				$(".login").fadeIn(200);
