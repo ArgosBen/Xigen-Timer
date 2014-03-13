@@ -3442,9 +3442,9 @@ p.ver {
   padding: 0px; }
   .activity_messages li {
     padding: 5px;
-    display: block;
+    display: inline-block;
     height: auto;
-    overflow: hidden; }
+    width: 100%; }
     .activity_messages li p > span {
       color: #999; }
   .activity_messages li + li {

@@ -3,14 +3,14 @@ default:
     - 'clean:dev'
 js:
     - 'concat:js'
-    - 'uglify'
+    - 'concurrent:js'
 css:
     - 'sass'
     - 'concat:css'
     - 'cssmin'
 postbuild:
     - 'notify:nodewebkit'
-    - 'compress'
+    - 'zip'
 prebuild:
     - 'default'
     - 'clean:build'

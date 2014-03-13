@@ -1,8 +1,8 @@
 module.exports = {
+	js: {
+		tasks: ['uglify:main', 'uglify:manage', 'uglify:view']
+	},
 	compress: {
-		tasks: ['js', 'css'],
-		options: {
-			logConcurrentOutput: false
-		}
+		tasks: ['js', 'css']
 	}
 };

@@ -25,9 +25,9 @@
 
 	li {
 		padding: 5px;
-		display: block;
+		display: inline-block;
 		height: auto;
-		overflow: hidden;
+		width: 100%;
 
 		p > span {
 			color: #999;

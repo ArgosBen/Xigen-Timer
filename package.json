@@ -2,7 +2,7 @@
   "name": "Xigen-EasyProjects-Timer",
   "main": "index.html",
   "author": "Matt Malone <Matt@xigen.co.uk>",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "A timer for the EasyProjects.NET project management system",
   "license": "MIT",
   "contributors": [
@@ -44,7 +44,7 @@
     "grunt-lib-contrib": "~0.7.1",
     "grunt-contrib-cssmin": "~0.9.0",
     "grunt-concurrent": "~0.5.0",
-    "grunt-contrib-compress": "~0.7.0"
+    "grunt-zip": "~0.13.0"
   },
   "dependencies": {
     "restler": "~3.2.0",
