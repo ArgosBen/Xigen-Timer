@@ -23,9 +23,11 @@
 			THREE: 51,
 			FOUR: 52,
 			FIVE: 53,
-			SIX: 54
+			SIX: 54,
+			KONAMI: "38,38,40,40,37,39,37,39,66,65"
 		},
-		matchesShortcut;
+		matchesShortcut,
+		kPress = [];
 
 	timer.shortCuts = {
 		"SUBMIT" : [keys.CTRL, keys.ENT],
@@ -87,9 +89,16 @@
 
 	$(document).on("keydown", function (e) {
 
+		kPress.push(e.which);
+
 		if (matchesShortcut(e)) {
 			e.preventDefault();
 			$(document).trigger("keyCombo", {"combo" : matchesShortcut(e)});
+		}
+
+		if (kPress.toString().indexOf(keys.KONAMI) >= 0) {
+			$(document).trigger("konami");
+			kPress = [];
 		}
 
 	});
