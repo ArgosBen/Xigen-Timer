@@ -3,16 +3,17 @@
 <head>
 	<title>Xigen Timer</title>
 	<link rel="stylesheet" href="assets/css/XigenTimer.css" />
+	<link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
 	<script src="https://code.jquery.com/jquery-2.1.0.min.js"></script>
 </head>
 <body class="xt">
 	<nav class="xt__nav">
 		<ul>
-			<li class="is-active"><a href="#">Time</a></li>
-			<li><a href="#">Tasks</a></li>
-			<li><a href="#">Logs</a></li>
-			<li><a href="#">Stasis</a></li>
-			<li><a href="#">Settings</a></li>
+			<li class="is-active"><a href="#"><i class="fa fa-clock-o"><!-- Icon --></i>Time</a></li>
+			<li><a href="#"><i class="fa  fa-check-square-o"><!-- Icon --></i>Tasks</a></li>
+			<li><a href="#"><i class="fa  fa-calendar"><!-- Icon --></i>Logs</a></li>
+			<li><a href="#"><i class="fa  fa-archive"><!-- Icon --></i>Stored</a></li>
+			<li><a href="#"><i class="fa  fa-cog"><!-- Icon --></i>Settings</a></li>
 		</ul>
 	</nav>
 
@@ -22,7 +23,7 @@
 			
 			<input type="text" placeholder="Filter Projects..." />
 
-			<div class="xt__timer--sidebar__list">
+			<div class="xt__timer--sidebar__list empty">
 
 			</div>
 

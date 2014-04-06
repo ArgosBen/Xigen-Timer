@@ -26,6 +26,10 @@
 		padding: 5px 10px;
 		color: lighten(@slategrey, 45%);
 		font-size: 14px;
+
+		& + li {
+			padding-top: 0px;
+		}
 	}
 
 	span {
@@ -64,10 +68,26 @@
 	&__list {
 		max-height: 91%;
 		overflow: auto;
+		padding-bottom: 10px;
 
 		> ul > li > span {
 			font-weight: @bold;
 			color: @offwhite;
+		}
+
+		&:before {
+			content: '';
+			display: block;
+
+		}
+
+		&.empty:before {
+			content: 'Just getting the latest data...';
+			display: block;
+			color: lighten(@slategrey, 65%);
+			padding: 20px;
+			font-size: 14px;
+			text-align: center;
 		}
 
 	}

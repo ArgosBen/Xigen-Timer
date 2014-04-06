@@ -2,6 +2,11 @@
 
 	"use strict";
 
+	var config = {
+		CLASS_PAUSED: "is-paused",
+		CLASS_RUNNING : "is-running"
+	};
+
 	xt.Timer = function () {
 		this.init.apply(this, arguments);
 	};
@@ -13,6 +18,7 @@
 			this.el = el.jquery ? el[0] : el;
 
 			this.findElements();
+			this.isRunning = false;
 
 		},
 
@@ -28,6 +34,15 @@
 
 			var that = this;
 
+			if (this.isRunning) {
+				return false;
+			}
+
+			this.isRunning = true;
+
+			$(this.el).addClass(config.CLASS_RUNNING);
+			$(this.el).removeClass(config.CLASS_PAUSED);
+
 			this.interval = setInterval(function () {
 
 				that.tick();
@@ -37,6 +52,11 @@
 		},
 
 		stop: function () {
+
+			$(this.el).addClass(config.CLASS_PAUSED);
+			$(this.el).removeClass(config.CLASS_RUNNING);
+
+			this.isRunning = false;
 
 			clearInterval(this.interval);
 
@@ -84,6 +104,37 @@
 				$(target).removeClass("changed");
 			}, 600);
 
+		},
+
+		setTime: function (triplet) {
+
+			if (this.isRunning) {
+				return false;
+			}
+
+			this.hours.text(triplet[0]);
+			this.minutes.text(triplet[1]);
+			this.seconds.text(triplet[2]);
+
+			this.time = triplet;
+
+			if (this.time.reduce(function (a, b) {
+				return a + b;
+			}) > 0) {
+				$(this.el).addClass(config.CLASS_PAUSED);
+			} else {
+				$(this.el).removeClass(config.CLASS_PAUSED);
+			}
+
+		},
+
+		reset: function () {
+
+			if (this.isRunning) {
+				return false;
+			}
+
+			this.setTime([0, 0, 0]);
 		}
 
 	};

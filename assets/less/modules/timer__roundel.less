@@ -1,15 +1,20 @@
+// Colours for various states
+@color_default: @xigenblue;
+@color_running: @green;
+@color_paused: @blue;
+
 @-webkit-keyframes pulse {
-  0%   	{ background: @xigenblue; }
-  10%   { background: lighten(@xigenblue, 15%); }
-  100%  { background: @xigenblue; }
+  0%   	{ background: @color_running; }
+  10%   { background: lighten(@color_running, 15%); }
+  100%  { background: @color_running; }
 }
 
 .xt__timer__clock__roundel {
 
 	width: 33.3333%;
-	height: 150px;
-	border: 5px solid lighten(@xigenblue, 5%);
-	background: @xigenblue;
+	height: 170px;
+	border: 5px solid lighten(@color_default, 5%);
+	background: @color_default;
 
 	display: flex;
 	align-content: center;
@@ -20,6 +25,8 @@
 	font-weight: 300;
 	font-size: 60px;
 	line-height: 1;
+
+	transition: border-color 0.5s, background 0.5s;
 
 	.caption {
 		font-size: 14px;
@@ -34,6 +41,17 @@
 
 	&.changed {
 		animation: pulse 0.5s;
+	}
+
+	.is-running & {
+		border-color: lighten(@color_running, 5%);
+		background: @color_running;
+	}
+
+	.is-paused & {
+		border-color: lighten(@color_paused, 5%);
+		background: @color_paused;
+		animation: none;
 	}
 
 }

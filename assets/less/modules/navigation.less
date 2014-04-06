@@ -1,6 +1,6 @@
 .xt__nav {
 
-	@nav_bg: darken(@offwhite, 10%);
+	@nav_bg: @xigenblue;
 	background: @nav_bg;
 	height: 9%;
 
@@ -20,7 +20,7 @@
 		background: @nav_bg;
 		padding: 12px 15px;
 		display: block;
-		color: @xigenblue;
+		color: @offwhite;
 		text-decoration: none;
 		font-weight: @regular;
 		text-transform: uppercase;
@@ -29,8 +29,19 @@
 		font-size: 14px;
 	}
 
+	ul,
+	li,
+	a {
+		height: 100%;
+	}
+
+	i {
+		position: relative;
+		left: -5px;
+	}
+
 	.is-active a {
-		background: @offwhite;
+		background: darken(@xigenblue, 10%);
 	}
 
 }

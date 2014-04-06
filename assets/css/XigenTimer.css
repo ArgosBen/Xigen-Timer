@@ -38,7 +38,7 @@ body {
 }
 
 .xt__nav {
-  background: #cfd9db;
+  background: #2d4569;
   height: 9%;
 }
 
@@ -72,10 +72,10 @@ body {
 }
 
 .xt__nav a {
-  background: #cfd9db;
+  background: #2d4569;
   padding: 12px 15px;
   display: block;
-  color: #2d4569;
+  color: #ecf0f1;
   text-decoration: none;
   font-weight: 400;
   text-transform: uppercase;
@@ -84,27 +84,38 @@ body {
   font-size: 14px;
 }
 
+.xt__nav ul,
+.xt__nav li,
+.xt__nav a {
+  height: 100%;
+}
+
+.xt__nav i {
+  position: relative;
+  left: -5px;
+}
+
 .xt__nav .is-active a {
-  background: #ecf0f1;
+  background: #1e2e45;
 }
 
 @-webkit-keyframes pulse {
   0% {
-    background: #2d4569;
+    background: #27ae60;
   }
 
   10% {
-    background: #44689f;
+    background: #4bd786;
   }
 
   100% {
-    background: #2d4569;
+    background: #27ae60;
   }
 }
 
 .xt__timer__clock__roundel {
   width: 33.3333%;
-  height: 150px;
+  height: 170px;
   border: 5px solid #35517b;
   background: #2d4569;
   display: -webkit-box;
@@ -131,6 +142,8 @@ body {
   font-weight: 300;
   font-size: 60px;
   line-height: 1;
+  -webkit-transition: border-color 0.5s, background 0.5s;
+  transition: border-color 0.5s, background 0.5s;
   float: left;
 }
 
@@ -146,6 +159,18 @@ body {
 .xt__timer__clock__roundel.changed {
   -webkit-animation: pulse 0.5s;
   animation: pulse 0.5s;
+}
+
+.is-running .xt__timer__clock__roundel {
+  border-color: #2cc36b;
+  background: #27ae60;
+}
+
+.is-paused .xt__timer__clock__roundel {
+  border-color: #2e8ece;
+  background: #2980b9;
+  -webkit-animation: none;
+  animation: none;
 }
 
 .xt__timer--sidebar {
@@ -178,6 +203,10 @@ body {
   padding: 5px 10px;
   color: #b0b9bc;
   font-size: 14px;
+}
+
+.xt__timer--sidebar ul li + li {
+  padding-top: 0px;
 }
 
 .xt__timer--sidebar span {
@@ -217,11 +246,26 @@ body {
 .xt__timer--sidebar__list {
   max-height: 91%;
   overflow: auto;
+  padding-bottom: 10px;
 }
 
 .xt__timer--sidebar__list > ul > li > span {
   font-weight: 700;
   color: #ecf0f1;
+}
+
+.xt__timer--sidebar__list:before {
+  content: '';
+  display: block;
+}
+
+.xt__timer--sidebar__list.empty:before {
+  content: 'Just getting the latest data...';
+  display: block;
+  color: #e7eaeb;
+  padding: 20px;
+  font-size: 14px;
+  text-align: center;
 }
 
 .xt__timer--main {

@@ -46,10 +46,12 @@
 		var targetList;
 
 		$(config.SIDEBAR).find("ul").remove();
+		$(config.SIDEBAR).addClass("empty");
 
 		targetList = $(config.SIDEBAR).find("ul");
 
 		$(config.SIDEBAR).append(listFromActivites(data, true));
+		$(config.SIDEBAR).removeClass("empty");
 
 	};
 
