@@ -1,0 +1,38 @@
+.btn {
+
+	// Button Mixin:
+	// .btn(@bgcolour, @textcolour, @padding, @ghost)
+
+	.btn();
+
+	&--success {
+		.btn(@green, @offwhite);
+	}
+
+	&--info {
+		.btn(@blue, @offwhite);
+	}
+
+	&--warning {
+		.btn(@orange, @offwhite);
+	}
+
+	&--yellow {
+		.btn(@yellow, @slategrey);
+	}
+
+	&--expand {
+		width: 100%;
+	}
+
+	// Button groups
+	&--group {
+
+		display: flex;
+		padding: 10px 0;
+
+		.btn { flex: 1; }
+
+	}
+
+}

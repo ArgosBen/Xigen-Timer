@@ -20,6 +20,7 @@
  
     "predef"        : [  // Custom globals.
         "XIGENTIMER",
+        "XT",
         "localforage",
         "ko",
         "moment",

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Xigen Timer</title>
+	<link rel="stylesheet" href="assets/css/XigenTimer.css" />
+	<script src="https://code.jquery.com/jquery-2.1.0.min.js"></script>
+</head>
+<body class="xt">
+	<nav class="xt__nav">
+		<ul>
+			<li class="is-active"><a href="#">Time</a></li>
+			<li><a href="#">Tasks</a></li>
+			<li><a href="#">Logs</a></li>
+			<li><a href="#">Stasis</a></li>
+			<li><a href="#">Settings</a></li>
+		</ul>
+	</nav>
+
+	<main>
+
+		<div class="xt__timer--sidebar">
+			
+			<input type="text" />
+
+		</div>
+
+		<div class="xt__timer--main">
+
+			<section class="xt__timer__clock">
+
+				<div class="xt__timer__clock__roundel" data-hours>
+					<span data-duration>0</span>
+					<span class="caption">Hours</span>
+				</div>
+
+				<div class="xt__timer__clock__roundel" data-minutes>
+					<span data-duration>0</span>
+					<span class="caption">Minutes</span>
+				</div>
+
+				<div class="xt__timer__clock__roundel" data-seconds>
+					<span data-duration>0</span>
+					<span class="caption">Seconds</span>
+				</div>
+
+			</section>
+
+			<div class="btn--group">
+				<a class="btn btn--success">Start</a>
+				<a class="btn btn--info">Send to Stasis</a>
+				<a class="btn btn--yellow">Edit Time</a>
+				<a class="btn btn--warning">Send Time</a>
+			</div>
+
+			<textarea class="xt__timer__desc" placeholder="What did you do..?"></textarea>
+
+		</div>
+
+	</main>
+
+	<script src="assets/js/XT.js"></script>
+	<script src="assets/js/XT_Timer.js"></script>
+	<script src="assets/js/XT_Runtime.js"></script>
+</body>
+</html>

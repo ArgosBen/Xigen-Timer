@@ -1,0 +1,56 @@
+/**	Bulletless Lists **/
+.bulletless() {
+	list-style: none outside none;
+	padding: 0;
+	margin: 0;
+}
+
+/**	Floated lists **/
+.floated() {
+
+	display: block;
+	height: auto;
+	overflow: hidden;
+
+	li {
+		float: left;
+		display: inline-block;
+	}
+}
+
+/** Buttons **/
+.btn(@bgcolour: @xigenblue, @textcolour: @offwhite, @padding: 15px 25px) {
+
+	padding: @padding;
+	color: @textcolour;
+	background: @bgcolour;
+	display: inline-block;
+	cursor: pointer;
+	text-transform: capitalize;
+	font-size: 16px;
+	text-align: center;
+
+	transition: background 0.3s, color 0.3s;
+
+	&:hover {
+		background: lighten(@bgcolour, 5%);
+	}
+
+	&:disabled,
+	&[disabled] {
+		cursor: default;
+		opacity: 0.5;
+	}
+
+	&.btn--ghost {
+		border: 4px solid @bgcolour;
+		background: transparent;
+		color: @bgcolour;
+
+		&:hover {
+			background: @bgcolour;
+			color: @offwhite;
+		}
+	}
+
+}
