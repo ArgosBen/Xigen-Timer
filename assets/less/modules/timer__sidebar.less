@@ -11,6 +11,65 @@
 		margin: 0;
 		background: lighten(@slategrey, 10%);
 		color: @offwhite;
+		height: 9%;
+	}
+
+	ul {
+		.bulletless();
+	}
+
+	li > ul {
+		padding-left: 15px;
+	}
+
+	ul li {
+		padding: 5px 10px;
+		color: lighten(@slategrey, 45%);
+		font-size: 14px;
+	}
+
+	span {
+		display: block;
+		position: relative;
+	}
+
+	li:last-child {
+		padding-bottom: 0px;
+	}
+
+	.is-active {
+		color: @yellow;
+	}
+
+	.is-active:before {
+		content: '';
+		width: 0; 
+		height: 0; 
+		border-top: 5px solid transparent;
+		border-bottom: 5px solid transparent;
+		border-left: 5px solid @yellow;
+		position: absolute;
+		top: 0px;
+		margin-top: 5px;
+		left: -10px;
+	}
+
+	li > ul span {
+		cursor: pointer;
+		&:hover {
+			color: lighten(@slategrey, 65%);
+		}
+	}
+
+	&__list {
+		max-height: 91%;
+		overflow: auto;
+
+		> ul > li > span {
+			font-weight: @bold;
+			color: @offwhite;
+		}
+
 	}
 
 }

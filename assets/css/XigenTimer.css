@@ -161,15 +161,76 @@ body {
   margin: 0;
   background: #556065;
   color: #ecf0f1;
+  height: 9%;
+}
+
+.xt__timer--sidebar ul {
+  list-style: none outside none;
+  padding: 0;
+  margin: 0;
+}
+
+.xt__timer--sidebar li > ul {
+  padding-left: 15px;
+}
+
+.xt__timer--sidebar ul li {
+  padding: 5px 10px;
+  color: #b0b9bc;
+  font-size: 14px;
+}
+
+.xt__timer--sidebar span {
+  display: block;
+  position: relative;
+}
+
+.xt__timer--sidebar li:last-child {
+  padding-bottom: 0px;
+}
+
+.xt__timer--sidebar .is-active {
+  color: #f1c40f;
+}
+
+.xt__timer--sidebar .is-active:before {
+  content: '';
+  width: 0;
+  height: 0;
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-left: 5px solid #f1c40f;
+  position: absolute;
+  top: 0px;
+  margin-top: 5px;
+  left: -10px;
+}
+
+.xt__timer--sidebar li > ul span {
+  cursor: pointer;
+}
+
+.xt__timer--sidebar li > ul span:hover {
+  color: #e7eaeb;
+}
+
+.xt__timer--sidebar__list {
+  max-height: 91%;
+  overflow: auto;
+}
+
+.xt__timer--sidebar__list > ul > li > span {
+  font-weight: 700;
+  color: #ecf0f1;
 }
 
 .xt__timer--main {
-  width: 75%;
+  width: 70%;
   padding: 15px;
 }
 
 .xt__timer--sidebar {
-  width: 25%;
+  width: 30%;
 }
 
 .xt__timer--main,

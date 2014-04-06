@@ -7,7 +7,7 @@
 		listFromActivites;
 
 	config = {
-		"SIDEBAR" : ".xt__timer--sidebar"
+		"SIDEBAR" : ".xt__timer--sidebar__list"
 	};
 
 	listFromActivites = function (activities, isProjectList) {
@@ -20,7 +20,6 @@
 			activities = activities.filter(function (act) {
 				return act.Activities.length > 0;
 			});
-			console.log(activities);
 		}
 
 		var ul = document.createElement("ul"),
@@ -32,7 +31,8 @@
 
 			$(li).append("<span>" + this.Name + "</span>");
 
-			$(li).append(listFromActivites(this.Activities));
+			$(li).append(listFromActivites(this.Activities, false));
+
 			ul.appendChild(li);
 
 		});
@@ -46,11 +46,8 @@
 		var targetList;
 
 		$(config.SIDEBAR).find("ul").remove();
-		$(config.SIDEBAR).append("<ul />");
 
 		targetList = $(config.SIDEBAR).find("ul");
-
-		console.log(data);
 
 		$(config.SIDEBAR).append(listFromActivites(data, true));
 
