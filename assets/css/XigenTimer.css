@@ -156,12 +156,11 @@ body {
 
 .xt__timer--sidebar input[type=text] {
   width: 100%;
-  border-width: 1px 1px 0 0;
+  border-width: 0;
+  padding: 10px;
   margin: 0;
-}
-
-.xt__timer--sidebar input[type=text]:focus {
-  border-color: #3e4649;
+  background: #556065;
+  color: #ecf0f1;
 }
 
 .xt__timer--main {
