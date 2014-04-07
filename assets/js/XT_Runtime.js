@@ -68,7 +68,9 @@ $(function () {
 
 	ready = function () {
 
-		XT.drawProjectList();
+		XT.drawProjectList(function () {
+			var nav = new XT.HierachyList();
+		});
 
 		XT.viewmodel.currentPage("timer");
 

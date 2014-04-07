@@ -55,11 +55,17 @@
 
 	};
 
-	xt.drawProjectList = function () {
+	xt.drawProjectList = function (callback) {
 
 		xt.socket.emit("getHierachy");
 
-		xt.socket.once("hierachy", draw);
+		xt.socket.once("hierachy", function (data) {
+			draw(data);
+
+			if (typeof callback === "function") {
+				callback();
+			}
+		});
 
 	};
 

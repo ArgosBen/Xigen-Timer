@@ -19,17 +19,17 @@
 	}
 
 	li > ul {
-		padding-left: 15px;
+		padding-left: 10px;
 	}
 
 	ul li {
 		padding: 5px 10px;
 		color: lighten(@slategrey, 45%);
 		font-size: 14px;
+	}
 
-		& + li {
-			padding-top: 0px;
-		}
+	li li + li {
+		padding-top: 0px;
 	}
 
 	span {
@@ -39,6 +39,7 @@
 
 	li:last-child {
 		padding-bottom: 0px;
+		border-bottom: none;
 	}
 
 	.is-active {
@@ -73,6 +74,37 @@
 		> ul > li > span {
 			font-weight: @bold;
 			color: @offwhite;
+			cursor: pointer;
+			position: relative;
+			padding-right: 15px;
+
+			&:after {
+				content: '';
+				width: 0; 
+				height: 0; 
+				border-top: 5px solid transparent;
+				border-bottom: 5px solid transparent;
+				border-left: 5px solid @offwhite;
+				position: absolute;
+				right: 0px;
+				top: 50%;
+				margin-top: -5px;
+				transition: -webkit-transform 0.3s;
+				-webkit-backface-visibility: hidden;
+			}
+
+			&.is-open:after {
+				-webkit-transform: rotate(90deg);
+			}
+
+		}
+
+		> ul > li {
+			border-bottom: 1px solid lighten(@slategrey, 5%);
+		}
+
+		> ul > li > ul {
+			display: none;
 		}
 
 		&:before {
