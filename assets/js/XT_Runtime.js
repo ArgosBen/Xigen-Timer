@@ -16,8 +16,6 @@ $(function () {
 
 	setup = function (userToken, userName) {
 
-		console.log(userName, userToken);
-
 		socket.emit("setup", {
 			"userToken" : userToken,
 			"userName" : userName
@@ -86,6 +84,15 @@ $(function () {
 			}
 
 		});
+
+		$("[data-showtask]").hover(
+		function () {
+			$(".project_overlay").addClass("is-visible");
+		},
+		function () {
+			$(".project_overlay").removeClass("is-visible");
+		}
+		);
 
 	};
 
