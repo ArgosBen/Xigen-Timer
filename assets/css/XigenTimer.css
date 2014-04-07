@@ -37,6 +37,27 @@ body {
   overflow: hidden;
 }
 
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 0px;
+  background: #2d4569;
+}
+
+::-webkit-scrollbar-thumb {
+  -webkit-box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.5);
+  background: #6d7b80;
+  -webkit-transition: background 0.3s;
+  transition: background 0.3s;
+}
+
+::-webkit-scrollbar-thumb:focus,
+::-webkit-scrollbar-thumb:active {
+  background: #79888d;
+}
+
 .xt__nav {
   background: #2d4569;
   height: 9%;
@@ -270,7 +291,7 @@ body {
 
 .xt__timer--main {
   width: 70%;
-  padding: 15px;
+  padding: 10px;
 }
 
 .xt__timer--sidebar {
@@ -286,6 +307,7 @@ body {
   display: block;
   height: auto;
   overflow: hidden;
+  clear: both;
 }
 
 .xt__timer__desc {
@@ -301,6 +323,9 @@ body {
   text-transform: capitalize;
   font-size: 16px;
   text-align: center;
+  border: 0;
+  -webkit-apperance: none;
+  margin: 0;
   -webkit-transition: background 0.3s, color 0.3s;
   transition: background 0.3s, color 0.3s;
 }
@@ -335,6 +360,9 @@ body {
   text-transform: capitalize;
   font-size: 16px;
   text-align: center;
+  border: 0;
+  -webkit-apperance: none;
+  margin: 0;
   -webkit-transition: background 0.3s, color 0.3s;
   transition: background 0.3s, color 0.3s;
 }
@@ -369,6 +397,9 @@ body {
   text-transform: capitalize;
   font-size: 16px;
   text-align: center;
+  border: 0;
+  -webkit-apperance: none;
+  margin: 0;
   -webkit-transition: background 0.3s, color 0.3s;
   transition: background 0.3s, color 0.3s;
 }
@@ -403,6 +434,9 @@ body {
   text-transform: capitalize;
   font-size: 16px;
   text-align: center;
+  border: 0;
+  -webkit-apperance: none;
+  margin: 0;
   -webkit-transition: background 0.3s, color 0.3s;
   transition: background 0.3s, color 0.3s;
 }
@@ -437,6 +471,9 @@ body {
   text-transform: capitalize;
   font-size: 16px;
   text-align: center;
+  border: 0;
+  -webkit-apperance: none;
+  margin: 0;
   -webkit-transition: background 0.3s, color 0.3s;
   transition: background 0.3s, color 0.3s;
 }
@@ -459,6 +496,44 @@ body {
 
 .btn--yellow.btn--ghost:hover {
   background: #f1c40f;
+  color: #ecf0f1;
+}
+
+.btn--white {
+  padding: 15px 25px;
+  color: #2d4569;
+  background: #ecf0f1;
+  display: inline-block;
+  cursor: pointer;
+  text-transform: capitalize;
+  font-size: 16px;
+  text-align: center;
+  border: 0;
+  -webkit-apperance: none;
+  margin: 0;
+  -webkit-transition: background 0.3s, color 0.3s;
+  transition: background 0.3s, color 0.3s;
+  font-weight: 300;
+}
+
+.btn--white:hover {
+  background: #fbfcfc;
+}
+
+.btn--white:disabled,
+.btn--white[disabled] {
+  cursor: default;
+  opacity: 0.5;
+}
+
+.btn--white.btn--ghost {
+  border: 4px solid #ecf0f1;
+  background: transparent;
+  color: #ecf0f1;
+}
+
+.btn--white.btn--ghost:hover {
+  background: #ecf0f1;
   color: #ecf0f1;
 }
 
@@ -498,7 +573,10 @@ textarea:focus {
   border-color: #2d4569;
 }
 
-input[type=text] {
+input[type=text],
+input[type=password],
+input[type=date],
+input[type=email] {
   padding: 5px;
   font-family: 'Roboto', sans-serif;
   color: #3e4649;
@@ -506,7 +584,74 @@ input[type=text] {
   border: 1px solid #cfd9db;
 }
 
-input[type=text]:focus {
+input[type=text]:focus,
+input[type=password]:focus,
+input[type=date]:focus,
+input[type=email]:focus {
   outline: none;
   border-color: #2d4569;
+}
+
+.input--group {
+  display: block;
+  float: left;
+}
+
+.input--group label {
+  color: #3e4649;
+  font-size: 14px;
+}
+
+.input--group + .input--group {
+  margin-left: 5px;
+  padding-left: 5px;
+  border-left: 1px solid #c0cdd1;
+}
+
+.xt__timer__callout {
+  width: 34%;
+  display: block;
+  float: left;
+  margin-bottom: 10px;
+  background: #2d4569;
+  padding: 5px 10px;
+  border: 3px solid #3c5c8d;
+  font-size: 14px;
+}
+
+.xt__timer__callout + .xt__timer__callout {
+  margin-left: 2%;
+}
+
+.xt__timer__callout + .btn {
+  margin-left: 2%;
+  width: 28%;
+  padding: 7px 10px;
+}
+
+.xt__login {
+  max-width: 35%;
+  display: block;
+  margin: auto;
+  -webkit-app-region: no-drag;
+  margin: 15% auto;
+}
+
+.xt__login h3 {
+  text-align: center;
+  background: #2d4569;
+  margin: 0 0 5px 0;
+  padding: 15px;
+  font-weight: 300;
+}
+
+.xt__login input {
+  width: 100%;
+  margin: 0 0 5px 0;
+}
+
+.xt .xt__login--wrap {
+  background: #2d4569;
+  height: 100%;
+  -webkit-app-region: drag;
 }

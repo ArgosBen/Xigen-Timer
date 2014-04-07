@@ -76,11 +76,11 @@
 				m += 1;
 				s = 0;
 				this.pulse(this.minutes);
-			} else if (m === 59) {
+			} else if (m === 59 && s === 59) {
 				h += 1;
 				m = 0;
-				s += 1;
-				this.pulse(this.seconds);
+				s = 0;
+				this.pulse(this.hours);
 			} else {
 				s += 1;
 				this.pulse(this.seconds);
