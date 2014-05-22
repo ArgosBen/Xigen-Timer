@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Xigen Timer</title>
+	<link rel="stylesheet" href="assets/css/XigenTimer.css" />
+	<link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+	<script src="assets/js/jquery.min.js"></script>
+</head>
+<body class="xt">
+	<nav class="xt__nav" data-bind="visible: currentPage() !== 'login'">
+		<ul>
+			<li class="is-active">
+				<a href="#"><i class="fa fa-clock-o"><!-- Icon --></i>Time</a>
+			</li>
+
+			<li>
+				<a href="#"><i class="fa  fa-check-square-o"><!-- Icon --></i>Tasks</a>
+			</li>
+
+			<li>
+				<a href="#"><i class="fa  fa-calendar"><!-- Icon --></i>Logs</a>
+			</li>
+
+			<li>
+				<a href="#"><i class="fa  fa-archive"><!-- Icon --></i>Stored</a>
+			</li>
+
+			<li>
+				<a href="#"><i class="fa  fa-cog"><!-- Icon --></i>Settings</a>
+			</li>
+
+		</ul>
+	</nav>
+
+	<main class="xt__login--wrap" data-bind="visible: currentPage() === 'login'">
+
+		<form class="xt__login">
+
+			<h3 data-bind="text: loginGreeting">Hello.</h3>
+
+			<input type="text" name="username" placeholder="Username" />
+			<input type="password" name="pass" placeholder="Password..." />
+
+			<button class="btn btn--white btn--expand">Login</button>
+
+		</form>
+
+	</main>
+
+	<main data-bind="visible: currentPage() === 'timer'">
+
+		<div class="xt__timer--sidebar">
+			
+			<input type="text" placeholder="Filter Projects..." />
+
+			<div class="xt__timer--sidebar__list empty">
+
+			</div>
+
+		</div>
+
+		<div class="xt__timer--main">
+
+			<div class="xt__timer__callout">
+				<strong>Estimated Hours:</strong>
+				<span> 10.0</span>
+			</div>
+
+			<div class="xt__timer__callout">
+				<strong>Hours so far:</strong>
+				<span> 5.54</span>
+			</div>
+
+			<a class="btn btn--info" title="Click to view, Hover to view name" data-showtask>Current Task...</a>
+
+			<section class="xt__timer__clock">
+
+				<div class="xt__timer__clock__roundel" data-hours>
+					<span data-duration>0</span>
+					<span class="caption">Hours</span>
+				</div>
+
+				<div class="xt__timer__clock__roundel" data-minutes>
+					<span data-duration>0</span>
+					<span class="caption">Minutes</span>
+				</div>
+
+				<div class="xt__timer__clock__roundel" data-seconds>
+					<span data-duration>0</span>
+					<span class="caption">Seconds</span>
+				</div>
+
+			</section>
+
+			<div class="btn--group">
+				<a class="btn btn--success" data-startstop>Start</a>
+				<a class="btn btn--info">Store</a>
+				<a class="btn btn--yellow">Edit Time</a>
+				<a class="btn btn--warning">Send Time</a>
+			</div>
+
+			<textarea class="xt__timer__desc" placeholder="What did you do..?"></textarea>
+
+
+			<div class="input--group">			
+				<label for="billable">Billable:</label>
+				<input type="checkbox" id="billable" checked>
+			</div>
+
+			<div class="input--group">
+				<label for="status">Set As:</label>
+				<select id="status">
+					<option value="18" select>Waiting Internal Review</option>
+					<option value="18" select>Open</option>
+					<option value="18" select>Closed</option>
+					<option value="18" select>Client Pending</option>
+					<option value="18" select>Completed</option>
+					<option value="18" select>Hold</option>
+					<option value="18" select>Waiting for Approval</option>
+				</select>
+			</div>
+
+			<section class="project_overlay">
+				<span>Epson DE - General Support Block &raquo; Code Refactoring</span>
+			</section>
+
+		</div>
+
+	</main>
+
+	<script src="assets/js/socket.io/socket.io.min.js"></script>
+	<script src="assets/js/ko/ko.js"></script>
+	<script src="assets/js/XT.js"></script>
+	<script src="assets/js/i18n.js"></script>
+	<script src="assets/js/XT_Timer.js"></script>
+	<script src="assets/js/XT_drawProjectList.js"></script>
+	<script src="assets/js/XT_ViewModel.js"></script>
+	<script src="assets/js/XT_HierachyList.js"></script>
+	<script src="assets/js/XT_Runtime.js"></script>
+</body>
+</html>

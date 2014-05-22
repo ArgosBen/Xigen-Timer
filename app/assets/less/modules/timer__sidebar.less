@@ -1,0 +1,127 @@
+.xt__timer--sidebar {
+
+	background: @slategrey;
+	height: 100%;
+	padding: 0;
+
+	input[type=text] {
+		width: 100%;
+		border-width: 0;
+		padding: 10px;
+		margin: 0;
+		background: lighten(@slategrey, 10%);
+		color: @offwhite;
+		height: 9%;
+	}
+
+	ul {
+		.bulletless();
+	}
+
+	li > ul {
+		padding-left: 10px;
+	}
+
+	ul li {
+		padding: 5px 10px;
+		color: lighten(@slategrey, 45%);
+		font-size: 14px;
+	}
+
+	li li + li {
+		padding-top: 0px;
+	}
+
+	span {
+		display: block;
+		position: relative;
+	}
+
+	li:last-child {
+		padding-bottom: 0px;
+		border-bottom: none;
+	}
+
+	.is-active {
+		color: @yellow;
+	}
+
+	.is-active:before {
+		content: '';
+		width: 0; 
+		height: 0; 
+		border-top: 5px solid transparent;
+		border-bottom: 5px solid transparent;
+		border-left: 5px solid @yellow;
+		position: absolute;
+		top: 0px;
+		margin-top: 5px;
+		left: -10px;
+	}
+
+	li > ul span {
+		cursor: pointer;
+		&:hover {
+			color: lighten(@slategrey, 65%);
+		}
+	}
+
+	&__list {
+		max-height: 91%;
+		overflow: auto;
+		padding-bottom: 10px;
+
+		> ul > li > span {
+			font-weight: @bold;
+			color: @offwhite;
+			cursor: pointer;
+			position: relative;
+			padding-right: 15px;
+
+			&:after {
+				content: '';
+				width: 0; 
+				height: 0; 
+				border-top: 5px solid transparent;
+				border-bottom: 5px solid transparent;
+				border-left: 5px solid @offwhite;
+				position: absolute;
+				right: 0px;
+				top: 50%;
+				margin-top: -5px;
+				transition: -webkit-transform 0.3s;
+				-webkit-backface-visibility: hidden;
+			}
+
+			&.is-open:after {
+				-webkit-transform: rotate(90deg);
+			}
+
+		}
+
+		> ul > li {
+			border-bottom: 1px solid lighten(@slategrey, 5%);
+		}
+
+		> ul > li > ul {
+			display: none;
+		}
+
+		&:before {
+			content: '';
+			display: block;
+
+		}
+
+		&.empty:before {
+			content: 'Just getting the latest data...';
+			display: block;
+			color: lighten(@slategrey, 65%);
+			padding: 20px;
+			font-size: 14px;
+			text-align: center;
+		}
+
+	}
+
+}

@@ -1,0 +1,48 @@
+textarea {
+	width: 100%;
+	padding: 10px;
+	font-family: @bodyFontFamily;
+	color: @slategrey;
+	resize: none;
+	font-size: 14px;
+	border: 1px solid darken(@offwhite, 10%);
+
+	&:focus {
+		outline: none;
+		border-color: @xigenblue;
+	}
+}
+
+input[type=text],
+input[type=password],
+input[type=date],
+input[type=email] {
+	padding: 5px;
+	font-family: @bodyFontFamily;
+	color: @slategrey;
+	font-size: 14px;
+	border: 1px solid darken(@offwhite, 10%);
+
+	&:focus {
+		outline: none;
+		border-color: @xigenblue;
+	}
+}
+
+.input--group {
+
+	display: block;
+	float: left;
+
+	label {
+		color: @slategrey;
+		font-size: 14px;
+	}
+
+	& + & {
+		margin-left: 5px;
+		padding-left: 5px;
+		border-left: 1px solid darken(@offwhite, 15%);
+	}
+
+}

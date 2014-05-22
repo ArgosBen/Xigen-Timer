@@ -1,0 +1,47 @@
+.xt__nav {
+
+	@nav_bg: @xigenblue;
+	background: @nav_bg;
+	height: 9%;
+
+	ul {
+		.bulletless();
+		.floated();
+		display: flex;
+		-webkit-app-region: drag;
+	}
+
+	li {
+		flex: 1; // Spread evenly
+		max-width: 130px;
+	}
+
+	a {
+		background: @nav_bg;
+		padding: 12px 15px;
+		display: block;
+		color: @offwhite;
+		text-decoration: none;
+		font-weight: @regular;
+		text-transform: uppercase;
+		text-align: center;
+		-webkit-app-region: no-drag;
+		font-size: 14px;
+	}
+
+	ul,
+	li,
+	a {
+		height: 100%;
+	}
+
+	i {
+		position: relative;
+		left: -5px;
+	}
+
+	.is-active a {
+		background: darken(@xigenblue, 10%);
+	}
+
+}
