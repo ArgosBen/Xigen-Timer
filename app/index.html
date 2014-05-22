@@ -9,24 +9,24 @@
 <body class="xt">
 	<nav class="xt__nav" data-bind="visible: currentPage() !== 'login'">
 		<ul>
-			<li class="is-active">
-				<a href="#"><i class="fa fa-clock-o"><!-- Icon --></i>Time</a>
+			<li data-bind="css: { 'is-active' : currentPage() === 'timer' }">
+				<a data-bind="click: function () { return currentPage('timer') }" href="#"><i class="fa fa-clock-o"><!-- Icon --></i>Time</a>
 			</li>
 
-			<li>
-				<a href="#"><i class="fa  fa-check-square-o"><!-- Icon --></i>Tasks</a>
+			<li data-bind="css: { 'is-active' : currentPage() === 'tasks' }">
+				<a data-bind="click: function () { return currentPage('tasks') }" href="#"><i class="fa  fa-check-square-o"><!-- Icon --></i>Tasks</a>
 			</li>
 
-			<li>
-				<a href="#"><i class="fa  fa-calendar"><!-- Icon --></i>Logs</a>
+			<li data-bind="css: { 'is-active' : currentPage() === 'logs' }">
+				<a data-bind="click: function () { return currentPage('logs') }" href="#"><i class="fa  fa-calendar"><!-- Icon --></i>Logs</a>
 			</li>
 
-			<li>
-				<a href="#"><i class="fa  fa-archive"><!-- Icon --></i>Stored</a>
+			<li data-bind="css: { 'is-active' : currentPage() === 'stored' }">
+				<a data-bind="click: function () { return currentPage('stored') }" href="#"><i class="fa  fa-archive"><!-- Icon --></i>Stored</a>
 			</li>
 
-			<li>
-				<a href="#"><i class="fa  fa-cog"><!-- Icon --></i>Settings</a>
+			<li data-bind="css: { 'is-active' : currentPage() === 'settings' }">
+				<a data-bind="click: function () { return currentPage('settings') }" href="#"><i class="fa  fa-cog"><!-- Icon --></i>Settings</a>
 			</li>
 
 		</ul>
@@ -73,6 +73,8 @@
 
 			<a class="btn btn--info" title="Click to view, Hover to view name" data-showtask>Current Task...</a>
 
+			<a class="btn btn--warning" title="Toggle Mini Mode" data-togglemini>Back to big mode!</a>
+
 			<section class="xt__timer__clock">
 
 				<div class="xt__timer__clock__roundel" data-hours>
@@ -93,10 +95,11 @@
 			</section>
 
 			<div class="btn--group">
-				<a class="btn btn--success" data-startstop>Start</a>
+				<a class="btn btn--success" data-startstop data-minimode>Start</a>
 				<a class="btn btn--info">Store</a>
 				<a class="btn btn--yellow">Edit Time</a>
 				<a class="btn btn--warning">Send Time</a>
+				<a class="btn btn--yellow" data-minimize data-minimode>Minimize</a>
 			</div>
 
 			<textarea class="xt__timer__desc" placeholder="What did you do..?"></textarea>
@@ -136,6 +139,7 @@
 	<script src="assets/js/XT_drawProjectList.js"></script>
 	<script src="assets/js/XT_ViewModel.js"></script>
 	<script src="assets/js/XT_HierachyList.js"></script>
+	<script src="assets/js/XT_miniMode.js"></script>
 	<script src="assets/js/XT_Runtime.js"></script>
 </body>
 </html>

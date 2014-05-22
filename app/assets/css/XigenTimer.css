@@ -14,6 +14,8 @@ body {
   color: #ffffff;
   padding: 0;
   margin: 0;
+  display: flex;
+  flex-direction: column;
 }
 .xt,
 .xt * {
@@ -22,7 +24,7 @@ body {
 .xt main {
   padding: 0;
   display: block;
-  height: 91%;
+  flex: 9 1 90%;
   overflow: hidden;
   position: relative;
 }
@@ -44,30 +46,27 @@ body {
 }
 .xt__nav {
   background: #2d4569;
-  height: 9%;
+  flex: 1 0 10%;
+  display: flex;
+  flex-direction: column;
+  -webkit-app-region: drag;
 }
 .xt__nav ul {
   list-style: none outside none;
   padding: 0;
   margin: 0;
-  display: block;
-  height: auto;
-  overflow: hidden;
   display: flex;
   -webkit-app-region: drag;
-}
-.xt__nav ul li {
-  float: left;
-  display: inline-block;
+  flex: 1;
+  max-width: 80%;
 }
 .xt__nav li {
   flex: 1;
-  max-width: 130px;
+  display: flex;
 }
 .xt__nav a {
   background: #2d4569;
-  padding: 12px 15px;
-  display: block;
+  display: flex;
   color: #ecf0f1;
   text-decoration: none;
   font-weight: 400;
@@ -75,15 +74,13 @@ body {
   text-align: center;
   -webkit-app-region: no-drag;
   font-size: 14px;
-}
-.xt__nav ul,
-.xt__nav li,
-.xt__nav a {
-  height: 100%;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
 }
 .xt__nav i {
   position: relative;
-  left: -5px;
+  left: 0;
 }
 .xt__nav .is-active a {
   background: #1e2e45;
@@ -232,9 +229,12 @@ body {
 .xt__timer--main {
   width: 70%;
   padding: 10px;
+  margin-left: 30%;
 }
 .xt__timer--sidebar {
   width: 30%;
+  position: absolute;
+  left: 0;
 }
 .xt__timer--main,
 .xt__timer--sidebar {
@@ -446,6 +446,9 @@ body {
 .btn--group .btn {
   flex: 1;
 }
+.btn[data-minimode]:last-child {
+  display: none;
+}
 textarea {
   width: 100%;
   padding: 10px;
@@ -507,19 +510,23 @@ input[type=email]:focus {
   width: 28%;
   padding: 7px 10px;
 }
+.xt__timer__callout ~ [data-togglemini] {
+  display: none;
+}
 .xt__login {
   max-width: 35%;
   display: block;
   margin: auto;
   -webkit-app-region: no-drag;
-  margin: 15% auto;
+  z-index: 2;
+  position: relative;
 }
 .xt__login h3 {
   text-align: center;
-  background: #2d4569;
   margin: 0 0 5px 0;
-  padding: 15px;
+  padding: 0 15px 15px;
   font-weight: 300;
+  font-size: 24px;
 }
 .xt__login input {
   width: 100%;
@@ -529,6 +536,22 @@ input[type=email]:focus {
   background: #2d4569;
   height: 100%;
   -webkit-app-region: drag;
+  display: flex;
+}
+.xt .xt__login--wrap:after {
+  display: block;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  content: '';
+  z-index: 1;
+  background: url(../svg/x.svg);
+  background-repeat: no-repeat;
+  background-size: auto 100%;
+  background-position: center;
+  opacity: 0.03;
 }
 .project_overlay {
   background: rgba(45, 69, 105, 0.95);

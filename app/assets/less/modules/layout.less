@@ -9,8 +9,10 @@ body {
 	color: @white;
 	padding: 0;
 	margin: 0;
+	display: flex;
+	flex-direction: column;
 
-	&, 
+	&,
 	& * {
 		box-sizing: border-box;
 	}
@@ -18,7 +20,7 @@ body {
 	main {
 		padding: 0;
 		display: block;
-		height: 91%;
+		flex: 9 1 90%;
 		overflow: hidden;
 		position: relative;
 	}

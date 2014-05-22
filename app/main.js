@@ -25,12 +25,11 @@ app.on('ready', function() {
         "title": "Xigen Timer",
         "width": 1000,
         "height": 600,
-        "max-width": 1000,
-        "max-height": 600,
-        "min-width": 1000,
-        "min-height": 600,
-        "frame": false
+        "frame": false,
+        "resizable" : false
     });
     mainWindow.loadUrl('file://' + __dirname + '/index.html');
+
+    mainWindow.toggleDevTools();
 
 });

@@ -2,24 +2,27 @@
 
 	@nav_bg: @xigenblue;
 	background: @nav_bg;
-	height: 9%;
+	flex: 1 0 10%;
+	display: flex;
+	flex-direction: column;
+	-webkit-app-region: drag;
 
 	ul {
 		.bulletless();
-		.floated();
 		display: flex;
 		-webkit-app-region: drag;
+		flex: 1;
+		max-width: 80%;
 	}
 
 	li {
 		flex: 1; // Spread evenly
-		max-width: 130px;
+		display: flex;
 	}
 
 	a {
 		background: @nav_bg;
-		padding: 12px 15px;
-		display: block;
+		display: flex;
 		color: @offwhite;
 		text-decoration: none;
 		font-weight: @regular;
@@ -27,17 +30,14 @@
 		text-align: center;
 		-webkit-app-region: no-drag;
 		font-size: 14px;
-	}
-
-	ul,
-	li,
-	a {
-		height: 100%;
+		flex-direction: column;
+		justify-content: center;
+		width: 100%;
 	}
 
 	i {
 		position: relative;
-		left: -5px;
+		left: 0;
 	}
 
 	.is-active a {
