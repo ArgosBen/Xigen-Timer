@@ -23,12 +23,12 @@ app.on('ready', function() {
 
     mainWindow = new BrowserWindow({ 
         "title": "Xigen Timer",
-        "width": 900,
-        "height": 510,
-        "max-width": 900,
-        "max-height": 530,
-        "min-width": 900,
-        "min-height": 510,
+        "width": 1000,
+        "height": 600,
+        "max-width": 1000,
+        "max-height": 600,
+        "min-width": 1000,
+        "min-height": 600,
         "frame": false
     });
     mainWindow.loadUrl('file://' + __dirname + '/index.html');

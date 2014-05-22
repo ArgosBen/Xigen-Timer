@@ -16,6 +16,7 @@ module.exports = function(grunt) {
           "../app/*"
         ],
         tasks: [
+          "less",
           "copy:app"
         ]
       },
@@ -26,14 +27,25 @@ module.exports = function(grunt) {
           {expand: true, cwd: "../app" ,src: ['**'], dest: './XigenTimer/resources/app'}
         ]
       }
+    },
+    "less" : {
+      "dist" : {
+        "options" : {
+          "paths" : ["../app/assets/less/core", "../app/assets/less/modules"]
+        },
+        "files": {
+          "../app/assets/css/XigenTimer.css": "../app/assets/less/XigenTimer.less"
+        }
+      }
     }
   });
 
   grunt.loadNpmTasks('grunt-download-atom-shell');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-copy');
+  grunt.loadNpmTasks('grunt-contrib-less');
 
-  grunt.task.registerTask('dev', ['copy:app', 'watch:dev']);
+  grunt.task.registerTask('dev', ['less', 'copy:app', 'watch:dev']);
   grunt.task.registerTask('build', ['download-atom-shell', 'copy:app', 'watch:dev']);
 
 };

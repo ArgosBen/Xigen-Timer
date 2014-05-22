@@ -1,20 +1,13 @@
 @import url(http://fonts.googleapis.com/css?family=Roboto:400,500,700,300);
-
 /* Fonts */
-
 /* Colours */
-
 /**	Bulletless Lists **/
-
 /**	Floated lists **/
-
 /** Buttons **/
-
 html,
 body {
   height: 100%;
 }
-
 .xt {
   background: #ecf0f1;
   font-family: 'Roboto', sans-serif;
@@ -22,14 +15,10 @@ body {
   padding: 0;
   margin: 0;
 }
-
 .xt,
 .xt * {
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
-
 .xt main {
   padding: 0;
   display: block;
@@ -37,33 +26,26 @@ body {
   overflow: hidden;
   position: relative;
 }
-
 ::-webkit-scrollbar {
   width: 12px;
 }
-
 ::-webkit-scrollbar-track {
   border-radius: 0px;
   background: #2d4569;
 }
-
 ::-webkit-scrollbar-thumb {
   -webkit-box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.5);
   background: #6d7b80;
-  -webkit-transition: background 0.3s;
   transition: background 0.3s;
 }
-
 ::-webkit-scrollbar-thumb:focus,
 ::-webkit-scrollbar-thumb:active {
   background: #79888d;
 }
-
 .xt__nav {
   background: #2d4569;
   height: 9%;
 }
-
 .xt__nav ul {
   list-style: none outside none;
   padding: 0;
@@ -71,28 +53,17 @@ body {
   display: block;
   height: auto;
   overflow: hidden;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -moz-box;
-  display: -ms-flexbox;
   display: flex;
   -webkit-app-region: drag;
 }
-
 .xt__nav ul li {
   float: left;
   display: inline-block;
 }
-
 .xt__nav li {
-  -webkit-box-flex: 1;
-  -webkit-flex: 1;
-  -moz-box-flex: 1;
-  -ms-flex: 1;
   flex: 1;
   max-width: 130px;
 }
-
 .xt__nav a {
   background: #2d4569;
   padding: 12px 15px;
@@ -105,102 +76,58 @@ body {
   -webkit-app-region: no-drag;
   font-size: 14px;
 }
-
 .xt__nav ul,
 .xt__nav li,
 .xt__nav a {
   height: 100%;
 }
-
 .xt__nav i {
   position: relative;
   left: -5px;
 }
-
 .xt__nav .is-active a {
   background: #1e2e45;
 }
-
-@-webkit-keyframes pulse {
-  0% {
-    background: #27ae60;
-  }
-
-  10% {
-    background: #4bd786;
-  }
-
-  100% {
-    background: #27ae60;
-  }
-}
-
 .xt__timer__clock__roundel {
-  width: 33.3333%;
+  width: 33.33333%;
   height: 170px;
   border: 5px solid #35517b;
   background: #2d4569;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -moz-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-align-content: center;
-  -ms-flex-line-pack: center;
   align-content: center;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -moz-box-pack: center;
-  -ms-flex-pack: center;
   justify-content: center;
   text-align: center;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: column;
-  -moz-box-orient: vertical;
-  -moz-box-direction: normal;
-  -ms-flex-direction: column;
   flex-direction: column;
   font-weight: 300;
   font-size: 60px;
   line-height: 1;
-  -webkit-transition: border-color 0.5s, background 0.5s;
   transition: border-color 0.5s, background 0.5s;
   float: left;
 }
-
 .xt__timer__clock__roundel .caption {
   font-size: 14px;
   opacity: 0.5;
 }
-
 .xt__timer__clock__roundel + .xt__timer__clock__roundel {
   border-left: 0px;
 }
-
 .xt__timer__clock__roundel.changed {
-  -webkit-animation: pulse 0.5s;
   animation: pulse 0.5s;
 }
-
 .is-running .xt__timer__clock__roundel {
   border-color: #2cc36b;
   background: #27ae60;
 }
-
 .is-paused .xt__timer__clock__roundel {
   border-color: #2e8ece;
   background: #2980b9;
-  -webkit-animation: none;
   animation: none;
 }
-
 .xt__timer--sidebar {
   background: #3e4649;
   height: 100%;
   padding: 0;
 }
-
 .xt__timer--sidebar input[type=text] {
   width: 100%;
   border-width: 0;
@@ -210,41 +137,33 @@ body {
   color: #ecf0f1;
   height: 9%;
 }
-
 .xt__timer--sidebar ul {
   list-style: none outside none;
   padding: 0;
   margin: 0;
 }
-
 .xt__timer--sidebar li > ul {
   padding-left: 10px;
 }
-
 .xt__timer--sidebar ul li {
   padding: 5px 10px;
   color: #b0b9bc;
   font-size: 14px;
 }
-
 .xt__timer--sidebar li li + li {
   padding-top: 0px;
 }
-
 .xt__timer--sidebar span {
   display: block;
   position: relative;
 }
-
 .xt__timer--sidebar li:last-child {
   padding-bottom: 0px;
   border-bottom: none;
 }
-
 .xt__timer--sidebar .is-active {
   color: #f1c40f;
 }
-
 .xt__timer--sidebar .is-active:before {
   content: '';
   width: 0;
@@ -257,21 +176,17 @@ body {
   margin-top: 5px;
   left: -10px;
 }
-
 .xt__timer--sidebar li > ul span {
   cursor: pointer;
 }
-
 .xt__timer--sidebar li > ul span:hover {
   color: #e7eaeb;
 }
-
 .xt__timer--sidebar__list {
   max-height: 91%;
   overflow: auto;
   padding-bottom: 10px;
 }
-
 .xt__timer--sidebar__list > ul > li > span {
   font-weight: 700;
   color: #ecf0f1;
@@ -279,7 +194,6 @@ body {
   position: relative;
   padding-right: 15px;
 }
-
 .xt__timer--sidebar__list > ul > li > span:after {
   content: '';
   width: 0;
@@ -291,28 +205,22 @@ body {
   right: 0px;
   top: 50%;
   margin-top: -5px;
-  -webkit-transition: -webkit-transform 0.3s;
   transition: -webkit-transform 0.3s;
   -webkit-backface-visibility: hidden;
 }
-
 .xt__timer--sidebar__list > ul > li > span.is-open:after {
   -webkit-transform: rotate(90deg);
 }
-
 .xt__timer--sidebar__list > ul > li {
   border-bottom: 1px solid #4a5357;
 }
-
 .xt__timer--sidebar__list > ul > li > ul {
   display: none;
 }
-
 .xt__timer--sidebar__list:before {
   content: '';
   display: block;
 }
-
 .xt__timer--sidebar__list.empty:before {
   content: 'Just getting the latest data...';
   display: block;
@@ -321,32 +229,26 @@ body {
   font-size: 14px;
   text-align: center;
 }
-
 .xt__timer--main {
   width: 70%;
   padding: 10px;
 }
-
 .xt__timer--sidebar {
   width: 30%;
 }
-
 .xt__timer--main,
 .xt__timer--sidebar {
   float: left;
 }
-
 .xt__timer__clock {
   display: block;
   height: auto;
   overflow: hidden;
   clear: both;
 }
-
 .xt__timer__desc {
   height: 120px;
 }
-
 .btn {
   padding: 15px 25px;
   color: #ecf0f1;
@@ -359,31 +261,25 @@ body {
   border: 0;
   -webkit-apperance: none;
   margin: 0;
-  -webkit-transition: background 0.3s, color 0.3s;
   transition: background 0.3s, color 0.3s;
 }
-
 .btn:hover {
   background: #35517b;
 }
-
 .btn:disabled,
 .btn[disabled] {
   cursor: default;
   opacity: 0.5;
 }
-
 .btn.btn--ghost {
   border: 4px solid #2d4569;
   background: transparent;
   color: #2d4569;
 }
-
 .btn.btn--ghost:hover {
   background: #2d4569;
   color: #ecf0f1;
 }
-
 .btn--success {
   padding: 15px 25px;
   color: #ecf0f1;
@@ -396,31 +292,25 @@ body {
   border: 0;
   -webkit-apperance: none;
   margin: 0;
-  -webkit-transition: background 0.3s, color 0.3s;
   transition: background 0.3s, color 0.3s;
 }
-
 .btn--success:hover {
   background: #2cc36b;
 }
-
 .btn--success:disabled,
 .btn--success[disabled] {
   cursor: default;
   opacity: 0.5;
 }
-
 .btn--success.btn--ghost {
   border: 4px solid #27ae60;
   background: transparent;
   color: #27ae60;
 }
-
 .btn--success.btn--ghost:hover {
   background: #27ae60;
   color: #ecf0f1;
 }
-
 .btn--info {
   padding: 15px 25px;
   color: #ecf0f1;
@@ -433,31 +323,25 @@ body {
   border: 0;
   -webkit-apperance: none;
   margin: 0;
-  -webkit-transition: background 0.3s, color 0.3s;
   transition: background 0.3s, color 0.3s;
 }
-
 .btn--info:hover {
   background: #2e8ece;
 }
-
 .btn--info:disabled,
 .btn--info[disabled] {
   cursor: default;
   opacity: 0.5;
 }
-
 .btn--info.btn--ghost {
   border: 4px solid #2980b9;
   background: transparent;
   color: #2980b9;
 }
-
 .btn--info.btn--ghost:hover {
   background: #2980b9;
   color: #ecf0f1;
 }
-
 .btn--warning {
   padding: 15px 25px;
   color: #ecf0f1;
@@ -470,31 +354,25 @@ body {
   border: 0;
   -webkit-apperance: none;
   margin: 0;
-  -webkit-transition: background 0.3s, color 0.3s;
   transition: background 0.3s, color 0.3s;
 }
-
 .btn--warning:hover {
   background: #ec5e00;
 }
-
 .btn--warning:disabled,
 .btn--warning[disabled] {
   cursor: default;
   opacity: 0.5;
 }
-
 .btn--warning.btn--ghost {
   border: 4px solid #d35400;
   background: transparent;
   color: #d35400;
 }
-
 .btn--warning.btn--ghost:hover {
   background: #d35400;
   color: #ecf0f1;
 }
-
 .btn--yellow {
   padding: 15px 25px;
   color: #3e4649;
@@ -507,31 +385,25 @@ body {
   border: 0;
   -webkit-apperance: none;
   margin: 0;
-  -webkit-transition: background 0.3s, color 0.3s;
   transition: background 0.3s, color 0.3s;
 }
-
 .btn--yellow:hover {
   background: #f2ca27;
 }
-
 .btn--yellow:disabled,
 .btn--yellow[disabled] {
   cursor: default;
   opacity: 0.5;
 }
-
 .btn--yellow.btn--ghost {
   border: 4px solid #f1c40f;
   background: transparent;
   color: #f1c40f;
 }
-
 .btn--yellow.btn--ghost:hover {
   background: #f1c40f;
   color: #ecf0f1;
 }
-
 .btn--white {
   padding: 15px 25px;
   color: #2d4569;
@@ -544,53 +416,36 @@ body {
   border: 0;
   -webkit-apperance: none;
   margin: 0;
-  -webkit-transition: background 0.3s, color 0.3s;
   transition: background 0.3s, color 0.3s;
   font-weight: 300;
 }
-
 .btn--white:hover {
   background: #fbfcfc;
 }
-
 .btn--white:disabled,
 .btn--white[disabled] {
   cursor: default;
   opacity: 0.5;
 }
-
 .btn--white.btn--ghost {
   border: 4px solid #ecf0f1;
   background: transparent;
   color: #ecf0f1;
 }
-
 .btn--white.btn--ghost:hover {
   background: #ecf0f1;
   color: #ecf0f1;
 }
-
 .btn--expand {
   width: 100%;
 }
-
 .btn--group {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -moz-box;
-  display: -ms-flexbox;
   display: flex;
   padding: 10px 0;
 }
-
 .btn--group .btn {
-  -webkit-box-flex: 1;
-  -webkit-flex: 1;
-  -moz-box-flex: 1;
-  -ms-flex: 1;
   flex: 1;
 }
-
 textarea {
   width: 100%;
   padding: 10px;
@@ -600,12 +455,10 @@ textarea {
   font-size: 14px;
   border: 1px solid #cfd9db;
 }
-
 textarea:focus {
   outline: none;
   border-color: #2d4569;
 }
-
 input[type=text],
 input[type=password],
 input[type=date],
@@ -616,7 +469,6 @@ input[type=email] {
   font-size: 14px;
   border: 1px solid #cfd9db;
 }
-
 input[type=text]:focus,
 input[type=password]:focus,
 input[type=date]:focus,
@@ -624,23 +476,19 @@ input[type=email]:focus {
   outline: none;
   border-color: #2d4569;
 }
-
 .input--group {
   display: block;
   float: left;
 }
-
 .input--group label {
   color: #3e4649;
   font-size: 14px;
 }
-
 .input--group + .input--group {
   margin-left: 5px;
   padding-left: 5px;
   border-left: 1px solid #c0cdd1;
 }
-
 .xt__timer__callout {
   width: 34%;
   display: block;
@@ -651,17 +499,14 @@ input[type=email]:focus {
   border: 3px solid #3c5c8d;
   font-size: 14px;
 }
-
 .xt__timer__callout + .xt__timer__callout {
   margin-left: 2%;
 }
-
 .xt__timer__callout + .btn {
   margin-left: 2%;
   width: 28%;
   padding: 7px 10px;
 }
-
 .xt__login {
   max-width: 35%;
   display: block;
@@ -669,7 +514,6 @@ input[type=email]:focus {
   -webkit-app-region: no-drag;
   margin: 15% auto;
 }
-
 .xt__login h3 {
   text-align: center;
   background: #2d4569;
@@ -677,18 +521,15 @@ input[type=email]:focus {
   padding: 15px;
   font-weight: 300;
 }
-
 .xt__login input {
   width: 100%;
   margin: 0 0 5px 0;
 }
-
 .xt .xt__login--wrap {
   background: #2d4569;
   height: 100%;
   -webkit-app-region: drag;
 }
-
 .project_overlay {
   background: rgba(45, 69, 105, 0.95);
   position: absolute;
@@ -696,10 +537,8 @@ input[type=email]:focus {
   bottom: -100px;
   left: 0px;
   padding: 15px;
-  -webkit-transition: bottom 0.3s ease-in-out;
   transition: bottom 0.3s ease-in-out;
 }
-
 .project_overlay.is-visible {
   bottom: 0px;
 }
