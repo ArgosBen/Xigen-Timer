@@ -3,7 +3,7 @@
 <head>
 	<title>Xigen Timer</title>
 	<link rel="stylesheet" href="assets/css/XigenTimer.css" />
-	<link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+	<link href="http://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.css" rel="stylesheet">
 	<script src="assets/js/jquery.min.js"></script>
 </head>
 <body class="xt">
@@ -38,8 +38,8 @@
 
 			<h3 data-bind="text: loginGreeting">Hello.</h3>
 
-			<input type="text" name="username" placeholder="Username" />
-			<input type="password" name="pass" placeholder="Password..." />
+			<input type="text" name="username" placeholder="Username" value="mattm" />
+			<input type="password" name="pass" placeholder="Password..." value="jr74anAQ" />
 
 			<button class="btn btn--white btn--expand">Login</button>
 
@@ -131,6 +131,58 @@
 
 	</main>
 
+	<main data-bind="visible: currentPage() === 'logs'" class="xt__timelogs">
+
+		<div class="xt__timelogs--table">
+
+			<div class="btn--group">
+				<a data-prev-day class="btn btn--info"><i class="fa fa-backward"></i></a>
+				<div class="btn btn--display btn--white">Today</div>
+				<a data-next-day class="btn btn--info"><i class="fa fa-forward"></i></a>
+			</div>
+
+			<table cellspacing="0" cellpadding="0">
+				<thead>
+					<tr>
+						<th>Duration</th>
+						<th>Desc</th>
+						<th></th>
+					</tr>
+				</thead>
+
+			</table>
+
+			<div class="xt__timelogs--wrap">
+				<table cellspacing="0" cellpadding="0">
+					<tbody>
+						<tr>
+							<td>1.5</td>
+							<td>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa, sunt possimus repellat recusandae iusto blanditiis adipisci a fugit voluptates nisi!</td>
+							<td><a class="btn btn--yellow">Edit</a></td>
+						</tr>
+
+						<tr>
+							<td>1.5</td>
+							<td>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa, sunt possimus repellat recusandae iusto blanditiis adipisci a fugit voluptates nisi!</td>
+							<td><a class="btn btn--yellow">Edit</a></td>
+						</tr>
+
+						<tr>
+							<td>1.5</td>
+							<td>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa, sunt possimus repellat recusandae iusto blanditiis adipisci a fugit voluptates nisi!</td>
+							<td><a class="btn btn--yellow">Edit</a></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+		<div class="xt__timelogs--graph">
+		&nbsp;
+		</div>
+
+	</main>
+
 	<script src="assets/js/socket.io/socket.io.min.js"></script>
 	<script src="assets/js/ko/ko.js"></script>
 	<script src="assets/js/XT.js"></script>
@@ -140,6 +192,8 @@
 	<script src="assets/js/XT_ViewModel.js"></script>
 	<script src="assets/js/XT_HierachyList.js"></script>
 	<script src="assets/js/XT_miniMode.js"></script>
+	<script src="assets/js/XT_drawGraph.js"></script>
+	<script src="assets/js/XT_timelogList.js"></script>
 	<script src="assets/js/XT_Runtime.js"></script>
 </body>
 </html>

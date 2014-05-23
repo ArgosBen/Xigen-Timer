@@ -31,7 +31,9 @@ module.exports = function(grunt) {
     "less" : {
       "dist" : {
         "options" : {
-          "paths" : ["../app/assets/less/core", "../app/assets/less/modules"]
+          "paths" : ["../app/assets/less/core", "../app/assets/less/modules"],
+          "sourceMap" : true,
+          "sourceMapFilename": "assets/css/XigenTimer.css.map"
         },
         "files": {
           "../app/assets/css/XigenTimer.css": "../app/assets/less/XigenTimer.less"

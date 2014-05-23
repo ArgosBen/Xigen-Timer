@@ -71,6 +71,8 @@ $(function () {
 
 	ready = function () {
 
+		XT.timelogs = new XT.Timeloglist();
+
 		XT.drawProjectList(function () {
 			var nav = new XT.HierachyList();
 		});

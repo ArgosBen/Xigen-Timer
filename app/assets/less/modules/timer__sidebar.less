@@ -3,6 +3,7 @@
 	background: @slategrey;
 	height: 100%;
 	padding: 0;
+	position: relative;
 
 	input[type=text] {
 		width: 100%;
@@ -70,6 +71,8 @@
 		max-height: 91%;
 		overflow: auto;
 		padding-bottom: 10px;
+		position: relative;
+		z-index: 2;
 
 		> ul > li > span {
 			font-weight: @bold;
@@ -122,6 +125,19 @@
 			text-align: center;
 		}
 
+	}
+
+	&:after {
+		display: block;
+		position: absolute;
+		left: 10px;
+		bottom: 10px;
+		width: 50px;
+		height: 50px;
+		content: '';
+		background: url(../svg/x.svg) no-repeat;
+		opacity: 0.1;
+		background-size: 100%;
 	}
 
 }

@@ -124,6 +124,7 @@ body {
   background: #3e4649;
   height: 100%;
   padding: 0;
+  position: relative;
 }
 .xt__timer--sidebar input[type=text] {
   width: 100%;
@@ -183,6 +184,8 @@ body {
   max-height: 91%;
   overflow: auto;
   padding-bottom: 10px;
+  position: relative;
+  z-index: 2;
 }
 .xt__timer--sidebar__list > ul > li > span {
   font-weight: 700;
@@ -225,6 +228,18 @@ body {
   padding: 20px;
   font-size: 14px;
   text-align: center;
+}
+.xt__timer--sidebar:after {
+  display: block;
+  position: absolute;
+  left: 10px;
+  bottom: 10px;
+  width: 50px;
+  height: 50px;
+  content: '';
+  background: url(../svg/x.svg) no-repeat;
+  opacity: 0.1;
+  background-size: 100%;
 }
 .xt__timer--main {
   width: 70%;
@@ -270,6 +285,7 @@ body {
 .btn[disabled] {
   cursor: default;
   opacity: 0.5;
+  pointer-events: none;
 }
 .btn.btn--ghost {
   border: 4px solid #2d4569;
@@ -301,6 +317,7 @@ body {
 .btn--success[disabled] {
   cursor: default;
   opacity: 0.5;
+  pointer-events: none;
 }
 .btn--success.btn--ghost {
   border: 4px solid #27ae60;
@@ -332,6 +349,7 @@ body {
 .btn--info[disabled] {
   cursor: default;
   opacity: 0.5;
+  pointer-events: none;
 }
 .btn--info.btn--ghost {
   border: 4px solid #2980b9;
@@ -363,6 +381,7 @@ body {
 .btn--warning[disabled] {
   cursor: default;
   opacity: 0.5;
+  pointer-events: none;
 }
 .btn--warning.btn--ghost {
   border: 4px solid #d35400;
@@ -394,6 +413,7 @@ body {
 .btn--yellow[disabled] {
   cursor: default;
   opacity: 0.5;
+  pointer-events: none;
 }
 .btn--yellow.btn--ghost {
   border: 4px solid #f1c40f;
@@ -426,6 +446,7 @@ body {
 .btn--white[disabled] {
   cursor: default;
   opacity: 0.5;
+  pointer-events: none;
 }
 .btn--white.btn--ghost {
   border: 4px solid #ecf0f1;
@@ -445,6 +466,9 @@ body {
 }
 .btn--group .btn {
   flex: 1;
+}
+.btn--display {
+  cursor: default;
 }
 .btn[data-minimode]:last-child {
   display: none;
@@ -565,3 +589,85 @@ input[type=email]:focus {
 .project_overlay.is-visible {
   bottom: 0px;
 }
+.xt .xt__timelogs {
+  display: flex;
+  padding: 10px;
+}
+.xt .xt__timelogs--table {
+  flex: 6;
+  padding-right: 20px;
+}
+.xt .xt__timelogs--table .btn--group {
+  padding-top: 0;
+}
+.xt .xt__timelogs--table table {
+  width: 100%;
+}
+.xt .xt__timelogs--table thead {
+  background: #2d4569;
+}
+.xt .xt__timelogs--table th {
+  font-weight: 300;
+  padding: 10px;
+}
+.xt .xt__timelogs--table th:first-child {
+  width: 60px;
+}
+.xt .xt__timelogs--table td {
+  color: #3e4649;
+  padding: 10px;
+  font-size: 14px;
+  border-bottom: 1px solid #2d4569;
+}
+.xt .xt__timelogs--table td:first-child {
+  font-size: 20px;
+  width: 60px;
+  text-align: center;
+}
+.xt .xt__timelogs--table td:only-child {
+  font-size: 16px;
+  text-align: center;
+  color: #2d4569;
+}
+.xt .xt__timelogs--table td i {
+  color: #d35400;
+  font-size: 30px;
+  display: block;
+}
+.xt .xt__timelogs--table td small {
+  display: block;
+  font-size: 14px;
+  text-align: center;
+}
+.xt .xt__timelogs--table tbody tr {
+  border-bottom: 1px solid #2d4569;
+}
+.xt .xt__timelogs--table tr:last-child td {
+  border-bottom: none;
+}
+.xt .xt__timelogs--wrap {
+  overflow: auto;
+  max-height: 415px;
+}
+.xt .xt__timelogs--graph {
+  flex: 4;
+  padding-top: 30px;
+}
+.graph-tooltip {
+  background: #3e4649;
+  opacity: 0.8;
+  color: #ffffff;
+  padding: 10px;
+  position: absolute;
+  top: 50%;
+  right: 30px;
+  font-size: 24px;
+  width: 200px;
+  margin-right: -100px;
+  text-align: center;
+}
+.graph-tooltip strong {
+  display: block;
+  font-size: 30px;
+}
+/*# sourceMappingURL=assets/css/XigenTimer.css.map */

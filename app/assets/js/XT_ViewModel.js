@@ -15,6 +15,14 @@
 
 		});
 
+		this.currentPage.subscribe(function (newVal) {
+
+			if (newVal === "logs") {
+				XT.drawGraph();
+			};
+
+		});
+
 	};
 
 }(XT));

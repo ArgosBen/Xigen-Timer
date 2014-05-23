@@ -1,0 +1,102 @@
+.xt .xt__timelogs {
+
+	display: flex;
+	padding: 10px;
+
+	&--table {
+		flex: 6;
+		padding-right: 20px;
+
+		.btn--group {
+			padding-top: 0;
+		}
+
+		table {
+			width: 100%;
+		}
+
+		thead {
+			background: @xigenblue;
+		}
+
+		th {
+			font-weight: 300;
+			padding: 10px;
+
+			&:first-child {
+				width: 60px;
+			}
+		}
+
+		td {
+			color: @slategrey;
+			padding: 10px;
+			font-size: 14px;
+			border-bottom: 1px solid #2d4569;
+
+			&:first-child {
+				font-size: 20px;
+				width: 60px;
+				text-align: center;
+			}
+
+			&:only-child {
+				font-size: 16px;
+				text-align: center;
+				color: @xigenblue;
+			}
+
+			i {
+				color: @orange;
+				font-size: 30px;
+				display: block;
+			}
+
+			small {
+				display: block;
+				font-size: 14px;
+				text-align: center;
+			}
+		}
+
+		tbody tr {
+			border-bottom: 1px solid @xigenblue;
+		}
+
+		tr:last-child td {
+			border-bottom: none;
+		}
+
+	}
+
+	&--wrap {
+		overflow: auto;
+		max-height: 415px;
+	}
+
+	&--graph {
+		flex: 4;
+		padding-top: 30px;
+	}
+
+}
+
+.graph-tooltip {
+	background: @slategrey;
+	opacity: 0.8;
+	color: @white;
+	padding: 10px;
+	position: absolute;
+	top: 50%;
+	right: 30px;
+	font-size: 24px;
+	width: 200px;
+	margin-right: -100px;
+	text-align: center;
+
+	strong {
+		display: block;
+		font-size: 30px;
+	}
+
+}
