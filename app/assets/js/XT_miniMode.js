@@ -4,7 +4,9 @@ $(function () {
 	var remote = require("remote"),
 		win = remote.getCurrentWindow(),
 		isMiniMode = false,
-		pos;
+		pos,
+		tx,
+		ty;
 
 	XT.miniMode = function () {
 
@@ -34,9 +36,14 @@ $(function () {
 
 			$(".btn").css("-webkit-app-region", "no-drag");
 
+			tx = parseInt(pos[0] + ((1000 - 680) / 2), 10);
+			ty = parseInt(pos[1] + ((600 - 315) / 2), 10);
+
+			console.log(tx, ty);
+
 			win.setResizable(true);
 			win.setSize(680, 315);
-			//win.setPosition(pos[0] + ((1000 - 680) / 2), pos[0] + ((600 - 315) / 2));
+			win.setPosition(tx, ty);
 			win.setResizable(false);
 
 			isMiniMode = true;
@@ -56,9 +63,14 @@ $(function () {
 
 			$(".btn").removeAttr("style");
 
+			tx = parseInt(pos[0] - ((1000 - 680) / 2), 10);
+			ty = parseInt(pos[1] - ((600 - 315) / 2), 10);
+
+			console.log(tx, ty);
+
 			win.setResizable(true);
 			win.setSize(1000, 600);
-			//win.setPosition(pos[0] - (1000 - 680) / 2, pos[0] - (600 - 315) / 2);
+			win.setPosition(tx, ty);
 			win.setResizable(false);
 
 			isMiniMode = false;
