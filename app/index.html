@@ -39,7 +39,7 @@
 			<h3 data-bind="text: loginGreeting">Hello.</h3>
 
 			<input type="text" name="username" placeholder="Username" value="mattm" />
-			<input type="password" name="pass" placeholder="Password..." value="" />
+			<input type="password" name="pass" placeholder="Password..." value="jr74anAQ" />
 
 			<button class="btn btn--white btn--expand">Login</button>
 
@@ -113,13 +113,13 @@
 			<div class="input--group">
 				<label for="status">Set As:</label>
 				<select id="status">
-					<option value="18" select>Waiting Internal Review</option>
-					<option value="18" select>Open</option>
-					<option value="18" select>Closed</option>
-					<option value="18" select>Client Pending</option>
-					<option value="18" select>Completed</option>
-					<option value="18" select>Hold</option>
-					<option value="18" select>Waiting for Approval</option>
+					<option value="18">Waiting Internal Review</option>
+					<option value="18">Open</option>
+					<option value="18">Closed</option>
+					<option value="18">Client Pending</option>
+					<option value="18">Completed</option>
+					<option value="18">Hold</option>
+					<option value="18">Waiting for Approval</option>
 				</select>
 			</div>
 
@@ -189,16 +189,30 @@
 
 			<form class="xt__timelog-edit__fields">
 
-					<label for="date">Date:</label>
-					<input name="date" id="date" type="date" />
+					<div class="input-wrap-group">
+						<div class="input-group">
+							<label for="date">Date:</label>
+							<input name="date" id="date" type="date" />
+						</div>
 
-					<label for="duration">Duration:</label>
-					<input id="duration" name="duration" type="text" />
+						<div class="input-group">
+							<label for="duration">Duration:</label>
+							<input id="duration" name="duration" type="text" />
+						</div>
+
+					</div>
 
 					<label for="isBillable">
 						<span>Billable?:</span>
 						<input name="isBillable" id="isBillable" type="checkbox" />
 					</label>
+
+					<label>Project:</label>
+					<span data-project></span>
+
+					<label>Activity:</label>
+					<span data-activity></span>
+
 					
 					<label for="description">Description:</label>
 					<textarea id="description" name="description"></textarea>

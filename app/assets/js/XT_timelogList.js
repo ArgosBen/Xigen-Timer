@@ -157,13 +157,22 @@
 				durationField = offcanvas.find("[id=duration]"),
 				billableField = offcanvas.find("[name=isBillable]"),
 				submitBtn = offcanvas.find("[type=submit]"),
+				activityField = offcanvas.find("[data-activity]"),
+				projectField = offcanvas.find("[data-project]"),
 				entryDate,
+				activity,
+				project,
 				d,
 				that = this;
 
 			XT.socket.emit("get", [{
 				type: "timelogs",
 				id: id
+			},
+			{
+				type: "activities"
+			}, {
+				type: "projects"
 			}]);
 
 			XT.socket.once("data", function (data) {
@@ -173,6 +182,16 @@
 
 				entryDate = moment(d.EntryDate, "YYYY-MM-DD/HH:mm:ss.SS");
 
+				activity = data.activities.filter(function (act) {
+					return act.EntityBaseID === d.TaskID;
+				})[0];
+
+				project = data.projects.filter(function (proj) {
+					return proj.ProjectID === activity.ProjectID;
+				})[0];
+
+				projectField.text(project.Name);
+				activityField.text(activity.Name);
 				dateField.val(entryDate.format("YYYY-MM-DD"));
 				dateTitle.text(entryDate.format("DD/MM/YYYY"));
 				descField.val(d.Description);

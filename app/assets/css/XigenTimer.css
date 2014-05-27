@@ -641,6 +641,12 @@ textarea.is-error {
   width: 60px;
   text-align: center;
 }
+.xt .xt__timelogs--table td:last-child {
+  width: 120px;
+}
+.xt .xt__timelogs--table td:last-child .btn {
+  width: 100%;
+}
 .xt .xt__timelogs--table td:only-child {
   font-size: 16px;
   text-align: center;
@@ -740,15 +746,12 @@ textarea.is-error {
   font-weight: 300;
   font-size: 16px;
 }
-.xt .xt__timelog-edit label:first-of-type {
-  margin-top: 0;
-}
 .xt .xt__timelog-edit textarea {
   flex: 1;
 }
 .xt .xt__timelog-edit input[type=text],
 .xt .xt__timelog-edit input[type=date] {
-  width: 50%;
+  width: 90%;
 }
 .xt .xt__timelog-edit h3 {
   color: #ffffff;
@@ -758,5 +761,20 @@ textarea.is-error {
 }
 .xt .xt__timelog-edit .btn--group {
   padding-bottom: 0;
+}
+.xt .xt__timelog-edit .input-group {
+  float: left;
+  width: 50%;
+}
+.xt .xt__timelog-edit .input-group label {
+  margin-top: 0;
+}
+.xt .xt__timelog-edit [data-activity] {
+  color: #f1c40f;
+  font-weight: bold;
+}
+.xt .xt__timelog-edit [data-project] {
+  color: #27ae60;
+  font-weight: bold;
 }
 /*# sourceMappingURL=assets/css/XigenTimer.css.map */

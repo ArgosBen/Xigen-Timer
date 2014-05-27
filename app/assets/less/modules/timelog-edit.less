@@ -54,10 +54,6 @@
 		margin-bottom: 5px;
 		font-weight: 300;
 		font-size: 16px;
-
-		&:first-of-type {
-			margin-top: 0;
-		}
 	}
 
 	textarea {
@@ -66,7 +62,7 @@
 
 	input[type=text],
 	input[type=date] {
-		width: 50%;
+		width: 90%;
 	}
 
 	h3 {
@@ -79,5 +75,17 @@
 	.btn--group {
 		padding-bottom: 0;
 	}
+
+	.input-group {
+		float: left;
+		width: 50%;
+
+		label {
+			margin-top: 0;
+		}
+	}
+
+	[data-activity] { color: @yellow; font-weight: bold; }
+	[data-project] { color: @green; font-weight: bold; }
 
 }
