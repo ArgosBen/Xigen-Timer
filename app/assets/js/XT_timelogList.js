@@ -68,7 +68,7 @@
 
 			$(config.WRAPPER).on("click", config.EDIT_BTN, function (e) {
 				e.preventDefault();
-				$(this).text(config.UPDATE_BTN_LOADING);
+				$(this).text(config.UPDATE_BTN_LOADING).attr("disabled", "disabled");
 				that.loadLogAndOpenEdit($(this).attr("data-log"), this);
 			});
 
@@ -205,7 +205,7 @@
 				}
 
 				$(config.OFFCANVAS_CLASS).addClass(config.OFFCANVAS_OPEN_CLASS);
-				$(btn).text(config.UPDATE_BTN_STANDARD);
+				$(btn).text(config.UPDATE_BTN_STANDARD).removeAttr("disabled");
 
 			});
 
