@@ -516,6 +516,23 @@ input[type=email]:focus {
   padding-left: 5px;
   border-left: 1px solid #c0cdd1;
 }
+input[type=date]::-webkit-inner-spin-button,
+input[type=date]::-webkit-clear-button {
+  display: none;
+}
+input[type=text],
+input[type=date],
+input[type=email],
+textarea {
+  -webkit-transition: border-color 0.2s, background 0.2s;
+}
+input[type=text].is-error,
+input[type=date].is-error,
+input[type=email].is-error,
+textarea.is-error {
+  background: #ffb686;
+  border-color: #d35400;
+}
 .xt__timer__callout {
   width: 34%;
   display: block;
@@ -669,5 +686,77 @@ input[type=email]:focus {
 .graph-tooltip strong {
   display: block;
   font-size: 30px;
+}
+.xt .xt__timelog-edit {
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  position: absolute;
+  bottom: 0px;
+  left: -50%;
+  height: 100%;
+  background: #3e4649;
+  -webkit-transition: left 0.5s ease-in-out;
+}
+.xt .xt__timelog-edit,
+.xt .xt__timelog-edit__overlay {
+  -webkit-transform: translate3d(0, 0, 0);
+  -webkit-backface-visibility: hidden;
+}
+.xt .xt__timelog-edit__fields {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.xt .xt__timelog-edit__fields:after,
+.xt .xt__timelog-edit__fields:before {
+  content: '';
+  display: table;
+}
+.xt .xt__timelog-edit__overlay {
+  position: absolute;
+  bottom: 0px;
+  left: 0;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.25);
+  width: 100%;
+  content: '';
+  -webkit-transition: left 0.5s ease-in-out;
+  cursor: pointer;
+}
+.xt .xt__timelog-edit.is-open {
+  left: 0px;
+}
+.xt .xt__timelog-edit.is-open .xt__timelog-edit__overlay {
+  visibility: visible;
+  left: 100%;
+}
+.xt .xt__timelog-edit label {
+  color: #ffffff;
+  display: block;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  font-weight: 300;
+  font-size: 16px;
+}
+.xt .xt__timelog-edit label:first-of-type {
+  margin-top: 0;
+}
+.xt .xt__timelog-edit textarea {
+  flex: 1;
+}
+.xt .xt__timelog-edit input[type=text],
+.xt .xt__timelog-edit input[type=date] {
+  width: 50%;
+}
+.xt .xt__timelog-edit h3 {
+  color: #ffffff;
+  text-transform: none;
+  margin: 0 0 10px 0;
+  font-weight: 500;
+}
+.xt .xt__timelog-edit .btn--group {
+  padding-bottom: 0;
 }
 /*# sourceMappingURL=assets/css/XigenTimer.css.map */

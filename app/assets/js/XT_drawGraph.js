@@ -22,16 +22,20 @@
 					"fillColor" : "#2980b9",
 					"align" : "center",
 					"barWidth" : 0.7,
+				},
+				threshold: {
+					below: 4.5,
+					color: "red"
 				}
 			}
 		], {
 			xaxis: {
 				ticks: [
-					[1, "Mon"],
-					[2, "Tue"],
-					[3, "Wed"],
-					[4, "Thurs"],
-					[5, "Fri"]
+					[1, moment().subtract('days', 5).format("ddd")],
+					[2, moment().subtract('days', 4).format("ddd")],
+					[3, moment().subtract('days', 3).format("ddd")],
+					[4, moment().subtract('days', 2).format("ddd")],
+					[5, moment().subtract('days', 1).format("ddd")]
 				],
 				font: {
 					weight: "bold",
@@ -76,17 +80,17 @@
 
 		XT.socket.once("data", function (data) {
 			
-			var Monday = moment().subtract('days', new Date().getDay() - 1).format("YYYY-MM-DD"),
+			var FiveDaysAgo = moment().subtract('days', 5).format("YYYY-MM-DD"),
 				pastWeek,
 				days = [0, 0, 0, 0, 0],
 				triplet,
 				diff,
-				parts = Monday.split("-");
+				parts = FiveDaysAgo.split("-");
 
 			pastWeek = data.timelogs.forEach(function (d) {
 
 				triplet = moment(d.EntryDate, "YYYY-MM-DD/HH:mm:ss.SS");
-				diff = triplet.diff(Monday, 'days');
+				diff = triplet.diff(FiveDaysAgo, 'days');
 
 				if (diff >= 0) {
 					days[diff] += d.Duration;
@@ -94,7 +98,7 @@
 
 			});
 
-			plot(days.map(function (d, i) {
+			plot(days.slice(0, 5).map(function (d, i) {
 				return [i + 1, d];
 			}));
 

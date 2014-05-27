@@ -39,7 +39,7 @@
 			<h3 data-bind="text: loginGreeting">Hello.</h3>
 
 			<input type="text" name="username" placeholder="Username" value="mattm" />
-			<input type="password" name="pass" placeholder="Password..." value="jr74anAQ" />
+			<input type="password" name="pass" placeholder="Password..." value="" />
 
 			<button class="btn btn--white btn--expand">Login</button>
 
@@ -179,6 +179,37 @@
 
 		<div class="xt__timelogs--graph">
 		&nbsp;
+		</div>
+
+		<div class="xt__timelog-edit">
+
+			<div class="xt__timelog-edit__overlay"></div>
+
+			<h3>Editing Timelog from <span data-date>DD/MM/YYYY</span></h3>
+
+			<form class="xt__timelog-edit__fields">
+
+					<label for="date">Date:</label>
+					<input name="date" id="date" type="date" />
+
+					<label for="duration">Duration:</label>
+					<input id="duration" name="duration" type="text" />
+
+					<label for="isBillable">
+						<span>Billable?:</span>
+						<input name="isBillable" id="isBillable" type="checkbox" />
+					</label>
+					
+					<label for="description">Description:</label>
+					<textarea id="description" name="description"></textarea>
+
+					<div class="btn--group">
+						<a class="btn btn--yellow" data-offcanvas-close>Cancel</a>
+						<button type="submit" class="btn btn--success" data-offcanvas-save>Update Log</button>
+					</div>
+
+			</form>
+
 		</div>
 
 	</main>

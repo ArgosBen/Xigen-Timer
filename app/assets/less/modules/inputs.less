@@ -46,3 +46,22 @@ input[type=email] {
 	}
 
 }
+
+input[type=date]::-webkit-inner-spin-button,
+input[type=date]::-webkit-clear-button  {
+	display: none;
+}
+
+input[type=text],
+input[type=date],
+input[type=email],
+textarea {
+
+	-webkit-transition: border-color 0.2s, background 0.2s;
+
+	&.is-error {
+		background: lighten(@orange, 35%);
+		border-color: @orange;
+	}
+
+}

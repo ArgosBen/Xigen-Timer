@@ -1,0 +1,83 @@
+.xt .xt__timelog-edit {
+
+	padding: 15px;
+	display: flex;
+	flex-direction: column;
+	width: 50%;
+	position: absolute;
+	bottom: 0px;
+	left: -50%;
+	height: 100%;
+	background: @slategrey;
+
+	-webkit-transition: left 0.5s ease-in-out;
+
+	&,
+	&__overlay {
+		-webkit-transform: translate3d(0, 0, 0);
+		-webkit-backface-visibility: hidden;
+	}
+
+	&__fields {
+		.cf();
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+	}
+
+	&__overlay {
+		position: absolute;
+		bottom: 0px;
+		left: 0;
+		height: 100%;
+		background: rgba(0, 0, 0, 0.25);
+		width: 100%;
+		content: '';
+		//visibility: hidden;
+		-webkit-transition: left 0.5s ease-in-out;
+		cursor: pointer;
+	}
+
+	&.is-open {
+		left: 0px;
+
+		.xt__timelog-edit__overlay {
+			visibility: visible;
+			left: 100%;
+		}
+	}
+
+	label {
+		color: @white;
+		display: block;
+		margin-top: 10px;
+		margin-bottom: 5px;
+		font-weight: 300;
+		font-size: 16px;
+
+		&:first-of-type {
+			margin-top: 0;
+		}
+	}
+
+	textarea {
+		flex: 1;
+	}
+
+	input[type=text],
+	input[type=date] {
+		width: 50%;
+	}
+
+	h3 {
+		color: @white;
+		text-transform: none;
+		margin: 0 0 10px 0;
+		font-weight: @semibold;
+	}
+
+	.btn--group {
+		padding-bottom: 0;
+	}
+
+}
