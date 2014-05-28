@@ -12,7 +12,7 @@ $(function () {
 		ready,
 		loginError;
 
-	XT.socket = socket = io.connect("http://localhost:8080");
+	XT.socket = socket = io.connect("http://timerservice.magpiex.co.uk:8080");
 	XT.viewmodel = new XT.ViewModel();
 
 	ko.applyBindings(XT.viewmodel);
@@ -53,6 +53,17 @@ $(function () {
 
 	});
 
+	socket.on("send setup", function () {
+
+		if (XT.token && XT.user) {
+			socket.emit("setup", {
+				"userToken" : XT.token,
+				"userName" : XT.user
+			});
+		}
+
+	});
+
 	$(".xt__login").on("submit", function (e) {
 		e.preventDefault();
 
@@ -61,7 +72,8 @@ $(function () {
 			password = form.find("[name=pass]").val(),
 			token;
 
-		token = "Basic " + btoa(username + ":" + password);
+		token = XT.token = "Basic " + btoa(username + ":" + password);
+		XT.user = username;
 
 		setup(token, username);
 

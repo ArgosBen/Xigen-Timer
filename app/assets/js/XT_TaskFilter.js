@@ -8,6 +8,7 @@
 		TASKS_BODY: ".xt__tasks__body",
 		APPLY: ".btn--info",
 		RESET: ".btn--yellow",
+		OVERLAY: ".xt__tasks__overlay",
 		REFRESH: ".btn--warning",
 		NAME: "[name=nameFilter]",
 		NO_END_DATE: "#withoutEndDate",
@@ -64,7 +65,10 @@
 
 			this.noEndDateState = endDate;
 			this.waitingReviewState = waitingReview;
-			this.nameFieldState = !!nameFilter;
+			this.nameFieldState = nameFilter;
+
+			this.checkApplyButton();
+			this.checkResetButton();
 
 			XT.socket.once("filteredActivites", function (data) {
 				that.getProjectNames(data);
@@ -158,6 +162,10 @@
 				});
 			});
 
+			$(config.OVERLAY).css({
+				"display" : "flex"
+			});
+
 			XT.socket.emit("get", request);
 
 			XT.socket.once("data", function (data) {
@@ -211,6 +219,10 @@
 				"cellspacing" : 0,
 				"cellpadding" : 0
 			}).appendTo(config.TASKS_BODY);
+
+			$(config.OVERLAY).css({
+				"display" : "none"
+			});
 
 		}
 
