@@ -1,0 +1,106 @@
+.xt .xt__tasks {
+
+	display: flex;
+	flex-direction: column;
+
+	&__filters {
+		background: @slategrey;
+		padding: 10px;
+		display: flex;
+		flex-direction: row;
+
+		> * + * {
+			margin-left: 15px;
+		}
+
+		input {
+			margin: 0;
+		}
+
+		> .btn {
+			flex: 0.5;
+		}
+
+		.btn {
+			text-align: center;
+			justify-content: center;
+			flex-direction: column;
+			display: flex;
+		}
+
+		> .input-group {
+			display: flex;
+
+			input {
+				margin: auto 0 auto 10px;
+			}
+
+			label {
+				display: flex;
+				flex-direction: column;
+				text-align: center;
+				justify-content: center;
+				line-height: 1;
+			}
+		}
+
+		.input-group--text {
+
+			display: flex;
+			flex: 2;
+
+			> input {
+				flex: 2;
+				margin: 0;
+			}
+
+			> .btn {
+				flex: 1;
+			}
+
+		}
+	}
+
+	table {
+		width: 100%;
+	}
+
+	thead {
+		background: @xigenblue;
+		color: @offwhite;
+
+		th {
+			padding: 10px;
+			font-weight: 300;
+		}
+	}
+
+	td {
+		color: @slategrey;
+		padding: 5px;
+		font-size: 14px;
+		border-bottom: 1px solid darken(@offwhite, 10%);
+	}
+
+	td,
+	th {
+
+		&:nth-child(1) { width: 35%; }
+		&:nth-child(2) { width: 35%; }
+		&:nth-child(3) { width: 15%; }
+		&:nth-child(4) { width: 15%; }
+
+	}
+
+	&__tasks {
+		padding: 10px 10px 0 10px;
+	}
+
+	&__body {
+		margin: 0 10px 10px 10px;
+		display: flex;
+		flex: 1;
+		overflow: auto;
+	}
+
+}

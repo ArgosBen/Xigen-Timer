@@ -72,6 +72,7 @@ $(function () {
 	ready = function () {
 
 		XT.timelogs = new XT.Timeloglist();
+		XT.taskFilter = new XT.TaskFilter();
 
 		XT.drawProjectList(function () {
 			var nav = new XT.HierachyList();

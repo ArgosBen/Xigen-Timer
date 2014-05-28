@@ -467,6 +467,9 @@ body {
 .btn--group .btn {
   flex: 1;
 }
+.btn--small {
+  padding: 0;
+}
 .btn--display {
   cursor: default;
 }
@@ -776,5 +779,96 @@ textarea.is-error {
 .xt .xt__timelog-edit [data-project] {
   color: #27ae60;
   font-weight: bold;
+}
+.xt .xt__tasks {
+  display: flex;
+  flex-direction: column;
+}
+.xt .xt__tasks__filters {
+  background: #3e4649;
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+}
+.xt .xt__tasks__filters > * + * {
+  margin-left: 15px;
+}
+.xt .xt__tasks__filters input {
+  margin: 0;
+}
+.xt .xt__tasks__filters > .btn {
+  flex: 0.5;
+}
+.xt .xt__tasks__filters .btn {
+  text-align: center;
+  justify-content: center;
+  flex-direction: column;
+  display: flex;
+}
+.xt .xt__tasks__filters > .input-group {
+  display: flex;
+}
+.xt .xt__tasks__filters > .input-group input {
+  margin: auto 0 auto 10px;
+}
+.xt .xt__tasks__filters > .input-group label {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
+  line-height: 1;
+}
+.xt .xt__tasks__filters .input-group--text {
+  display: flex;
+  flex: 2;
+}
+.xt .xt__tasks__filters .input-group--text > input {
+  flex: 2;
+  margin: 0;
+}
+.xt .xt__tasks__filters .input-group--text > .btn {
+  flex: 1;
+}
+.xt .xt__tasks table {
+  width: 100%;
+}
+.xt .xt__tasks thead {
+  background: #2d4569;
+  color: #ecf0f1;
+}
+.xt .xt__tasks thead th {
+  padding: 10px;
+  font-weight: 300;
+}
+.xt .xt__tasks td {
+  color: #3e4649;
+  padding: 5px;
+  font-size: 14px;
+  border-bottom: 1px solid #cfd9db;
+}
+.xt .xt__tasks td:nth-child(1),
+.xt .xt__tasks th:nth-child(1) {
+  width: 35%;
+}
+.xt .xt__tasks td:nth-child(2),
+.xt .xt__tasks th:nth-child(2) {
+  width: 35%;
+}
+.xt .xt__tasks td:nth-child(3),
+.xt .xt__tasks th:nth-child(3) {
+  width: 15%;
+}
+.xt .xt__tasks td:nth-child(4),
+.xt .xt__tasks th:nth-child(4) {
+  width: 15%;
+}
+.xt .xt__tasks__tasks {
+  padding: 10px 10px 0 10px;
+}
+.xt .xt__tasks__body {
+  margin: 0 10px 10px 10px;
+  display: flex;
+  flex: 1;
+  overflow: auto;
 }
 /*# sourceMappingURL=assets/css/XigenTimer.css.map */

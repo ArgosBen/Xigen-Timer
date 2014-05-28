@@ -131,6 +131,42 @@
 
 	</main>
 
+	<main data-bind="visible: currentPage() === 'tasks'" class="xt__tasks">
+
+		<div class="xt__tasks__filters">
+
+			<a class="btn btn--warning btn--small">Refresh</a>
+
+			<div class="input-group">
+				<label for="withoutEndDate">Without end date</label>
+				<input id="withoutEndDate" type="checkbox">
+			</div>
+
+			<div class="input-group">
+				<label for="waitingReview">Waiting internal review</label>
+				<input id="waitingReview" type="checkbox">
+			</div>
+
+			<div class="input-group input-group--text">
+				<input type="text" name="nameFilter" placeholder="Name Contains...">
+			</div>
+
+			<a class="btn btn--info btn--small" disabled>Apply</a>
+
+			<a class="btn btn--yellow btn--small" disabled>Reset</a>
+
+		</div>
+
+		<div class="xt__tasks__tasks">
+
+		</div>
+
+		<div class="xt__tasks__body">
+
+		</div>
+
+	</main>
+
 	<main data-bind="visible: currentPage() === 'logs'" class="xt__timelogs">
 
 		<div class="xt__timelogs--table">
@@ -239,6 +275,7 @@
 	<script src="assets/js/XT_miniMode.js"></script>
 	<script src="assets/js/XT_drawGraph.js"></script>
 	<script src="assets/js/XT_timelogList.js"></script>
+	<script src="assets/js/XT_TaskFilter.js"></script>
 	<script src="assets/js/XT_Runtime.js"></script>
 </body>
 </html>

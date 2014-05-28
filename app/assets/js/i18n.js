@@ -18,6 +18,14 @@ XT.i18n = {
 		"Really? You tried THAT?",
 		"Wrong. Nice try though.",
 		"Sorry, once more please!"
-	]
+	],
+
+	"priorities" : {
+		5 : "On Fire",
+		1 : "Urgent",
+		2 : "High",
+		3 : "Medium",
+		4 : "Low",
+	}
 
 };
